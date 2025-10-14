@@ -3,14 +3,14 @@
 En lo más profundo de una tranquila selva habita Pili, una gigante piedra que custodia la tranquilidad de la naturaleza. Un día, se encuentra con Mati, un niño perdido. Aunque no comparten ni palabras, pronto descubren una gran conexión entre ellos; Pili escucha los pensamientos de Mati, y Mati siente la selva a través de Pili.
 Juntos emprenden un viaje para devolver la luz a los santuarios del bosque, apagados por el mundo exterior.
 ## Índice
-1. [Integrantes] (#Integrantes)
-2. [Introducción] (#Introducción)
-3. [Narrativa] (#Narrativa)
-4. [Personajes y mecánicas] (#Personajes y mecanicas)
-5. [Escenarios] (#Escenarios)
-6. [Niveles] (#Niveles)
-7. [Progreso del juego] (#Progreso del juego)
-8. [Referencias] (#Referencias)
+1. [Integrantes] (#integrantes)
+2. [Introducción] (#introducción)
+3. [Narrativa] (#narrativa)
+4. [Personajes y mecánicas] (#personajes y mecanicas)
+5. [Escenarios] (#escenarios)
+6. [Niveles] (#niveles)
+7. [Progreso del juego] (#progreso del juego)
+8. [Referencias] (#referencias)
 ## Integrantes
 Grupo 7
 | Nombre | Apellidos      | Correos                                                                   | Cuenta github |
