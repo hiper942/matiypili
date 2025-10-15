@@ -31,10 +31,22 @@ Plataforma:
 Web (cooperativo local)
 
 Público objetivo: 
-Para todas las edades
+Todas las edades y amantes de los juegos en parejas.
+
+Controles:
+
+Movimiento de Mati - WASD 
+
+Movimiento de Pili - ↑←↓→
 
 Estilo visual: 
-Arte 2D con una estética relajada, naturalista y luminosa. Entornos de bosque, con colores suaves, iluminación dorada y detalles ambientales (animales, agua…).
+
+El juego presenta un arte 2D dibujado a mano con un estilo cartoon-naturalista, el cual combina trazos suaves y colores cálidos. La estética se caracteriza por su atmósfera relajada, luminosa y orgánica, reviviendo la calma de un bosque mágico bañado por su luz propia.
+Los entornos están formados con tonos verdes, dorados y ocres suaves para reflejar la calidez del bosque, junto con efectos de iluminación ambiental como los rayos del sol filtrandose entre las ramas o los reflejos sobre el agua.
+
+El estilo visual combina formas redondeadas y simplificadas con detalles texturizados (musgo, raices, madeja, hojas...) que mantienen un visual agradable para todas las edades. Los elementos ambientales (animales, agua, partículas de luz) refuerzan la inmersión.
+
+El resultado final busca un equilibrio entre la estética ilustrada a mano y la claridad visual propia de un videojuego de plataformas cooperativo, asegurandose que los jugadores logren distinguir, sin problemas, los elementos interactivos sin perder la belleza del entorno.
 
 Descripción: 
 Mati & Pili es un videojuego de plataformas cooperativo en el cual dos personajes muy distintos entre sí; Mati, un niño curioso y alocado, y Pili, una gigante piedra pacífica; deben avanzar por un bosque mágico resolviendo puzles enfocados en la colaboración, unión de habilidades, altura y tiempo.
@@ -61,7 +73,7 @@ Página de cómic simulando una cinemática entre niveles, las cuales muestran e
 
 El final muestra a ambos juntos observando el bosque desde lo alto de un árbol, iluminado de nuevo.
 
-## Personajes y Mecánicas
+## Personajes, Mecánicas y Físicas
 ### Personajes
 #### Mati
 <img src="./img/Matias_Concepto.png" width=512 height=512>
@@ -123,6 +135,15 @@ Cada jugador controlará un personaje que tendrá mecánicas únicas que se debe
 - Crear rutas seguras para Mati.
 - Sostener interruptores mientras Mati logra su objetivo.
 - Formar puentes o escaleras naturales.
+
+### Físicas
+El sistema de físicas combina precisión y simplicidad para reforzar la cooperación entre ambos.
+Cada uno responde de forma distinta a la gravedad, la inercia y el peso, por lo que se logra una variedad y dificultad progresiva.
+
+- Mati posee físicas ligeras: mayor impulso en saltos, mayor velocidad de movimiento y capacidad de realizar doble salto. Puede ser desplazado fácilmente por plataformas móviles, corrientes de agua...
+- Pili, por su parte, tiene físicas pesadas: movimientos lentos y estables, menor salto, pero con alta resistencia. Su peso permite mantener estructuras en equilibrio, activar ciertas placas de presión...
+
+Estas dinámicas ayudan a la coordinación, elevando la dificultad de manera natural a medida que avanza la aventura.
 
 ## Escenarios
 <img src="./img/Escenario.png" width=1024 height=1024>
@@ -242,9 +263,17 @@ En escala suave. La curva de aprendizaje se apoya en la cooperación de ambos m�
 ### Rejugabilidad
 La experiencia emocional es distinta dependiendo de con quién se juegue.
 
-## Musica
--Aqui escribes belath-
-## Referencias
+## Música
+La música ambiental del bosque está diseñada para acompañar la atmósfera tranquila y mágica del entorno natural de _Mati&Pili_. Se compone de una base melódica suave, reforzada con sonidos ambientales que recuerdan la vida y movimiento del bosque.
+
+En los mapas de día, predominan las flautas de viento, percusiones de madera... Estas se entrelazan con el sonido ambiental del viento moviendo hojas, el movimiento del agua de un arroyo cercano, el crujir de ramas y cantos de pájaros. El conjunto transmite una armonía y conexión con el bosque, consiguiendo una sensación de serenidad mientras los jugadores exploran y pasan los niveles.
+La música no busca imponer un ritmo en concreto, sino acompañar el flujo del entorno.
+
+Durante los niveles nocturnos, la composición se transforma en una versión más misteriosa. Se baja la intensidad de los instrumentos, dando brillo a los sonidos naturales: grillos, gúhos, viento suave, aullidos lejanos de lobos... La melodía mantiene su carácter relajado, pero con un aire más melacólico, reflejando el paso del día a la noche en el bosque.
+
+El objetivo de esta música es crear una inmersión emocional absoluta, en la que el jugador sienta lo vivo que está el bosque, convirtiendose casi en un personaje más dentro de la historia.
+
+## Referencias e Inspiración
 - [Nunu y Willump](https://www.leagueoflegends.com/es-es/champions/nunu/)
 - [Masha y el oso](https://es.wikipedia.org/wiki/Masha_y_el_oso_(serie_de_televisi%C3%B3n))
 - [Sully y Boo](https://www.reddit.com/r/Pixar/comments/1eizi3p/sully_and_boo/?tl=es-es)
