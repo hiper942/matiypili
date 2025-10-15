@@ -12,7 +12,8 @@ Juntos emprenden un viaje para devolver la luz a los santuarios del bosque, apag
 6. [Niveles](#niveles)
 7. [Progreso del juego](#progreso-del-juego)
 8. [Música](#musica)
-9. [Referencias](#referencias)
+9. [Marketing](#marketing)
+10. [Referencias](#referencias)
 
 ## Integrantes
 Grupo 7
@@ -272,6 +273,18 @@ La música no busca imponer un ritmo en concreto, sino acompañar el flujo del e
 Durante los niveles nocturnos, la composición se transforma en una versión más misteriosa. Se baja la intensidad de los instrumentos, dando brillo a los sonidos naturales: grillos, gúhos, viento suave, aullidos lejanos de lobos... La melodía mantiene su carácter relajado, pero con un aire más melacólico, reflejando el paso del día a la noche en el bosque.
 
 El objetivo de esta música es crear una inmersión emocional absoluta, en la que el jugador sienta lo vivo que está el bosque, convirtiendose casi en un personaje más dentro de la historia.
+
+## Marketing
+### Estrategia de difusión
+Mati & Pili busca emocionar y despertar curiosidad, no vender. Al ser jugable gratis desde el navegador, el objetivo es atraer tráfico y lograr que la gente comparta la experiencia.
+
+La web oficial mostrará una imagen del bosque luminoso, el logo y un gran botón de “Jugar ahora”, junto a una frase breve que capture el tono del juego, capturas, música y una historia sobre su desarrollo.
+
+Se lanzará un teaser de 20–30 segundos con gameplay real y tono emotivo, publicado en TikTok, YouTube Shorts, Instagram y X, destacando que se juega directamente online.
+
+La difusión gratuita se apoyará en comunidades como r/IndieGaming y redes sociales, compartiendo clips, arte y frases cortas como “Cada luz en este bosque guarda un recuerdo”.
+
+Finalmente, se mantendrá una comunicación cercana mediante actualizaciones semanales, un pequeño servidor de Discord y una campaña de lanzamiento clara: “Ya puedes jugar gratis a Mati & Pili”.
 
 ## Referencias e Inspiración
 - [Nunu y Willump](https://www.leagueoflegends.com/es-es/champions/nunu/)
