@@ -5,8 +5,8 @@ import { PauseScene } from './scenes/PauseScene.js';
 
 const config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: 1600,
+    height: 900,
     parent: 'game-container',
     physics: {
         default: 'arcade',
