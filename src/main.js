@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+import Phaser, { Physics } from 'phaser';
 import { MenuScene } from './scenes/MenuScene.js';
 import { GameScene } from './scenes/GameScene.js';
 import { PauseScene } from './scenes/PauseScene.js';
