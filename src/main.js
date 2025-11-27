@@ -1,22 +1,22 @@
 import Phaser, { Physics } from 'phaser';
-import { MenuScene } from './scenes/MenuScene.js';
-import { GameScene } from './scenes/GameScene.js';
-import { PauseScene } from './scenes/PauseScene.js';
+import MenuScene from './scenes/MenuScene.js';
+import ForestLevelScene from './scenes/ForestLevelScene.js';
+import WinScene from './scenes/WinScene.js';
 
 const config = {
     type: Phaser.AUTO,
-    width: 1600,
-    height: 900,
+    width: 960,
+    height: 540,
     parent: 'game-container',
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 0 },
+            gravity: { y: 900 },
             debug: false
         }
     },
-    scene: [MenuScene, GameScene, PauseScene],
-    backgroundColor: '#1a1a2e',
+    scene: [MenuScene, ForestLevelScene, WinScene],
+    backgroundColor: '#173327',
 }
 
 const game = new Phaser.Game(config);
