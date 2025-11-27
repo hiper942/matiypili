@@ -5,8 +5,8 @@ import WinScene from './scenes/WinScene.js';
 
 const config = {
     type: Phaser.AUTO,
-    width: 960,
-    height: 540,
+    width: 1600,
+    height: 900,
     parent: 'game-container',
     physics: {
         default: 'arcade',
@@ -16,7 +16,7 @@ const config = {
         }
     },
     scene: [MenuScene, ForestLevelScene, WinScene],
-    backgroundColor: '#173327',
+    backgroundColor: '#8e9423ff',
 }
 
 const game = new Phaser.Game(config);

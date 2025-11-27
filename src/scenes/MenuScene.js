@@ -6,19 +6,22 @@ export default class MenuScene extends Phaser.Scene{
     }
 
     create(){
-        this.add.text(480, 120, 'MATY & PILI', {
+        this.add.text(800, 350, 'MATY & PILI', {
             fontSize: '64px',
             color: '#ffffff'
         }).setOrigin(0.5);
 
-        const playBtn = this.add.text(480, 300, 'Jugar', {
+        const playBtn = this.add.text(800, 500, 'Jugar', {
             fontSize: '32px',
-            color: '#00ff00',
+            color: '#aaa82aff',
         }).setOrigin(0.5)
         .setInteractive()
-        .on('pointerover', () => this.scene.start('ForestLevelScene'));
+        .on('pointerover', () => playBtn.setColor('#dfdc32ff'))
+        .on('pointerout', () => playBtn.setColor('#aaa82aff'))
+        .on('pointerdown', () => this.scene.start('ForestLevelScene'))
 
-        const creditsBtn = this.add.text(480, 380, 'Créditos', {
+
+        const creditsBtn = this.add.text(800, 600, 'Créditos', {
             fontSize: '24px',
             color: '#ffffff',
         }).setOrigin(0.5)

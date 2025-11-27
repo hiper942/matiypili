@@ -8,7 +8,7 @@ export default class Platform{
         graphics.destroy();
 
         let block = scene.physics.add.staticSprite(x, y, `platform-${x}-${y}`);
-        block.setOrigin(0, 0);
+        block.setOrigin(0.5, 0.5);
 
         return block;
     }

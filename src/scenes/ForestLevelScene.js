@@ -12,7 +12,9 @@ export default class ForestLevelScene extends Phaser.Scene{
         super('ForestLevelScene');
     }
 
-    create(){
+    // Start()
+    create()
+    {
         //Plataformas
         this.platforms = this.physics.add.staticGroup();
         this.platforms.add(new Platform(this, 0, 480, 1200, 60));
@@ -26,6 +28,7 @@ export default class ForestLevelScene extends Phaser.Scene{
 
         this.physics.add.collider(this.mati.sprite, this.platforms);
         this.physics.add.collider(this.pili.sprite, this.platforms);
+        // this.physics.add.collider(this.mati.collider, this.pili.collider);
 
         //Switch y Puerta
         this.switchObj = new Switch(this, 360, 350);
@@ -44,29 +47,74 @@ export default class ForestLevelScene extends Phaser.Scene{
         });
     }
 
-    update(){
+    // Update()
+    update()
+    {
         //Movimiento Mati
         this.mati.sprite.setVelocityX(0);
+
         if(this.keys.A.isDown) this.mati.sprite.setVelocityX(-this.mati.baseSpeed);
         if(this.keys.D.isDown) this.mati.sprite.setVelocityX(this.mati.baseSpeed);
-        
-        if((this.keys.W.isDown || this.keys.SPACE.isDown)){
-            if(this.mati.sprite.body.onFloor()) this.mati.sprite.setVelocityY(-this.mati.jumpStrength);
-            if(this.physics.overlap(this.mati.sprite, this.pili.sprite) && this.pili.isIdle()){
-                this.mati.sprite.setVelocityY(-500);
+
+        // Deteccion de pili
+        const isTouchingPili = this.physics.overlap(this.mati.sprite, this.pili.topCollider) && this.mati.sprite.body.velocity.y > 0 && this.mati.sprite.body.bottom <= this.pili.sprite.body.top + 8;
+
+        if (isTouchingPili)
+        {
+            this.pili.isPlatform = true;
+        }
+
+        if (this.pili.isPlatform)
+        {
+            this.mati.sprite.body.y = this.pili.sprite.body.top - this.mati.sprite.body.height;
+
+            this.mati.sprite.body.setVelocityY(0);
+
+            const stillOverlapping = this.physics.overlap(this.mati.sprite, this.pili.topCollider);
+
+            if (!stillOverlapping) 
+            {
+                this.pili.isPlatform = false;
+            }
+
+            if (this.mati.sprite.body.bottom < this.pili.sprite.body.top - 4)
+            {
+                this.pili.isPlatform = false;
             }
         }
 
-        //Movimiento Pili
-        this.pili.sprite.setVelocityX(0);
-        if(this.cursors.left.isDown) this.pili.sprite.setVelocityX(-this.pili.baseSpeed);
-        if(this.cursors.right.isDown) this.pili.sprite.setVelocityX(this.pili.baseSpeed);
-        
-        if(this.cursors.up.isDown && this.pili.sprite.body.onFloor()){
-            this.pili.sprite.setVelocityY(-this.pili.jumpStrength);
+        if
+        (
+            (this.keys.W.isDown || this.keys.SPACE.isDown) && 
+            (this.mati.sprite.body.onFloor() || this.pili.isPlatform)
+        ) 
+        {
+            this.mati.sprite.setVelocityY(-this.mati.jumpStrength);
+            this.pili.isPlatform = false;
         }
 
-        //Switch
+        //Movimiento Pili
+        this.pili.update();
+
+        this.pili.sprite.setVelocityX(0);
+
+        console.log(this.pili.isPlatform);
+        if (this.pili.isPlatform)
+        {
+            this.pili.sprite.setVelocityX(0);
+        }
+        else
+        {
+            if(this.cursors.left.isDown) this.pili.sprite.setVelocityX(-this.pili.baseSpeed);
+            if(this.cursors.right.isDown) this.pili.sprite.setVelocityX(this.pili.baseSpeed);
+        
+            if(this.cursors.up.isDown && this.pili.sprite.body.onFloor()){
+                this.pili.sprite.setVelocityY(-this.pili.jumpStrength);
+            }
+        }
+        // 
+
+        //Interruptor
         this.switchObj.update(this.mati);
 
         //Puerta
