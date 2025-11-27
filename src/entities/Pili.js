@@ -1,7 +1,9 @@
 import { Physics } from "phaser";
 
-export default class Pili{
-    constructor(scene, x, y){
+export default class Pili
+{
+    constructor(scene, x, y)
+    {
         this.scene = scene;
 
         this.sprite = scene.physics.add.sprite(x, y, null)
@@ -30,7 +32,8 @@ export default class Pili{
         this.topCollider.y = this.sprite.y - this.sprite.displayHeight / 2 - 2;
     }
 
-    isIdle(){
+    isIdle()
+    {
         return Math.abs(this.sprite.body.velocity.x) < 5;
     }
 }

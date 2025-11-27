@@ -3,6 +3,7 @@ import Pili from '../entities/Pili.js';
 import Platform from '../entities/Platform.js';
 import Switch from '../entities/Switch.js';
 import Door from '../entities/Door.js';
+import Grid from "../entities/Grid.js";
 
 import { MoveCharacterCommand } from '../commands/MoveCharacterCommand.js';
 import { JumpCharacterCommand } from '../commands/JumpCharacterCommand.js';
@@ -15,27 +16,35 @@ export default class ForestLevelScene extends Phaser.Scene{
     // Start()
     create()
     {
-        //Plataformas
-        this.platforms = this.physics.add.staticGroup();
-        this.platforms.add(new Platform(this, 0, 480, 1200, 60));
-        this.platforms.add(new Platform(this, 350, 380, 120, 20));
-        this.platforms.add(new Platform(this, 550, 340, 80, 20));
-        this.platforms.add(new Platform(this, 750, 260, 120, 20));
+        const levelMatrix = [
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,3,0,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+        ]
 
-        //Personajes
-        this.mati = new Mati(this, 50, 400);
-        this.pili = new Pili(this, 150, 400);
+        this.grid = new Grid(this, levelMatrix);
+        
+        // Personajes
+        this.pili = new Pili(this, this.grid.piliSpawn.x, this.grid.piliSpawn.y);
+        this.mati = new Mati(this, this.grid.matiSpawn.x, this.grid.matiSpawn.y);
+        
+        this.physics.add.collider(this.mati.sprite, this.grid.platforms);
+        this.physics.add.collider(this.pili.sprite, this.grid.platforms);
 
-        this.physics.add.collider(this.mati.sprite, this.platforms);
-        this.physics.add.collider(this.pili.sprite, this.platforms);
-        // this.physics.add.collider(this.mati.collider, this.pili.collider);
+        this.grid.switch.update(this.mati);
 
-        //Switch y Puerta
-        this.switchObj = new Switch(this, 360, 350);
-        this.door = new Door(this, 640, 430);
-
-        this.physics.add.collider(this.mati.sprite, this.door.sprite);
-        this.physics.add.collider(this.pili.sprite, this.door.sprite);
+        this.grid.door.update();
 
         //Input
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -50,13 +59,14 @@ export default class ForestLevelScene extends Phaser.Scene{
     // Update()
     update()
     {
-        //Movimiento Mati
+        //----- MATI -----//
         this.mati.sprite.setVelocityX(0);
 
+        // Movimiento
         if(this.keys.A.isDown) this.mati.sprite.setVelocityX(-this.mati.baseSpeed);
         if(this.keys.D.isDown) this.mati.sprite.setVelocityX(this.mati.baseSpeed);
 
-        // Deteccion de pili
+        // Deteccion de Pili
         const isTouchingPili = this.physics.overlap(this.mati.sprite, this.pili.topCollider) && this.mati.sprite.body.velocity.y > 0 && this.mati.sprite.body.bottom <= this.pili.sprite.body.top + 8;
 
         if (isTouchingPili)
@@ -64,6 +74,7 @@ export default class ForestLevelScene extends Phaser.Scene{
             this.pili.isPlatform = true;
         }
 
+        // Mantener a Mati encima de Pili si Mati está encima
         if (this.pili.isPlatform)
         {
             this.mati.sprite.body.y = this.pili.sprite.body.top - this.mati.sprite.body.height;
@@ -83,27 +94,24 @@ export default class ForestLevelScene extends Phaser.Scene{
             }
         }
 
-        if
-        (
-            (this.keys.W.isDown || this.keys.SPACE.isDown) && 
-            (this.mati.sprite.body.onFloor() || this.pili.isPlatform)
-        ) 
+        // Salto
+        if ((this.keys.W.isDown || this.keys.SPACE.isDown) && (this.mati.sprite.body.onFloor() || this.pili.isPlatform)) 
         {
             this.mati.sprite.setVelocityY(-this.mati.jumpStrength);
             this.pili.isPlatform = false;
         }
 
-        //Movimiento Pili
-        this.pili.update();
+        //----- PILI -----//
 
         this.pili.sprite.setVelocityX(0);
 
-        console.log(this.pili.isPlatform);
-        if (this.pili.isPlatform)
-        {
-            this.pili.sprite.setVelocityX(0);
-        }
-        else
+        // Actualizar posicion del colliderTop de pili
+        this.pili.update();
+
+        // console.log(this.pili.isPlatform);
+
+        // Movimiento solo si Mati no está encima
+        if (!this.pili.isPlatform)
         {
             if(this.cursors.left.isDown) this.pili.sprite.setVelocityX(-this.pili.baseSpeed);
             if(this.cursors.right.isDown) this.pili.sprite.setVelocityX(this.pili.baseSpeed);
@@ -112,18 +120,14 @@ export default class ForestLevelScene extends Phaser.Scene{
                 this.pili.sprite.setVelocityY(-this.pili.jumpStrength);
             }
         }
-        // 
+        
+        //----- PUERTA -----//
+        this.grid.door.update();
 
-        //Interruptor
-        this.switchObj.update(this.mati);
+        //----- INTERRUPTOR -----//
+        this.grid.switch.update(this.mati);
 
-        //Puerta
-        if(this.switchObj.active){
-            this.door.open = true;
-        }
-        this.door.update();
-
-        //META
+        //----- META -----//
         if(this.mati.sprite.y < 300 && this.mati.sprite.x > 760 &&
             this.pili.sprite.y < 300 && this.pili.sprite.x > 760){
                 this.scene.start('WinScene');
