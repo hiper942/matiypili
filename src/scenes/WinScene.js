@@ -8,19 +8,19 @@ export default class WinScene extends Phaser.Scene{
         this.add.rectangle(480,270,960,540, 0x000000, 0.8);
 
         //Texto principal
-        this.add.text(480, 180, '¡Nivel Completado!',{
+        this.add.text(800, 300, '¡Nivel Completado!',{
             fontSize: '64px',
             color: '#ffffff'
         }).setOrigin(0.5);
 
         //Texto secundario
-        this.add.text(480, 260, 'Habeis cooperado de maravilla ^^',{
+        this.add.text(800, 384, 'Habeis cooperado de maravilla ^^',{
             fontSize: '64px',
             color: '#ffffff'
         }).setOrigin(0.5);
 
         //Botón vuelta al menú
-        const menuBtn = this.add.text(480, 360, 'Volver al menú',{
+        const menuBtn = this.add.text(800, 700, 'Volver al menú',{
             fontSize: '32px',
             color:'#00ff00'
         }).setOrigin(0.5)

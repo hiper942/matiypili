@@ -1,6 +1,7 @@
 import Platform from "./Platform.js";
 import Switch from "./Switch.js";
 import Door from "./Door.js";
+import Rock from "./Rock.js";
 
 export default class Grid
 {
@@ -13,6 +14,7 @@ export default class Grid
         this.platforms = this.scene.physics.add.staticGroup();
         this.switch = null;
         this.door = null;
+        this.rocks = [];
 
         this.matiSpawn = null;
         this.piliSpawn = null;
@@ -84,8 +86,14 @@ export default class Grid
                         this.piliSpawn = { x, y };
                         break;
                     }
+
+                    // Roca
+                    case 6:
+                        const rock = new Rock(this.scene, x, y);
+                        this.rocks.push(rock);
+                        break;
                     default:
-                        console.warn("Grid: Tile unknown:", tile);
+                        console.warn("Grid: Tile unknown: ", tile);
                         break;
                 }
             }
