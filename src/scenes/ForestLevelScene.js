@@ -60,7 +60,7 @@ export default class ForestLevelScene extends Phaser.Scene{
                 end: 39
             }),
 
-            frameRate: 24,
+            frameRate: 18,
             repeat: -1
         });
 
