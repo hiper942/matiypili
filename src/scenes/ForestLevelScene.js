@@ -13,6 +13,33 @@ export default class ForestLevelScene extends Phaser.Scene{
         super('ForestLevelScene');
     }
 
+    preload()
+    {
+        // Pili Idle
+        this.load.image('piliIdle0', 'assets/Pili/idle_00.png');
+        this.load.image('piliIdle1', 'assets/Pili/idle_01.png');
+        this.load.image('piliIdle2', 'assets/Pili/idle_02.png');
+        this.load.image('piliIdle3', 'assets/Pili/idle_03.png');
+        this.load.image('piliIdle4', 'assets/Pili/idle_04.png');
+        this.load.image('piliIdle5', 'assets/Pili/idle_05.png');
+        this.load.image('piliIdle6', 'assets/Pili/idle_06.png');
+        this.load.image('piliIdle7', 'assets/Pili/idle_07.png');
+        this.load.image('piliIdle8', 'assets/Pili/idle_08.png');
+        this.load.image('piliIdle9', 'assets/Pili/idle_09.png');
+        this.load.image('piliIdle10', 'assets/Pili/idle_10.png');
+        this.load.image('piliIdle11', 'assets/Pili/idle_11.png');
+        this.load.image('piliIdle12', 'assets/Pili/idle_12.png');
+        this.load.image('piliIdle13', 'assets/Pili/idle_13.png');
+        this.load.image('piliIdle14', 'assets/Pili/idle_14.png');
+        this.load.image('piliIdle15', 'assets/Pili/idle_15.png');
+        this.load.image('piliIdle16', 'assets/Pili/idle_16.png');
+        this.load.image('piliIdle17', 'assets/Pili/idle_17.png');
+        this.load.image('piliIdle18', 'assets/Pili/idle_18.png');
+        this.load.image('piliIdle19', 'assets/Pili/idle_19.png');
+
+        // Pili Walk
+    }
+
     // Start()
     create()
     {
@@ -40,6 +67,7 @@ export default class ForestLevelScene extends Phaser.Scene{
         this.pili.sprite.y -= this.pili.sprite.body.height/2;
 
         this.mati = new Mati(this, this.grid.matiSpawn.x, this.grid.matiSpawn.y);
+        this.mati.sprite.y -= this.mati.sprite.body.height / 2;
         
         this.physics.add.collider(this.mati.sprite, this.grid.platforms);
         this.physics.add.collider(this.pili.sprite, this.grid.platforms);
