@@ -28,8 +28,8 @@ export default class ForestLevelScene extends Phaser.Scene{
             [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
             [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
             [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,3,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,4,0,5,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,3,0,1],
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
         ]
 
@@ -37,6 +37,8 @@ export default class ForestLevelScene extends Phaser.Scene{
         
         // Personajes
         this.pili = new Pili(this, this.grid.piliSpawn.x, this.grid.piliSpawn.y);
+        this.pili.sprite.y -= this.pili.sprite.body.height/2;
+
         this.mati = new Mati(this, this.grid.matiSpawn.x, this.grid.matiSpawn.y);
         
         this.physics.add.collider(this.mati.sprite, this.grid.platforms);
