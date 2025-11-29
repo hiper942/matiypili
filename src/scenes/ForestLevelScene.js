@@ -16,53 +16,58 @@ export default class ForestLevelScene extends Phaser.Scene{
     preload()
     {
         // Pili Idle
-        this.load.image('piliIdle0', 'assets/Pili/idle_00.png');
-        this.load.image('piliIdle1', 'assets/Pili/idle_01.png');
-        this.load.image('piliIdle2', 'assets/Pili/idle_02.png');
-        this.load.image('piliIdle3', 'assets/Pili/idle_03.png');
-        this.load.image('piliIdle4', 'assets/Pili/idle_04.png');
-        this.load.image('piliIdle5', 'assets/Pili/idle_05.png');
-        this.load.image('piliIdle6', 'assets/Pili/idle_06.png');
-        this.load.image('piliIdle7', 'assets/Pili/idle_07.png');
-        this.load.image('piliIdle8', 'assets/Pili/idle_08.png');
-        this.load.image('piliIdle9', 'assets/Pili/idle_09.png');
-        this.load.image('piliIdle10', 'assets/Pili/idle_10.png');
-        this.load.image('piliIdle11', 'assets/Pili/idle_11.png');
-        this.load.image('piliIdle12', 'assets/Pili/idle_12.png');
-        this.load.image('piliIdle13', 'assets/Pili/idle_13.png');
-        this.load.image('piliIdle14', 'assets/Pili/idle_14.png');
-        this.load.image('piliIdle15', 'assets/Pili/idle_15.png');
-        this.load.image('piliIdle16', 'assets/Pili/idle_16.png');
-        this.load.image('piliIdle17', 'assets/Pili/idle_17.png');
-        this.load.image('piliIdle18', 'assets/Pili/idle_18.png');
-        this.load.image('piliIdle19', 'assets/Pili/idle_19.png');
+        this.load.spritesheet('piliIdle', 'assets/Pili/idlePili.png',
+        {
+            frameWidth: 256, 
+            frameHeight: 256 
+        });
 
         // Pili Walk
-        this.load.image('piliWalk0', 'assets/Pili/walk_00.png');
-        this.load.image('piliWalk1', 'assets/Pili/walk_01.png');
-        this.load.image('piliWalk2', 'assets/Pili/walk_02.png');
-        this.load.image('piliWalk3', 'assets/Pili/walk_03.png');
-        this.load.image('piliWalk4', 'assets/Pili/walk_04.png');
-        this.load.image('piliWalk5', 'assets/Pili/walk_05.png');
-        this.load.image('piliWalk6', 'assets/Pili/walk_06.png');
-        this.load.image('piliWalk7', 'assets/Pili/walk_07.png');
-        this.load.image('piliWalk8', 'assets/Pili/walk_08.png');
-        this.load.image('piliWalk9', 'assets/Pili/walk_09.png');
-        this.load.image('piliWalk10', 'assets/Pili/walk_10.png');
-        this.load.image('piliWalk11', 'assets/Pili/walk_11.png');
-        this.load.image('piliWalk12', 'assets/Pili/walk_12.png');
-        this.load.image('piliWalk13', 'assets/Pili/walk_13.png');
-        this.load.image('piliWalk14', 'assets/Pili/walk_14.png');
-        this.load.image('piliWalk15', 'assets/Pili/walk_15.png');
-        this.load.image('piliWalk16', 'assets/Pili/walk_16.png');
-        this.load.image('piliWalk17', 'assets/Pili/walk_17.png');
-        this.load.image('piliWalk18', 'assets/Pili/walk_18.png');
-        this.load.image('piliWalk19', 'assets/Pili/walk_19.png');
+        this.load.spritesheet('piliWalk', 'assets/Pili/walkPili.png',
+        {
+            frameWidth: 256, 
+            frameHeight: 256 
+        });
     }
 
     // Start()
     create()
     {
+        // --- ANIAMCIONES --- //
+        
+        // = PILI = //
+        // Idle
+        this.anims.create(
+        {
+            key: 'piliIdle',
+            frames: this.anims.generateFrameNumbers('piliIdle',
+            {
+                start: 0,
+                end: 24
+            }),
+
+            frameRate: 8,
+            repeat: -1
+        });
+
+        // Walk
+        this.anims.create(
+        {
+            key: 'piliWalk',
+            frames: this.anims.generateFrameNumbers('piliWalk',
+            {
+                start: 0,
+                end: 39
+            }),
+
+            frameRate: 24,
+            repeat: -1
+        });
+
+        // = MATI = //
+
+        // --- NIVEL --- //
+        // Grid
         const levelMatrix = [
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
             [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
@@ -96,7 +101,7 @@ export default class ForestLevelScene extends Phaser.Scene{
 
         this.grid.door.update();
 
-        //Input
+        // --- INPUT --- //
         this.cursors = this.input.keyboard.createCursorKeys();
         this.keys = this.input.keyboard.addKeys({
             A: 'A',
@@ -109,7 +114,7 @@ export default class ForestLevelScene extends Phaser.Scene{
     // Update()
     update()
     {
-        //----- MATI -----//
+        // ----- MATI ----- //
         this.mati.sprite.setVelocityX(0);
 
         // Movimiento
@@ -151,7 +156,7 @@ export default class ForestLevelScene extends Phaser.Scene{
             this.pili.isPlatform = false;
         }
 
-        //----- PILI -----//
+        // ----- PILI ----- //
 
         this.pili.sprite.setVelocityX(0);
 
@@ -163,12 +168,33 @@ export default class ForestLevelScene extends Phaser.Scene{
         // Movimiento solo si Mati no está encima
         if (!this.pili.isPlatform)
         {
-            if(this.cursors.left.isDown) this.pili.sprite.setVelocityX(-this.pili.baseSpeed);
-            if(this.cursors.right.isDown) this.pili.sprite.setVelocityX(this.pili.baseSpeed);
-        
-            if(this.cursors.up.isDown && this.pili.sprite.body.onFloor()){
+            if(this.cursors.left.isDown)
+            {
+                
+                this.pili.sprite.flipX = true;
+                this.pili.sprite.play('piliWalk', true);
+                this.pili.sprite.setVelocityX(-this.pili.baseSpeed);
+            }
+            else if(this.cursors.right.isDown)
+            {
+                this.pili.sprite.flipX = false;
+                this.pili.sprite.play('piliWalk', true);
+                this.pili.sprite.setVelocityX(this.pili.baseSpeed);
+            }
+            else if(this.cursors.up.isDown && this.pili.sprite.body.onFloor())
+            {
+                // animacion salto??
+                this.pili.sprite.play('piliIdle', true);
                 this.pili.sprite.setVelocityY(-this.pili.jumpStrength);
             }
+            else
+            {
+                this.pili.sprite.play('piliIdle', true);
+            }
+        }
+        else
+        {
+            this.pili.sprite.play('piliIdle', true);
         }
         
         //----- PUERTA -----//

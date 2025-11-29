@@ -6,18 +6,24 @@ export default class Pili
     {
         this.scene = scene;
 
-        this.sprite = scene.physics.add.sprite(x, y, null)
-            .setDisplaySize(128, 128)
-            .setTint(0x9fc5e8)
-            .setOrigin(0.5, 0.5)
+        // Carga sprite
+        this.sprite = scene.physics.add.sprite(x, y, 'piliIdle')
+            .setOrigin(0.5, 1)
             .setCollideWorldBounds(true);
 
-        this.sprite.body.setOffset(0, 0);
+        // Reescala a 128x128
+        this.sprite.setScale(0.8);
 
+        // Collider
+        this.sprite.body.setSize(128 * 1.25, 128 * 1.25);
+        this.sprite.body.setOffset(40, 80);
+
+        // Stats
         this.baseSpeed = 100;
         this.jumpStrength = 100;
 
-        this.topCollider = scene.add.rectangle(x, y - this.sprite.displayHeight / 2 - 2, this.sprite.displayWidth, 4, 0x00ff00, 0);
+        // topCollider
+        this.topCollider = scene.add.rectangle(x, y - this.sprite.displayHeight / 2 - 10, this.sprite.displayWidth * 0.5, 6, 0x00ff00, 0);
         scene.physics.add.existing(this.topCollider, false);
 
         this.topCollider.body.allowGravity = false;
@@ -28,8 +34,8 @@ export default class Pili
 
     update()
     {
-        this.topCollider.x = this.sprite.x;
-        this.topCollider.y = this.sprite.y - this.sprite.displayHeight / 2 - 2;
+        this.topCollider.x = this.sprite.x - 12;
+        this.topCollider.y = this.sprite.body.top - 4;
     }
 
     isIdle()
