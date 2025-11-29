@@ -43,7 +43,7 @@ export default class ForestLevelScene extends Phaser.Scene{
             frames: this.anims.generateFrameNumbers('piliIdle',
             {
                 start: 0,
-                end: 24
+                end: 19
             }),
 
             frameRate: 8,
