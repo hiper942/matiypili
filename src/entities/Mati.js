@@ -7,7 +7,7 @@ export default class Mati
         this.scene = scene;
 
         this.sprite = scene.physics.add.sprite(x, y, null)
-            .setDisplaySize(32, 48)
+            .setDisplaySize(48, 64)
             .setTint(0xffb347)
             .setOrigin(0.5, 0.5)
             .setCollideWorldBounds(true);

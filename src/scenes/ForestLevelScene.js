@@ -38,6 +38,26 @@ export default class ForestLevelScene extends Phaser.Scene{
         this.load.image('piliIdle19', 'assets/Pili/idle_19.png');
 
         // Pili Walk
+        this.load.image('piliWalk0', 'assets/Pili/walk_00.png');
+        this.load.image('piliWalk1', 'assets/Pili/walk_01.png');
+        this.load.image('piliWalk2', 'assets/Pili/walk_02.png');
+        this.load.image('piliWalk3', 'assets/Pili/walk_03.png');
+        this.load.image('piliWalk4', 'assets/Pili/walk_04.png');
+        this.load.image('piliWalk5', 'assets/Pili/walk_05.png');
+        this.load.image('piliWalk6', 'assets/Pili/walk_06.png');
+        this.load.image('piliWalk7', 'assets/Pili/walk_07.png');
+        this.load.image('piliWalk8', 'assets/Pili/walk_08.png');
+        this.load.image('piliWalk9', 'assets/Pili/walk_09.png');
+        this.load.image('piliWalk10', 'assets/Pili/walk_10.png');
+        this.load.image('piliWalk11', 'assets/Pili/walk_11.png');
+        this.load.image('piliWalk12', 'assets/Pili/walk_12.png');
+        this.load.image('piliWalk13', 'assets/Pili/walk_13.png');
+        this.load.image('piliWalk14', 'assets/Pili/walk_14.png');
+        this.load.image('piliWalk15', 'assets/Pili/walk_15.png');
+        this.load.image('piliWalk16', 'assets/Pili/walk_16.png');
+        this.load.image('piliWalk17', 'assets/Pili/walk_17.png');
+        this.load.image('piliWalk18', 'assets/Pili/walk_18.png');
+        this.load.image('piliWalk19', 'assets/Pili/walk_19.png');
     }
 
     // Start()
@@ -64,7 +84,7 @@ export default class ForestLevelScene extends Phaser.Scene{
         
         // Personajes
         this.pili = new Pili(this, this.grid.piliSpawn.x, this.grid.piliSpawn.y);
-        this.pili.sprite.y -= this.pili.sprite.body.height/2;
+        this.pili.sprite.y -= this.pili.sprite.body.height;
 
         this.mati = new Mati(this, this.grid.matiSpawn.x, this.grid.matiSpawn.y);
         this.mati.sprite.y -= this.mati.sprite.body.height / 2;

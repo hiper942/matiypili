@@ -3,7 +3,7 @@
   "health": 100,
   "energy": 100,
   "experience": 100,
-  "time": 4.464907018596275,
+  "time": 21.13107378524297,
   "selectedTool": "hoe",
   "inventory": {
     "carrot": 1,
@@ -30,8 +30,8 @@
       "type": "chicken",
       "x": 10,
       "y": 4,
-      "offsetX": 2.629179330382017,
-      "offsetY": 9.792242779688253,
+      "offsetX": 5.269361617115412,
+      "offsetY": -10.94237875688887,
       "eggTimer": 0
     }
   ],

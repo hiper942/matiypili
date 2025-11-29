@@ -7,7 +7,7 @@ export default class Pili
         this.scene = scene;
 
         this.sprite = scene.physics.add.sprite(x, y, null)
-            .setDisplaySize(100, 100)
+            .setDisplaySize(128, 128)
             .setTint(0x9fc5e8)
             .setOrigin(0.5, 0.5)
             .setCollideWorldBounds(true);
