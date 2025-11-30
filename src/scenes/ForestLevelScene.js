@@ -55,6 +55,20 @@ export default class ForestLevelScene extends Phaser.Scene
             frameWidth: 256,
             frameHeight: 256
         });
+
+        // Mati Jump
+        this.load.spritesheet('matiJump', 'assets/Mati/jumpMati.png',
+        {
+            frameWidth: 256,
+            frameHeight: 256
+        });
+
+        // Mati Fall
+        this.load.spritesheet('matiFall', 'assets/Mati/fallMati.png',
+        {
+            frameWidth: 256,
+            frameHeight: 256
+        });
     }
 
     // Start()
@@ -129,11 +143,34 @@ export default class ForestLevelScene extends Phaser.Scene
                 end: 14
             }),
 
-            frameRate: 48,
+            frameRate: 60,
             repeat: 0
         });
 
         // Jump
+        this.anims.create({
+            key: 'matiJump',
+            frames: this.anims.generateFrameNumbers('matiJump',
+                {
+                    start: 0,
+                    end: 22
+                }
+            ),
+            frameRate: 34
+        });
+
+        // Fall
+        this.anims.create({
+            key: 'matiFall',
+            frames: this.anims.generateFrameNames('matiFall',
+            {
+                start: 0,
+                end: 9
+            }
+            ),
+            frameRate: 34,
+            repeat: -1
+        });
 
         // --- NIVEL --- //
         // = GRID = //
@@ -248,30 +285,15 @@ export default class ForestLevelScene extends Phaser.Scene
         }
 
         //----- PUERTA -----//
-        if (!this.grid.door.open && this.grid.switch.active)
-        {
-            this.grid.door.openDoor();
-        }
+        if (!this.grid.door.open && this.grid.switch.active) this.grid.door.openDoor();
 
-        if (this.grid.door)
-        {
-            this.grid.door.update(this.mati, this.pili);
-        }
+        if (this.grid.door) this.grid.door.update(this.mati, this.pili);
 
         //----- BOTON -----//
-        this.grid.buttons.forEach(btn =>
-        {
-            btn.update(this.mati);
-        });
+        this.grid.buttons.forEach(btn => btn.update(this.mati));
 
         //----- PINCHOS -----//
-        if (this.grid.spikes)
-        {       
-            this.grid.spikes.forEach(spike =>
-            {
-                spike.update(this.mati, this.pili);
-            });
-        }
+        if (this.grid.spikes) this.grid.spikes.forEach(spike => spike.update(this.mati, this.pili));
     }
 
     onSpikeTouched(who)

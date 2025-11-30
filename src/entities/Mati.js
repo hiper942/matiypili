@@ -22,7 +22,7 @@ export default class Mati {
         this.count = 0;
         // Dash
         this.isDashing = false;
-        this.dashSpeed = 700;
+        this.dashSpeed = 800;
         this.dashDuration = 200; // ms
         this.dashCooldown = 1000; // ms
         this.canDash = true;
@@ -86,16 +86,6 @@ export default class Mati {
             pili.isPlatform = false;
         }
 
-        // = DASH = //
-        if (this.scene.keys.SHIFT.isDown)
-        {
-            const dir = this.scene.keys.D.isDown ? 1 : (this.scene.keys.A.isDown ? -1 : 0);
-            if (dir !== 0)
-            {
-                this.dash(dir);
-            }
-        }
-
         // = ANIMACIONES = //
         const vy = this.sprite.body.velocity.y;
 
@@ -103,11 +93,11 @@ export default class Mati {
         {
             if (vy < -50)
             {
-                // this.sprite.play('matiJump', true);
+                this.sprite.play('matiJump', true);
             }
             else if (vy > 50)
             {
-                // this.sprite.play('matiFall', true);
+                this.sprite.play('matiFall', true);
             }
         }
         else
@@ -119,6 +109,16 @@ export default class Mati {
             else
             {
                 this.sprite.play('matiIdle', true);
+            }
+        }
+
+        // = DASH = //
+        if (this.scene.keys.SHIFT.isDown)
+        {
+            const dir = this.scene.keys.D.isDown ? 1 : (this.scene.keys.A.isDown ? -1 : 0);
+            if (dir !== 0)
+            {
+                this.dash(dir);
             }
         }
     }

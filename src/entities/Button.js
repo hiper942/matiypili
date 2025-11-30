@@ -29,8 +29,6 @@ export default class Button
                 if (obj.id === this.id)
                     obj.activate();
             });
-
-            console.log("Is active!");
         }
     }
 }

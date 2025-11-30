@@ -6,7 +6,7 @@ export default class MenuScene extends Phaser.Scene{
     }
 
     create(){
-        this.add.text(800, 350, 'MATY & PILI', {
+        this.add.text(800, 350, 'MATI & PILI', {
             fontSize: '64px',
             color: '#ffffff'
         }).setOrigin(0.5);

@@ -27,7 +27,7 @@ export default class Grid
         this.piliSpawn = null;
 
         // Esto poner false en la entrega
-        this.debug = false;
+        this.debug = true;
 
         this.build();
     }

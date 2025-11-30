@@ -23,7 +23,6 @@ export default class Bridge
         if (this.active) return;
         this.active = true;
 
-        console.log("Bridge on!");
         this.sprite.enableBody(false, this.sprite.x, this.sprite.y, true, true);
     }
 }
