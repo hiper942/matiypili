@@ -18,6 +18,8 @@ export default class ForestLevelScene extends Phaser.Scene
 
     preload()
     {
+        // --- PERSONAJES --- //
+        // = PILI = //
         // Pili Idle
         this.load.spritesheet('piliIdle', 'assets/Pili/idlePili.png',
         {
@@ -30,6 +32,28 @@ export default class ForestLevelScene extends Phaser.Scene
         {
             frameWidth: 256, 
             frameHeight: 256 
+        });
+
+        // = MATI = //
+        // Mati Idle
+        this.load.spritesheet('matiIdle', 'assets/Mati/idleMati.png',
+        {
+            frameWidth: 256,
+            frameHeight: 256
+        });
+
+        // Mati Walk
+        this.load.spritesheet('matiWalk', 'assets/Mati/walkMati.png',
+        {
+            frameWidth: 256,
+            frameHeight: 256
+        });
+
+        // Mati Dash
+        this.load.spritesheet('matiDash', 'assets/Mati/dashMati.png',
+        {
+            frameWidth: 256,
+            frameHeight: 256
         });
     }
 
@@ -67,6 +91,49 @@ export default class ForestLevelScene extends Phaser.Scene
         });
 
         // = MATI = //
+        // Idle
+        this.anims.create(
+        {
+            key: 'matiIdle',
+            frames: this.anims.generateFrameNumbers('matiIdle',
+            {
+                start: 0,
+                end: 12
+            }),
+
+            frameRate: 14,
+            repeat: -1
+        });
+
+        // Walk
+        this.anims.create(
+        {
+            key: 'matiWalk',
+            frames: this.anims.generateFrameNumbers('matiWalk',
+            {
+                start: 0,
+                end: 19
+            }),
+
+            frameRate: 18,
+            repeat: -1
+        });
+
+        // Dash
+        this.anims.create(
+        {
+            key: 'matiDash',
+            frames: this.anims.generateFrameNumbers('matiDash',
+            {
+                start: 0,
+                end: 14
+            }),
+
+            frameRate: 48,
+            repeat: 0
+        });
+
+        // Jump
 
         // --- NIVEL --- //
         // = GRID = //
@@ -128,11 +195,11 @@ export default class ForestLevelScene extends Phaser.Scene
 
                 if (mati.x < r.x)
                 {
-                    mati.x = r.x - (r.displayWidth / 2 + mati.displayWidth / 2);
+                    mati.x = r.x - (r.displayWidth / 2 + mati.body.width / 2);
                 }
                 else
                 {
-                    mati.x = r.x + (r.displayWidth / 2 + mati.displayWidth / 2);
+                    mati.x = r.x + (r.displayWidth / 2 + mati.body.width / 2);
                 }
             });
             this.physics.add.collider(rock.sprite, this.pili.sprite);
@@ -169,97 +236,10 @@ export default class ForestLevelScene extends Phaser.Scene
     update()
     {
         // ----- MATI ----- //
-        if (!this.mati.isDashing)
-        {
-            this.mati.sprite.setVelocityX(0);
+        this.mati.update(this.pili);
 
-            // Movimiento
-            if(this.keys.A.isDown) this.mati.sprite.setVelocityX(-this.mati.baseSpeed);
-            if(this.keys.D.isDown) this.mati.sprite.setVelocityX(this.mati.baseSpeed);
-
-            // Deteccion de Pili
-            const isTouchingPili = this.physics.overlap(this.mati.sprite, this.pili.topCollider) && this.mati.sprite.body.velocity.y > 0 && this.mati.sprite.body.bottom <= this.pili.sprite.body.top + 8;
-
-            if (isTouchingPili)
-            {
-                this.pili.isPlatform = true;
-            }
-
-            // Mantener a Mati encima de Pili si Mati está encima
-            if (this.pili.isPlatform)
-            {
-            this.mati.sprite.body.y = this.pili.sprite.body.top - this.mati.sprite.body.height;
-
-            this.mati.sprite.body.setVelocityY(0);
-
-            const stillOverlapping = this.physics.overlap(this.mati.sprite, this.pili.topCollider);
-
-            if (!stillOverlapping) 
-                {
-                    this.pili.isPlatform = false;
-                }
-
-                if (this.mati.sprite.body.bottom < this.pili.sprite.body.top - 4)
-                {
-                    this.pili.isPlatform = false;
-                }
-            }
-
-            // Salto
-            if ((this.keys.W.isDown || this.keys.SPACE.isDown) && (this.mati.sprite.body.onFloor() || this.pili.isPlatform)) 
-            {
-                this.mati.sprite.setVelocityY(-this.mati.jumpStrength);
-                this.pili.isPlatform = false;
-            }
-        }
-        
-        // Dash
-        if(this.keys.SHIFT.isDown)
-        {
-            const dir = this.keys.D.isDown ? 1 : (this.keys.A.isDown ? -1 : 0);
-            if (dir !== 0)
-            {
-                this.mati.dash(dir);
-            }
-        }
-
-        // ----- PILI ----- //
-        this.pili.sprite.setVelocityX(0);
-        
+        // ----- PILI ----- //        
         this.pili.update();
-
-        // console.log(this.pili.isPlatform);
-
-        if (!this.pili.isPlatform)
-        {
-            if(this.cursors.left.isDown)
-            {
-                
-                this.pili.sprite.flipX = true;
-                this.pili.sprite.play('piliWalk', true);
-                this.pili.sprite.setVelocityX(-this.pili.baseSpeed);
-            }
-            else if(this.cursors.right.isDown)
-            {
-                this.pili.sprite.flipX = false;
-                this.pili.sprite.play('piliWalk', true);
-                this.pili.sprite.setVelocityX(this.pili.baseSpeed);
-            }
-            else if(this.cursors.up.isDown && this.pili.sprite.body.onFloor())
-            {
-                // animacion salto??
-                this.pili.sprite.play('piliIdle', true);
-                this.pili.sprite.setVelocityY(-this.pili.jumpStrength);
-            }
-            else
-            {
-                this.pili.sprite.play('piliIdle', true);
-            }
-        }
-        else
-        {
-            this.pili.sprite.play('piliIdle', true);
-        }
         
         //----- INTERRUPTOR -----//        
         if (this.grid.switch)

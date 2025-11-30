@@ -8,22 +8,22 @@ export default class Pili
 
         // Carga sprite
         this.sprite = scene.physics.add.sprite(x, y, 'piliIdle')
-            .setOrigin(0.55, 0.5)
+            .setOrigin(0.5, 0.5)
             .setCollideWorldBounds(true);
 
         // Reescala a 128x128
-        this.sprite.setScale(0.8);
+        this.sprite.setScale(0.9);
 
         // Collider
-        this.sprite.body.setSize(128 * 1.25, 128 * 1.25);
-        this.sprite.body.setOffset(50, 74);
+        this.sprite.body.setSize(128 * 1.1, 128 * 1.1);
+        this.sprite.body.setOffset(56, 92);
 
         // Stats
         this.baseSpeed = 100;
         this.jumpStrength = 100;
 
         // topCollider
-        this.topCollider = scene.add.rectangle(x, y - this.sprite.displayHeight / 2 - 10, this.sprite.displayWidth * 0.5, 6, 0x00ff00, 0);
+        this.topCollider = scene.add.rectangle(x, y - this.sprite.displayHeight / 2, this.sprite.displayWidth * 0.5 - 4, 6, 0x00ff00, 0);
         scene.physics.add.existing(this.topCollider, false);
 
         this.topCollider.body.allowGravity = false;
@@ -34,7 +34,39 @@ export default class Pili
 
     update()
     {
-        this.topCollider.x = this.sprite.x - 12;
+        this.sprite.setVelocityX(0);
+
+        this.topCollider.x = this.sprite.x;
         this.topCollider.y = this.sprite.body.top - 4;
+
+        if (!this.isPlatform)
+        {
+            if(this.scene.cursors.left.isDown)
+            {
+                this.sprite.flipX = true;
+                this.sprite.play('piliWalk', true);
+                this.sprite.setVelocityX(-this.baseSpeed);
+            }
+            else if(this.scene.cursors.right.isDown)
+            {
+                this.sprite.flipX = false;
+                this.sprite.play('piliWalk', true);
+                this.sprite.setVelocityX(this.baseSpeed);
+            }
+            else if(this.scene.cursors.up.isDown && this.sprite.body.onFloor())
+            {
+                // animacion salto??
+                this.sprite.play('piliIdle', true);
+                this.sprite.setVelocityY(-this.jumpStrength);
+            }
+            else
+            {
+                this.sprite.play('piliIdle', true);
+            }
+        }
+        else
+        {
+            this.sprite.play('piliIdle', true);
+        }
     }
 }
