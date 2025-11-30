@@ -18,7 +18,7 @@ export default class Mati
 
         // Dash
         this.isDashing = false;
-        this.dashSpeed = 500;
+        this.dashSpeed = 700;
         this.dashDuration = 200; // ms
         this.dashCooldown = 1000; // ms
         this.canDash = true;
