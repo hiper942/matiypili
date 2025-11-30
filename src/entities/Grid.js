@@ -2,6 +2,10 @@ import Platform from "./Platform.js";
 import Switch from "./Switch.js";
 import Door from "./Door.js";
 import Rock from "./Rock.js";
+import Button from "./Button.js";
+import Trapdoor from "./Trapdoor.js";
+import Bridge from "./Bridge.js";
+import Spike from "./Spike.js";
 
 export default class Grid
 {
@@ -15,6 +19,9 @@ export default class Grid
         this.switch = null;
         this.door = null;
         this.rocks = [];
+        this.interactives = [];
+        this.buttons = [];
+        this.spikes = [];
 
         this.matiSpawn = null;
         this.piliSpawn = null;
@@ -89,9 +96,48 @@ export default class Grid
 
                     // Roca
                     case 6:
+                    {
                         const rock = new Rock(this.scene, x, y);
                         this.rocks.push(rock);
                         break;
+                    }
+
+                    // Boton
+                    case 7:
+                    {
+                        const btn = new Button(this.scene, x, y, 1);
+                        this.buttons.push(btn);
+                        break;
+                    }
+
+                    // Puente
+                    case 8:
+                    {
+                        const bridge = new Bridge(this.scene, x, y, this.cellSize, this.cellSize, 1);
+                        this.interactives.push(bridge);
+
+                        this.platforms.add(bridge.sprite);
+                        break;
+                    }
+
+                    // Trampilla
+                    case 9:
+                    {
+                        const trapdoor = new Trapdoor(this.scene, x, y, this.cellSize, this.cellSize, 1);
+                        this.interactives.push(trapdoor);
+
+                        this.platforms.add(trapdoor.sprite);
+                        break;
+                    }
+
+                    // Pinchos
+                    case 10:
+                    {
+                        const spike = new Spike(this.scene, x, y, this.cellSize, this.cellSize, (who) => this.scene.onSpikeTouched(who));
+                        this.spikes.push(spike);
+                        break;
+                    }
+
                     default:
                         console.warn("Grid: Tile unknown: ", tile);
                         break;

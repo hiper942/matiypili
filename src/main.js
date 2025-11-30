@@ -2,6 +2,7 @@ import Phaser, { Physics } from 'phaser';
 import MenuScene from './scenes/MenuScene.js';
 import ForestLevelScene from './scenes/ForestLevelScene.js';
 import WinScene from './scenes/WinScene.js';
+import DeathScene from './scenes/DeathScene.js';
 
 const config = {
     type: Phaser.AUTO,
@@ -15,7 +16,7 @@ const config = {
             debug: true
         }
     },
-    scene: [MenuScene, ForestLevelScene, WinScene],
+    scene: [MenuScene, ForestLevelScene, WinScene, DeathScene],
     backgroundColor: '#8e9423ff',
 }
 

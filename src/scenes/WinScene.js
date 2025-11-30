@@ -1,9 +1,12 @@
-export default class WinScene extends Phaser.Scene{
-    constructor(){
+export default class WinScene extends Phaser.Scene
+{
+    constructor()
+    {
         super('WinScene');
     }
 
-    create(){
+    create()
+    {
         //Fondo
         this.add.rectangle(480,270,960,540, 0x000000, 0.8);
 
