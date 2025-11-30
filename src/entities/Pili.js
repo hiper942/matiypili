@@ -8,7 +8,7 @@ export default class Pili
 
         // Carga sprite
         this.sprite = scene.physics.add.sprite(x, y, 'piliIdle')
-            .setOrigin(0.55, 1)
+            .setOrigin(0.55, 0.5)
             .setCollideWorldBounds(true);
 
         // Reescala a 128x128
@@ -16,7 +16,7 @@ export default class Pili
 
         // Collider
         this.sprite.body.setSize(128 * 1.25, 128 * 1.25);
-        this.sprite.body.setOffset(50, 80);
+        this.sprite.body.setOffset(50, 74);
 
         // Stats
         this.baseSpeed = 100;
@@ -36,10 +36,5 @@ export default class Pili
     {
         this.topCollider.x = this.sprite.x - 12;
         this.topCollider.y = this.sprite.body.top - 4;
-    }
-
-    isIdle()
-    {
-        return Math.abs(this.sprite.body.velocity.x) < 5;
     }
 }
