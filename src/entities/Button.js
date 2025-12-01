@@ -6,7 +6,7 @@ export default class Button
         this.id = id;
         this.active = false;
 
-        this.sprite = scene.add.rectangle(x, y, 48, 24, 0xff4a4a);
+        this.sprite = scene.physics.add.staticSprite(x, y, 'crystalOff');
         scene.physics.add.existing(this.sprite, true);
 
         this.sprite.isButton = true;
@@ -22,12 +22,18 @@ export default class Button
         if (pressed)
         {
             this.active = true;
-            this.sprite.fillColor = 0xff0000;
 
-            this.scene.grid.interactives.forEach(obj =>
+            this.sprite.setTexture('crystalMid');
+
+            this.scene.time.delayedCall(500, () =>
             {
-                if (obj.id === this.id)
-                    obj.activate();
+                this.sprite.setTexture('crystalOn');
+
+                this.scene.grid.interactives.forEach(obj =>
+                {
+                    if (obj.id === this.id)
+                        obj.activate();
+                });
             });
         }
     }

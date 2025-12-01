@@ -69,6 +69,18 @@ export default class ForestLevelScene extends Phaser.Scene
             frameWidth: 256,
             frameHeight: 256
         });
+
+        // = INTERRUPTOR = //
+        this.load.spritesheet('switchActivation', 'assets/Escenario/Palanca.png',
+        {
+            frameWidth: 128,
+            frameHeight: 128
+        });
+
+        // = BOTON = //
+        this.load.image('crystalOff', "assets/Escenario/Boton/cristalApagado.png");
+        this.load.image('crystalMid', "assets/Escenario/Boton/cristalIntermedio.png");
+        this.load.image('crystalOn', "assets/Escenario/Boton/cristalEncendido.png");
     }
 
     // Start()
@@ -170,6 +182,19 @@ export default class ForestLevelScene extends Phaser.Scene
             ),
             frameRate: 34,
             repeat: -1
+        });
+
+        // Palanca
+        this.anims.create({
+            key: 'switchActivation',
+            frames: this.anims.generateFrameNames('switchActivation',
+            {
+                start: 0,
+                end: 9
+            }
+            ),
+            frameRate: 12,
+            repeat: 0
         });
 
         // --- NIVEL --- //
