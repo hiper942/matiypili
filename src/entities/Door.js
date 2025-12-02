@@ -6,15 +6,16 @@ export default class Door
         this.open = false;
 
         // Sprite estático de colisión
-        this.sprite = scene.physics.add.staticSprite(x, y, null)
-            .setDisplaySize(64, 96)
-            .setTint(0x5d4037)
-            .setOrigin(0.5, 0.675);
+        this.sprite = scene.physics.add.sprite(x, y, 'doorOpen', 0)
+            .setDisplaySize(256, 256)
+            .setOrigin(0.325, 0.8375);
 
         this.sprite.body.setSize(64, 96);
-        this.sprite.body.setOffset(-16, -48);
-
-        this.trigger = scene.add.rectangle(x, y - 16, 64, 96, 0xffffff, 0);
+        this.sprite.body.setOffset(48, 128);
+        this.sprite.body.immovable = true;
+        this.sprite.body.allowGravity = false;
+        
+        this.trigger = scene.add.rectangle(x, y - 24, 64, 96, 0xffffff, 0);
         scene.physics.add.existing(this.trigger, false);
 
         this.trigger.body.allowGravity = false;
@@ -33,10 +34,14 @@ export default class Door
 
     openDoor()
     {
+        if (this.open) return;
         this.open = true;
 
-        this.sprite.setTint(0xffff88);
+        this.sprite.play('doorOpen');
 
-        this.sprite.body.enable = false;
+        this.sprite.on("animationcomplete", () =>
+        {
+            this.sprite.body.enable = false;
+        });
     }
 }

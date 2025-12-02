@@ -77,8 +77,12 @@ export default class Grid
                     // Puerta
                     case 3: 
                     { 
+                        this.doorpos = { x, y };
+                        
+                        /*
                         const d = new Door(this.scene, x, y);
                         this.door = d;
+                        */
                         break;
                     }
 

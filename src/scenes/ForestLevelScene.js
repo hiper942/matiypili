@@ -78,6 +78,12 @@ export default class ForestLevelScene extends Phaser.Scene
             frameHeight: 128
         });
 
+        // = PUERTA = //
+        this.load.spritesheet('doorOpen', 'assets/Escenario/Puerta/puertaAnim.png',
+        {
+            frameWidth: 256,
+            frameHeight: 256
+        });
         // = BOTON = //
         this.load.image('crystalOff', "assets/Escenario/Boton/cristalApagado.png");
         this.load.image('crystalMid', "assets/Escenario/Boton/cristalIntermedio.png");
@@ -191,17 +197,31 @@ export default class ForestLevelScene extends Phaser.Scene
             repeat: -1
         });
 
-        // Palanca
+        // = PALANCA = //
         this.anims.create(
         {
             key: 'switchActivation',
             frames: this.anims.generateFrameNames('switchActivation',
-            {
-                start: 0,
-                end: 9
-            }
+                {
+                    start: 0,
+                    end: 9
+                }
             ),
             frameRate: 12,
+            repeat: 0
+        });
+
+        // = PUERTA = //
+        this.anims.create(
+        {
+            key: 'doorOpen',
+            frames: this.anims.generateFrameNames('doorOpen',
+                {
+                    start: 0,
+                    end: 12
+                }
+            ),
+            frameRate: 8,
             repeat: 0
         });
 
@@ -219,6 +239,7 @@ export default class ForestLevelScene extends Phaser.Scene
         // 8 = Puente
         // 9 = Trampilla
         // 10 = Pinchos
+        // 11 = Placa de Presión
 
         const levelMatrix = 
         [
@@ -231,7 +252,7 @@ export default class ForestLevelScene extends Phaser.Scene
             [1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
             [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
             [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,1],
-            [1,0,4,0,5,0,0,0,11,0,0,0,0,0,0,0,0,0,0,0,6,0,3,0,1],
+            [1,0,4,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,3,0,1],
             [1,1,1,1,1,1,1,1,1,8,8,8,8,8,8,8,8,8,8,8,1,1,1,1,1],
             [1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
             [1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
@@ -239,14 +260,18 @@ export default class ForestLevelScene extends Phaser.Scene
         ]
 
         this.grid = new Grid(this, levelMatrix);
-        
+
+                
+        // = PUERTA = //
+        this.door = new Door(this, this.grid.doorpos.x, this.grid.doorpos.y);
+
         // = PERSONAJES = //
         this.pili = new Pili(this, this.grid.piliSpawn.x, this.grid.piliSpawn.y);
         this.pili.sprite.y -= this.pili.sprite.body.height / 2;
 
         this.mati = new Mati(this, this.grid.matiSpawn.x, this.grid.matiSpawn.y);
         this.mati.sprite.y -= this.mati.sprite.body.height / 2;
-        
+
         // --- FISICAS --- //
         // = COLISIONES = //
         // Plataformas
@@ -286,10 +311,10 @@ export default class ForestLevelScene extends Phaser.Scene
         }
 
         // Puerta
-        if (this.grid.door)
+        if (this.door)
         {
-            this.physics.add.collider(this.mati.sprite, this.grid.door.sprite);
-            this.physics.add.collider(this.pili.sprite, this.grid.door.sprite);
+            this.physics.add.collider(this.mati.sprite, this.door.sprite);
+            this.physics.add.collider(this.pili.sprite, this.door.sprite);
         }
 
         // = INTERACCIONES = //
@@ -320,9 +345,9 @@ export default class ForestLevelScene extends Phaser.Scene
         if (this.grid.switch) this.grid.switch.update(this.mati);
 
         //----- PUERTA -----//
-        if (!this.grid.door.open && this.grid.switch.active) this.grid.door.openDoor();
+        if (!this.door.open && this.grid.switch.active) this.door.openDoor();
 
-        if (this.grid.door) this.grid.door.update(this.mati, this.pili);
+        if (this.door) this.door.update(this.mati, this.pili);
 
         //----- BOTON -----//
         this.grid.buttons.forEach(btn => btn.update(this.mati));
