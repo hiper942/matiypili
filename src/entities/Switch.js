@@ -4,21 +4,25 @@ export default class Switch
     {
         this.scene = scene;
         this.active = false;
+        this.isMoving = false;
 
-        this.sprite = scene.add.rectangle(x, y, 40, 20, 0xcddc39);
+        this.sprite = scene.add.sprite(x, y, 'switchActivation');
 
         scene.physics.add.existing(this.sprite, true);
     }
 
     update(mati) 
     {
-        if (this.scene.active) return;
+        if (this.isMoving) return;
 
-        // Si Mati toca el switch
-        if (this.scene.physics.overlap(mati.sprite, this.sprite))
-        {
-            this.active = true;
-            this.sprite.fillColor = 0xffeb3b;
+        // Si Matiah toca el switch
+        if (this.scene.physics.overlap(mati.sprite, this.sprite)){
+            this.isMoving = true;  
+            this.sprite.play('switchActivation');
+
+            this.sprite.on("animationcomplete", () => {
+                this.active = true;
+            });
         }
     }
 }

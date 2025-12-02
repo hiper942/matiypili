@@ -72,7 +72,7 @@ export default class ForestLevelScene extends Phaser.Scene
         });
 
         // = INTERRUPTOR = //
-        this.load.spritesheet('switchActivation', 'assets/Escenario/Palanca.png',
+        this.load.spritesheet('switchActivation', 'assets/Escenario/Palanca/palanca.png',
         {
             frameWidth: 128,
             frameHeight: 128
