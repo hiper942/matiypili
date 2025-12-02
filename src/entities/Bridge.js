@@ -25,4 +25,12 @@ export default class Bridge
 
         this.sprite.enableBody(false, this.sprite.x, this.sprite.y, true, true);
     }
+
+    deactivate()
+    {
+        if (!this.active) return;
+        this.active = false;
+
+        this.sprite.disableBody(true, true);
+    }
 }

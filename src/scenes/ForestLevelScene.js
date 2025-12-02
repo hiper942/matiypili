@@ -4,6 +4,7 @@ import Platform from '../entities/Platform.js';
 import Switch from '../entities/Switch.js';
 import Door from '../entities/Door.js';
 import Rock from '../entities/Rock.js';
+import PressurePlate from '../entities/PressurePlate.js';
 import Grid from '../entities/Grid.js';
 
 import { MoveCharacterCommand } from '../commands/MoveCharacterCommand.js';
@@ -81,6 +82,10 @@ export default class ForestLevelScene extends Phaser.Scene
         this.load.image('crystalOff', "assets/Escenario/Boton/cristalApagado.png");
         this.load.image('crystalMid', "assets/Escenario/Boton/cristalIntermedio.png");
         this.load.image('crystalOn', "assets/Escenario/Boton/cristalEncendido.png");
+
+        // = PLACA DE PRESIÓN = //
+        this.load.image('pressureOff', "assets/Escenario/Placa/pressureOff.png");
+        this.load.image('pressureOn', "assets/Escenario/Placa/pressureOn.png");
     }
 
     // Start()
@@ -160,7 +165,8 @@ export default class ForestLevelScene extends Phaser.Scene
         });
 
         // Jump
-        this.anims.create({
+        this.anims.create(
+        {
             key: 'matiJump',
             frames: this.anims.generateFrameNumbers('matiJump',
                 {
@@ -172,7 +178,8 @@ export default class ForestLevelScene extends Phaser.Scene
         });
 
         // Fall
-        this.anims.create({
+        this.anims.create(
+        {
             key: 'matiFall',
             frames: this.anims.generateFrameNames('matiFall',
             {
@@ -185,7 +192,8 @@ export default class ForestLevelScene extends Phaser.Scene
         });
 
         // Palanca
-        this.anims.create({
+        this.anims.create(
+        {
             key: 'switchActivation',
             frames: this.anims.generateFrameNames('switchActivation',
             {
@@ -212,7 +220,8 @@ export default class ForestLevelScene extends Phaser.Scene
         // 9 = Trampilla
         // 10 = Pinchos
 
-        const levelMatrix = [
+        const levelMatrix = 
+        [
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
             [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
             [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
@@ -222,7 +231,7 @@ export default class ForestLevelScene extends Phaser.Scene
             [1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
             [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
             [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,1],
-            [1,0,4,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,3,0,1],
+            [1,0,4,0,5,0,0,0,11,0,0,0,0,0,0,0,0,0,0,0,6,0,3,0,1],
             [1,1,1,1,1,1,1,1,1,8,8,8,8,8,8,8,8,8,8,8,1,1,1,1,1],
             [1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
             [1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
@@ -283,6 +292,10 @@ export default class ForestLevelScene extends Phaser.Scene
             this.physics.add.collider(this.pili.sprite, this.grid.door.sprite);
         }
 
+        // = INTERACCIONES = //
+        // Quien puede pulsar
+        this.pressure = [this.mati, this.pili, this.grid.rocks];
+
         // --- INPUT --- //
         this.cursors = this.input.keyboard.createCursorKeys();
         this.keys = this.input.keyboard.addKeys({
@@ -304,10 +317,7 @@ export default class ForestLevelScene extends Phaser.Scene
         this.pili.update();
         
         //----- INTERRUPTOR -----//        
-        if (this.grid.switch)
-        {
-            this.grid.switch.update(this.mati);
-        }
+        if (this.grid.switch) this.grid.switch.update(this.mati);
 
         //----- PUERTA -----//
         if (!this.grid.door.open && this.grid.switch.active) this.grid.door.openDoor();
@@ -319,6 +329,9 @@ export default class ForestLevelScene extends Phaser.Scene
 
         //----- PINCHOS -----//
         if (this.grid.spikes) this.grid.spikes.forEach(spike => spike.update(this.mati, this.pili));
+
+        //----- PLACA DE PRESIÓN -----//
+        if (this.grid.pressurePlates) this.grid.pressurePlates.forEach(press => press.update(this.pressure))
     }
 
     onSpikeTouched(who)

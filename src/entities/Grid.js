@@ -6,6 +6,7 @@ import Button from "./Button.js";
 import Trapdoor from "./Trapdoor.js";
 import Bridge from "./Bridge.js";
 import Spike from "./Spike.js";
+import PressurePlate from "./PressurePlate.js";
 
 export default class Grid
 {
@@ -22,6 +23,7 @@ export default class Grid
         this.interactives = [];
         this.buttons = [];
         this.spikes = [];
+        this.pressurePlates = [];
 
         this.matiSpawn = null;
         this.piliSpawn = null;
@@ -135,6 +137,14 @@ export default class Grid
                     {
                         const spike = new Spike(this.scene, x, y, this.cellSize, this.cellSize, (who) => this.scene.onSpikeTouched(who));
                         this.spikes.push(spike);
+                        break;
+                    }
+
+                    // Placa de presión
+                    case 11:
+                    {
+                        const plate = new PressurePlate(this.scene, x, y, 1);
+                        this.pressurePlates.push(plate);
                         break;
                     }
 
