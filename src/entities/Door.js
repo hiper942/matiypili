@@ -22,14 +22,14 @@ export default class Door
         this.trigger.body.immovable = true;
     }
 
-    update(mati, pili) 
+    update(mati, pili, nextLevel) 
     {
         if (!this.open) return;
 
         const matiInDoor = this.scene.physics.overlap(mati.sprite, this.trigger);
         const piliInDoor = this.scene.physics.overlap(pili.sprite, this.trigger);
 
-        if (matiInDoor && piliInDoor) this.scene.scene.start('WinScene');
+        if (matiInDoor && piliInDoor) this.scene.scene.start(nextLevel);
     }
 
     openDoor()

@@ -9,12 +9,13 @@ import Grid from '../entities/Grid.js';
 
 import { MoveCharacterCommand } from '../commands/MoveCharacterCommand.js';
 import { JumpCharacterCommand } from '../commands/JumpCharacterCommand.js';
+import ForestLevelScene from './ForestLevelScene.js';
 
-export default class ForestLevelScene extends Phaser.Scene
+export default class TutorialLevelScene extends Phaser.Scene
 {
     constructor()
     {
-        super('ForestLevelScene');
+        super('TutorialLevelScene');
     }
 
     preload()
@@ -244,19 +245,19 @@ export default class ForestLevelScene extends Phaser.Scene
         const levelMatrix = 
         [
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,7,0,0,0,0,0,1,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,1],
-            [1,1,1,1,0,0,0,0,1,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,1],
-            [1,0,4,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,3,0,1],
-            [1,1,1,1,1,1,1,1,1,8,8,8,8,8,8,8,8,8,8,8,1,1,1,1,1],
-            [1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
-            [1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
-            [1,1,1,1,1,1,1,1,1,10,10,10,10,10,10,10,10,10,10,10,1,1,1,1,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,2,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,1,1,1],
+            [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1],
+            [1,0,4,0,1,10,1,0,0,0,0,0,1,0,0,0,0,1,1,1,0,0,0,0,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,1,1],
+            [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,5,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,1],
+            [1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
         ]
 
         this.grid = new Grid(this, levelMatrix);
@@ -347,7 +348,7 @@ export default class ForestLevelScene extends Phaser.Scene
         //----- PUERTA -----//
         if (!this.door.open && this.grid.switch.active) this.door.openDoor();
 
-        if (this.door) this.door.update(this.mati, this.pili, 'WinScene');
+        if (this.door) this.door.update(this.mati, this.pili, 'ForestLevelScene');
 
         //----- BOTON -----//
         this.grid.buttons.forEach(btn => btn.update(this.mati));
