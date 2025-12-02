@@ -7,6 +7,7 @@ import Trapdoor from "./Trapdoor.js";
 import Bridge from "./Bridge.js";
 import Spike from "./Spike.js";
 import PressurePlate from "./PressurePlate.js";
+import Decoration from "./Decoration.js";
 
 export default class Grid
 {
@@ -24,6 +25,7 @@ export default class Grid
         this.buttons = [];
         this.spikes = [];
         this.pressurePlates = [];
+        this.decoPos = [];
 
         this.matiSpawn = null;
         this.piliSpawn = null;
@@ -152,12 +154,31 @@ export default class Grid
                         break;
                     }
 
+                    // Decoración
+                    case 12:
+                    {
+                        const temp = {x, y, row, col};
+                        this.decoPos.push(temp);
+                        break;
+                    }
+
                     default:
                         console.warn("Grid: Tile unknown: ", tile);
                         break;
                 }
             }
         }
+    }
+
+    grass(x, y)
+    {
+        const isGrass = (tile) => tile === 12;
+        const left = isGrass (this.matrix [x][y - 1]);
+        const right = isGrass (this.matrix [x][y + 1]);
+
+        if (!left && right) return 'grassL';
+        if (left && right) return 'grassM';
+        if (left && !right) return 'grassR';
     }
 
     drawDebugCell(x, y)

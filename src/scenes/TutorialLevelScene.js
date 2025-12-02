@@ -5,6 +5,7 @@ import Switch from '../entities/Switch.js';
 import Door from '../entities/Door.js';
 import Rock from '../entities/Rock.js';
 import PressurePlate from '../entities/PressurePlate.js';
+import Decoration from '../entities/Decoration.js';
 import Grid from '../entities/Grid.js';
 
 import { MoveCharacterCommand } from '../commands/MoveCharacterCommand.js';
@@ -93,6 +94,11 @@ export default class TutorialLevelScene extends Phaser.Scene
         // = PLACA DE PRESIÓN = //
         this.load.image('pressureOff', "assets/Escenario/Placa/pressureOff.png");
         this.load.image('pressureOn', "assets/Escenario/Placa/pressureOn.png");
+
+        // = CESPED = //
+        this.load.image('grassR', "assets/Escenario/Tiles/cespedDerecha.png");
+        this.load.image('grassM', "assets/Escenario/Tiles/cespedCentro.png");
+        this.load.image('grassL', "assets/Escenario/Tiles/cespedIzquierda.png");
     }
 
     // Start()
@@ -241,6 +247,7 @@ export default class TutorialLevelScene extends Phaser.Scene
         // 9 = Trampilla
         // 10 = Pinchos
         // 11 = Placa de Presión
+        // 12 = Decoración
 
         const levelMatrix = 
         [
@@ -253,8 +260,8 @@ export default class TutorialLevelScene extends Phaser.Scene
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,0,0,0,0,0,0,1],
             [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,1,1],
             [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,5,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,1],
+            [1,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,12,12,12,12,12,6,0,12,12,12,12,12,12,12,12,12,12,12,12,12,0,3,0,1],
             [1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -265,6 +272,8 @@ export default class TutorialLevelScene extends Phaser.Scene
                 
         // = PUERTA = //
         this.door = new Door(this, this.grid.doorpos.x, this.grid.doorpos.y);
+        
+        // = DECORACIÓN FONDO = //
 
         // = PERSONAJES = //
         this.pili = new Pili(this, this.grid.piliSpawn.x, this.grid.piliSpawn.y);
@@ -272,6 +281,12 @@ export default class TutorialLevelScene extends Phaser.Scene
 
         this.mati = new Mati(this, this.grid.matiSpawn.x, this.grid.matiSpawn.y);
         this.mati.sprite.y -= this.mati.sprite.body.height / 2;
+
+        // = DECORACIÓN FRENTE = //
+        this.grid.decoPos.forEach(deco => {
+            this.grass = new Decoration(this, deco.x, deco.y, this.grid.grass(deco.row, deco.col));
+        });
+
 
         // --- FISICAS --- //
         // = COLISIONES = //
