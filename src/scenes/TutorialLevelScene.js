@@ -10,7 +10,6 @@ import Grid from '../entities/Grid.js';
 
 import { MoveCharacterCommand } from '../commands/MoveCharacterCommand.js';
 import { JumpCharacterCommand } from '../commands/JumpCharacterCommand.js';
-import ForestLevelScene from './ForestLevelScene.js';
 
 export default class TutorialLevelScene extends Phaser.Scene
 {
@@ -99,6 +98,13 @@ export default class TutorialLevelScene extends Phaser.Scene
         this.load.image('grassR', "assets/Escenario/Tiles/cespedDerecha.png");
         this.load.image('grassM', "assets/Escenario/Tiles/cespedCentro.png");
         this.load.image('grassL', "assets/Escenario/Tiles/cespedIzquierda.png");
+
+        // = TILES = //
+        this.load.spritesheet('platformTiles', "assets/Escenario/Tiles/SpriteSheet/tilemap.png",
+        {
+            frameWidth: 64,
+            frameHeight: 64
+        });
     }
 
     // Start()

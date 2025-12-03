@@ -1,3 +1,5 @@
+import Phaser from 'phaser';
+
 export default class WinScene extends Phaser.Scene
 {
     constructor()
@@ -8,30 +10,13 @@ export default class WinScene extends Phaser.Scene
     create()
     {
         //Fondo
-        this.add.rectangle(480,270,960,540, 0x000000, 0.8);
-
-        //Texto principal
-        this.add.text(800, 300, '¡Nivel Completado!',{
-            fontSize: '64px',
-            color: '#ffffff'
-        }).setOrigin(0.5);
-
-        //Texto secundario
-        this.add.text(800, 384, 'Habeis cooperado de maravilla ^^',{
-            fontSize: '64px',
-            color: '#ffffff'
-        }).setOrigin(0.5);
+        this.add.image(800, 450, 'winScene').setDisplaySize(1600, 900);
 
         //Botón vuelta al menú
-        const menuBtn = this.add.text(800, 700, 'Volver al menú',{
-            fontSize: '32px',
-            color:'#00ff00'
-        }).setOrigin(0.5)
-        .setInteractive({useHandCursor : true})
-        .on('pointerover', () => menuBtn.setColor('#66ff66'))
-        .on('pointerout', () => menuBtn.setColor('#00ff00'))
-        .on("pointerdown", () => {
-            this.scene.start("MenuScene");
-        });
+        const volverBtn = this.add.image(800, 650, 'btnVolverOff')
+            .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => volverBtn.setTexture('btnVolverOn'))
+            .on('pointerout',  () => volverBtn.setTexture('btnVolverOff'))
+            .on('pointerdown', () => this.scene.start('MenuScene'));
     }
 }

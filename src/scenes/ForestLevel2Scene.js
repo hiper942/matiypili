@@ -5,23 +5,21 @@ import Switch from '../entities/Switch.js';
 import Door from '../entities/Door.js';
 import Rock from '../entities/Rock.js';
 import PressurePlate from '../entities/PressurePlate.js';
+import Decoration from '../entities/Decoration.js';
 import Grid from '../entities/Grid.js';
 
 import { MoveCharacterCommand } from '../commands/MoveCharacterCommand.js';
 import { JumpCharacterCommand } from '../commands/JumpCharacterCommand.js';
 
-export default class ForestLevelScene extends Phaser.Scene
+export default class ForestLevel2Scene extends Phaser.Scene
 {
     constructor()
     {
-        super('ForestLevelScene');
+        super('ForestLevel2Scene');
     }
 
     preload()
     {
-        // --- FONDO DEL NIVEL ---
-        this.load.image('fondoBosque', 'assets/Escenario/Fondo.png');
-
         // --- PERSONAJES --- //
         // = PILI = //
         // Pili Idle
@@ -113,10 +111,6 @@ export default class ForestLevelScene extends Phaser.Scene
     // Start()
     create()
     {
-        this.add.image(800, 450, 'fondoBosque')
-            .setDisplaySize(1600, 900)
-            .setDepth(-10);
-
         // --- ANIAMCIONES --- //
         // = PILI = //
         // Idle
@@ -264,19 +258,19 @@ export default class ForestLevelScene extends Phaser.Scene
         const levelMatrix = 
         [
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,7,0,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,1],
-            [1,0,4,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,3,0,1],
-            [1,1,1,1,1,1,1,1,1,8,8,8,8,8,8,8,8,8,8,8,1,1,1,1,1],
-            [1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
-            [1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
-            [1,1,1,1,1,1,1,1,1,10,10,10,10,10,10,10,10,10,10,10,1,1,1,1,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1],
+            [1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,1,1,0,0,1,9,1,1,1,1,0,0,1,1,1,1,0,1],
+            [1,0,4,0,5,0,0,1,0,0,0,1,0,0,2,1,0,0,0,1,0,0,0,0,1],
+            [1,1,1,1,1,0,0,1,0,0,1,1,1,1,1,1,10,10,1,0,0,0,0,0,1],
+            [1,1,1,1,1,0,0,1,0,7,0,1,0,0,0,1,1,1,0,0,0,1,1,1,1],
+            [1,1,1,1,1,0,0,1,1,1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,1],
+            [1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,1],
+            [1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,1],
+            [1,1,1,1,1,1,1,8,8,8,8,8,8,8,8,1,1,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,10,10,10,10,10,10,10,10,1,1,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
         ]
 
         this.grid = new Grid(this, levelMatrix);
@@ -367,7 +361,7 @@ export default class ForestLevelScene extends Phaser.Scene
         //----- PUERTA -----//
         if (!this.door.open && this.grid.switch.active) this.door.openDoor();
 
-        if (this.door) this.door.update(this.mati, this.pili, 'ForestLevel2Scene');
+        if (this.door) this.door.update(this.mati, this.pili, 'WinScene');
 
         //----- BOTON -----//
         this.grid.buttons.forEach(btn => btn.update(this.mati));
