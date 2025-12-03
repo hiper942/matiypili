@@ -2,6 +2,7 @@ import Mati from '../entities/Mati.js';
 import Pili from '../entities/Pili.js';
 import Platform from '../entities/Platform.js';
 import Switch from '../entities/Switch.js';
+import Spike from '../entities/Spike.js'
 import Door from '../entities/Door.js';
 import Rock from '../entities/Rock.js';
 import PressurePlate from '../entities/PressurePlate.js';
@@ -105,6 +106,9 @@ export default class TutorialLevelScene extends Phaser.Scene
             frameWidth: 64,
             frameHeight: 64
         });
+
+        // = PINCHOS = //
+        this.load.image('spike', "assets/Escenario/Pinchos/pinchos.png");
     }
 
     // Start()
