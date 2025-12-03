@@ -84,6 +84,7 @@ export default class ForestLevelScene extends Phaser.Scene
             frameWidth: 256,
             frameHeight: 256
         });
+
         // = BOTON = //
         this.load.image('crystalOff', "assets/Escenario/Boton/cristalApagado.png");
         this.load.image('crystalMid', "assets/Escenario/Boton/cristalIntermedio.png");
@@ -97,6 +98,13 @@ export default class ForestLevelScene extends Phaser.Scene
         this.load.image('bridgeR', "assets/Escenario/Puente/puenteDerecha.png");
         this.load.image('bridgeM', "assets/Escenario/Puente/puenteCentro.png");
         this.load.image('bridgeL', "assets/Escenario/Puente/puenteIzquierda.png");
+
+        // = TILES = //
+        this.load.spritesheet('platformTiles', "assets/Escenario/Tiles/SpriteSheet/tilemap.png",
+        {
+            frameWidth: 64,
+            frameHeight: 64
+        });
     }
 
     // Start()
@@ -251,8 +259,8 @@ export default class ForestLevelScene extends Phaser.Scene
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
             [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
             [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,7,0,0,0,0,0,1,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,1],
-            [1,1,1,1,0,0,0,0,1,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1],
+            [1,0,7,0,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1],
             [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
             [1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
             [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
