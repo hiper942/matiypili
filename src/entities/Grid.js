@@ -121,7 +121,8 @@ export default class Grid
                     // Puente
                     case 8:
                     {
-                        const bridge = new Bridge(this.scene, x, y, this.cellSize, this.cellSize, 1);
+                        const img = this.bridge(row,col);
+                        const bridge = new Bridge(this.scene, x, y, 1, img);
                         this.interactives.push(bridge);
 
                         this.platforms.add(bridge.sprite);
@@ -179,6 +180,17 @@ export default class Grid
         if (!left && right) return 'grassL';
         if (left && right) return 'grassM';
         if (left && !right) return 'grassR';
+    }
+
+    bridge(row, col)
+    {
+        const isBridge = (tile) => tile === 8;
+        const left = this.matrix[row][col - 1] === 8;
+        const right = this.matrix[row][col + 1] === 8;
+
+        if (!left && right) return 'bridgeL';
+        if (left && right) return 'bridgeM';
+        if (left && !right) return 'bridgeR';
     }
 
     drawDebugCell(x, y)

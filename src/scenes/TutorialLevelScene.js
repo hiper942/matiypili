@@ -258,7 +258,7 @@ export default class TutorialLevelScene extends Phaser.Scene
             [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1],
             [1,0,4,0,1,10,1,0,0,0,0,0,1,0,0,0,0,1,1,1,0,0,0,0,1],
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,1,1],
+            [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,1,1,1],
             [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
             [1,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
             [1,12,12,12,12,12,6,0,12,12,12,12,12,12,12,12,12,12,12,12,12,0,3,0,1],
@@ -275,10 +275,7 @@ export default class TutorialLevelScene extends Phaser.Scene
         
         // = DECORACIÓN FONDO = //
 
-        // = PERSONAJES = //
-        this.pili = new Pili(this, this.grid.piliSpawn.x, this.grid.piliSpawn.y);
-        this.pili.sprite.y -= this.pili.sprite.body.height / 2;
-
+        // = PERSONAJES 1 = //
         this.mati = new Mati(this, this.grid.matiSpawn.x, this.grid.matiSpawn.y);
         this.mati.sprite.y -= this.mati.sprite.body.height / 2;
 
@@ -287,6 +284,9 @@ export default class TutorialLevelScene extends Phaser.Scene
             this.grass = new Decoration(this, deco.x, deco.y, this.grid.grass(deco.row, deco.col));
         });
 
+        // = PERSONAJES 2 = //
+        this.pili = new Pili(this, this.grid.piliSpawn.x, this.grid.piliSpawn.y);
+        this.pili.sprite.y -= this.pili.sprite.body.height / 2;
 
         // --- FISICAS --- //
         // = COLISIONES = //

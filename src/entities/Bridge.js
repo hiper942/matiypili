@@ -1,18 +1,13 @@
 export default class Bridge
 {
-    constructor(scene, x, y, w, h, id)
+    constructor(scene, x, y, id, img)
     {
         this.scene = scene;
         this.id = id;
         this.active = false;
 
-        const g = scene.add.graphics();
-        g.fillStyle(0x009688);
-        g.fillRect(0, 0, w, h);
-        g.generateTexture(`bridge-${x}-${y}`, w, h);
-        g.destroy();
-
-        this.sprite = scene.physics.add.staticSprite(x, y, `bridge-${x}-${y}`);
+        this.sprite = scene.physics.add.staticSprite(x, y, img);
+        this.sprite.setOrigin(0.5, 0.5);
         this.sprite.isInteractive = true;
 
         this.sprite.disableBody(true, true);

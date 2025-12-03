@@ -92,6 +92,11 @@ export default class ForestLevelScene extends Phaser.Scene
         // = PLACA DE PRESIÓN = //
         this.load.image('pressureOff', "assets/Escenario/Placa/pressureOff.png");
         this.load.image('pressureOn', "assets/Escenario/Placa/pressureOn.png");
+
+        // = PUENTE = //
+        this.load.image('bridgeR', "assets/Escenario/Puente/puenteDerecha.png");
+        this.load.image('bridgeM', "assets/Escenario/Puente/puenteCentro.png");
+        this.load.image('bridgeL', "assets/Escenario/Puente/puenteIzquierda.png");
     }
 
     // Start()
