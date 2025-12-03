@@ -18,7 +18,7 @@ export default class MenuScene extends Phaser.Scene{
         .setInteractive()
         .on('pointerover', () => playBtn.setColor('#dfdc32ff'))
         .on('pointerout', () => playBtn.setColor('#aaa82aff'))
-        .on('pointerdown', () => this.scene.start('TutorialLevelScene'))
+        .on('pointerdown', () => this.scene.start('ForestLevelScene'))
 
 
         const creditsBtn = this.add.text(800, 600, 'Créditos', {

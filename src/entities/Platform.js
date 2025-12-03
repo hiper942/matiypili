@@ -1,16 +1,11 @@
 export default class Platform
 {
-    constructor(scene, x, y, width, height)
+    constructor(scene, x, y, img)
     {
-        const graphic = scene.add.graphics();
-        graphic.fillStyle(0x34543a);
-        graphic.fillRect(0, 0, width, height);
-        graphic.generateTexture(`platform-${x}-${y}`, width, height);
-        graphic.destroy();
+        this.scene = scene;
 
-        this.sprite = scene.physics.add.staticSprite(x, y, `platform-${x}-${y}`);
-
+        this.sprite = scene.add.sprite(x, y, 'platformTiles', img);
+        scene.physics.add.existing(this.sprite, true);
         this.sprite.setOrigin(0.5, 0.5);
-
     }
 }
