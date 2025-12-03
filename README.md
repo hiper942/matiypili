@@ -43,9 +43,9 @@ Movimiento de Pili - ↑←↓→
 Estilo visual: 
 
 El juego presenta un arte 2D dibujado a mano con un estilo cartoon-naturalista, el cual combina trazos suaves y colores cálidos. La estética se caracteriza por su atmósfera relajada, luminosa y orgánica, reviviendo la calma de un bosque mágico bañado por su luz propia.
-Los entornos están formados con tonos verdes, dorados y ocres suaves para reflejar la calidez del bosque, junto con efectos de iluminación ambiental como los rayos del sol filtrandose entre las ramas o los reflejos sobre el agua.
+Los entornos están formados con tonos verdes, dorados y ocres suaves para reflejar la calidez del bosque.
 
-El estilo visual combina formas redondeadas y simplificadas con detalles texturizados (musgo, raices, madeja, hojas...) que mantienen un visual agradable para todas las edades. Los elementos ambientales (animales, agua, partículas de luz) refuerzan la inmersión.
+El estilo visual combina formas redondeadas y simplificadas con detalles texturizados (musgo, raices, madeja, hojas...) que mantienen un visual agradable para todas las edades. 
 
 El resultado final busca un equilibrio entre la estética ilustrada a mano y la claridad visual propia de un videojuego de plataformas cooperativo, asegurandose que los jugadores logren distinguir, sin problemas, los elementos interactivos sin perder la belleza del entorno.
 
@@ -54,7 +54,7 @@ Mati & Pili es un videojuego de plataformas cooperativo en el cual dos personaje
 El juego combina una lógica, con sincronización y emoción. Se quiere transmitir un mensaje de confianza y unión entre seres diferentes.
 
 Objetivo del diseño: 
-Se quiere crear una experiencia cooperativa accesible para todos los públicos, emotiva y visualmente relajada, donde cada nivel sea un pequeño viaje que comparten estos personajes y logre reforzar un vínculo entre los dos jugadores.
+Se quiere crear una experiencia cooperativa accesible para todos los públicos, emotiva y visualmente relajada, donde cada nivel logre reforzar un vínculo entre los dos jugadores.
 
 ## Narrativa
 ### Tema
@@ -63,69 +63,42 @@ Amistad y cooperación + Naturaleza.
 ### Tono narrativo
 Aventurero y emotivo, con una atmósfera llena de serenidad y tranquilidad.
 **NO** hay diálogos, sólo gestos, sonidos ambientales y música emocional que logran transmitir la historia.
-Página de cómic simulando una cinemática entre niveles, las cuales muestran el crecimiento del vínculo.
-
-### Estructura narrativa
-- Encuentro: Mati y Pili se conocen.
-- Cooperación: deben superar juntos obstáculos.
-- Descubrimiento: empiezan a tener una unión más allá de una simple confianza.
-- Separación temporal: un evento los divide.
-- Reencuentro y resolución: logran devolver la armonía al bosque.
-
-El final muestra a ambos juntos observando el bosque desde lo alto de un árbol, iluminado de nuevo.
 
 ## Personajes, Mecánicas y Físicas
 ### Personajes
 #### Mati
-<img src="./img/Matias_Concepto.png" width=512 height=512>
+<img src="./public/assets/Matias_Concepto.png" width=512 height=512>
 Mati es un niño elfo, ágil, curioso y un poco imprudente. Representa la energía, la exploración y la agilidad.
 Viste una capa naranja, una bandana y pelo recogido en un moño.
 
 #### Pili
-<img src="./img/Pilar_Concepto.png" width=512 height=512>
+<img src="./public/assets/Pilar_Concepto.png" width=512 height=512>
 Pili es una gigante piedra con ojos brillantes y movimientos lentos pero firmes. Tiene musgo a lo largo de su lomo, y su tamaño triplica el de Mati. Transmite calma y fuerza.
-
-#### Enemigos
-<img src="./img/EspirituPeque_Concepto.png" width=512 height=512>
-Los enemigos no son malvados, sino “criaturas corrompidas” a causa de la falta de luz en el bosque.
-
-##### Tipos:
-###### Raíces errantes
-Se van arrastrando por el suelo. Pueden atacar a Mati, pero si se sube a Pili estas no le hacen nada a él ni a Pili.
-
-###### Espíritus oscuros
-Flotan y bloquean rutas altas; se disipan con la luz del Golpe de naturaleza de Pili.
-
-###### Plantas dormilonas
-Actúan como trampas; se abren si Mati pasa rápido, pero no si Pili pasa primero y Mati despacio detrás.
 
 ### Mecánicas
 Cada jugador controlará un personaje que tendrá mecánicas únicas que se deberán complementar para superar los desafíos.
 
 #### Mati
 ##### Habilidades
-- Salto triple: puede saltar hasta 3 casillas de altura o longitud.
-- Impulso: acelera brevemente.
+- Salto alto: puede saltar hasta 2 casillas de altura o longitud.
+- Dash: acelera brevemente.
+- Interactúa con cristales y mecanismos
+- Movilidad Rápida
 - Montarse sobre Pili: permite alcanzar zonas altas o protección.
-- Cooperación de salto: si está sobre Pili, puede impulsarse aún más alto.
 
 ##### Limitaciones
 - No puede mover objetos grandes.
 - Es mucho más vulnerable que Pili.
-- No puede nadar, se hunde si no está subido a Pili.
 
 ##### Uso de puzles
 - Accionar mecanismos a los que Pili no puede llegar gracias a su agilidad.
 - Pasar por huecos estrechos.
-- Atraer enemigos.
 
 #### Pili
 ##### Habilidades
 - Fuerza bruta: empuja bloques pesados y abre pasajes tapados.
-- Salto corto: solo una casilla de altura o longitud.
-- Escudo natural: puede proteger a Mati de ataques o proyectiles.
+- Salto corto: no puede saltar ni media casilla.
 - Plataforma móvil: Mati puede subirse a su lomo.
-- Golpe de naturaleza: activa “interruptores” ocultos en la zona.
 
 ##### Limitaciones
 - Se mueve lentamente.
