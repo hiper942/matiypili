@@ -13,7 +13,7 @@ export default class Mati {
 
         // Collider
         this.sprite.body.setSize(48 * 2.5, 64 * 2.5);
-        this.sprite.body.setOffset(42, 72);
+        this.sprite.body.setOffset(42, 90);
 
         // Base
         this.baseSpeed = 200;
