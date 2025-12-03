@@ -31,7 +31,7 @@ export default class Grid
         this.piliSpawn = null;
 
         // Esto poner false en la entrega
-        this.debug = true;
+        this.debug = false;
 
         this.build();
     }
@@ -131,7 +131,7 @@ export default class Grid
                     // Trampilla
                     case 9:
                     {
-                        const trapdoor = new Trapdoor(this.scene, x, y, this.cellSize, this.cellSize, 2);
+                        const trapdoor = new Trapdoor(this.scene, x, y, 2);
                         this.interactives.push(trapdoor);
 
                         this.platforms.add(trapdoor.sprite);
@@ -213,17 +213,15 @@ export default class Grid
         const atLeft   = (col === 0);
         const atRight  = (col === cols - 1);
 
-        // Ejemplo MUY típico, ajusta a tu gusto:
-        if (atTop && atLeft && mask === 0)        return 0; // esquina superior izquierda
+
+        if (atTop && atLeft && mask === 0) return 0;
         if (atTop && !atLeft && !atRight && ((mask === (L | R)) || (mask === (L | R | DL)) || (mask === (L | R | DR)))) return 1; // borde superior
-        if (atTop && atRight && mask === L)       return 2; // esquina sup. derecha
+        if (atTop && atRight && mask === L) return 2;
 
-            // Ejemplo MUY típico, ajusta a tu gusto:
-        if (atTop && atLeft && mask === (R | D))        return 3; // esquina superior izquierda
-        if (atTop && !atLeft && !atRight && (mask === (L | R | D))) return 4; // borde superior
-        if (atTop && atRight && mask === (L | D))       return 5; // esquina sup. derecha
+        if (atTop && atLeft && mask === (R | D)) return 3;
+        if (atTop && !atLeft && !atRight && (mask === (L | R | D))) return 4;
+        if (atTop && atRight && mask === (L | D)) return 5;
 
-        // ---------- CASOS "PUROS" SEGÚN LO QUE HAS ESCRITO ----------
         switch (mask)
         {
             // 21: nada alrededor
@@ -259,10 +257,8 @@ export default class Grid
             // 27: L plataforma
             case L:
                 return 27;
-
-            // 28 ó 15: R plataforma
-            // OJO: en tu lista 15 y 28 son iguales ("R plataforma").
-            // Me quedo con 28 y dejo 15 libre por si luego quieres diferenciar algo (diagonal, borde, etc.).
+            
+            // 15: R plataforma
             case R:
                 return 15;
 
@@ -372,8 +368,6 @@ export default class Grid
             case (L | R | UL | DL):
                 return 23;
 
-            // ---------- BLOQUE “GORDO” DE ESQUINAS Y CRUCES ----------
-
             // 12: T, TR, R plataforma
             case (U | UR | R):
                 return 12;
@@ -434,10 +428,8 @@ export default class Grid
                 return 10;
             case (U | UR | R | DR | D | DL | L):
                 return 10;
-
-            // ---------- POR DEFECTO ----------
+                
             default:
-                // Fallback razonable: aislado
                 return 21;
         }
     }

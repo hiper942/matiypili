@@ -7,6 +7,11 @@ export default class DeathScene extends Phaser.Scene
 
     create()
     {
+        if (this.sound.get('levelMusic'))
+        {
+            this.sound.get('levelMusic').stop();
+        }
+
         //Fondo
         this.add.image(800, 450, 'deathScene').setDisplaySize(1600, 900);
 

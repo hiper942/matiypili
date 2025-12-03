@@ -4,10 +4,8 @@ export default class Rock
     {
         this.scene = scene;
 
-        this.sprite = scene.physics.add.sprite(x, y, null)
-            .setDisplaySize(60, 60)
-            .setTint(0x777777)
-            .setOrigin(0.5, 0.5);
+        this.sprite = scene.physics.add.sprite(x, y, 'rock')
+            .setScale(0.9);
 
         this.sprite.body.setBounce(0);
         this.sprite.body.setDrag(600, 0);

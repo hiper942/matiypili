@@ -5,6 +5,8 @@ import TutorialLevelScene from './scenes/TutorialLevelScene.js';
 import ForestLevel2Scene from './scenes/ForestLevel2Scene.js';
 import WinScene from './scenes/WinScene.js';
 import DeathScene from './scenes/DeathScene.js';
+import Pause from './scenes/Pause.js';
+import Settings from './scenes/Settings.js'
 
 const config = {
     type: Phaser.AUTO,
@@ -18,7 +20,7 @@ const config = {
             debug: false
         }
     },
-    scene: [MenuScene, ForestLevelScene, TutorialLevelScene, ForestLevel2Scene, WinScene, DeathScene],
+    scene: [MenuScene, Pause, Settings, TutorialLevelScene, ForestLevelScene, ForestLevel2Scene, WinScene, DeathScene],
     backgroundColor: '#8e9423ff',
 }
 

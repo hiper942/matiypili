@@ -21,6 +21,9 @@ export default class TutorialLevelScene extends Phaser.Scene
 
     preload()
     {
+        // --- FONDO DEL NIVEL ---
+        this.load.image('fondoBosque', 'assets/Escenario/Fondo.png');
+        
         // --- PERSONAJES --- //
         // = PILI = //
         // Pili Idle
@@ -109,11 +112,33 @@ export default class TutorialLevelScene extends Phaser.Scene
 
         // = PINCHOS = //
         this.load.image('spike', "assets/Escenario/Pinchos/pinchos.png");
+
+        // = ROCA = //
+        this.load.image('rock', "assets/Escenario/Pedroloo/PiedraPili.png");
     }
 
     // Start()
     create()
     {
+        // --- MUSICA --- //
+        if (!this.sound.get('levelMusic'))
+        {
+            this.levelMusic = this.sound.add('levelMusic', {
+                loop: true,
+                volume: 0.4
+            });
+            this.levelMusic.play();
+        }
+        else
+        {
+            this.levelMusic = this.sound.get('levelMusic');
+        }
+        
+        // --- FONDO --- //
+        this.add.image(800, 450, 'fondoBosque')
+            .setDisplaySize(1600, 900)
+            .setDepth(-10);
+        
         // --- ANIAMCIONES --- //
         // = PILI = //
         // Idle
@@ -354,13 +379,26 @@ export default class TutorialLevelScene extends Phaser.Scene
             D: 'D',
             W: 'W',
             SPACE: 'SPACE',
-            SHIFT: 'SHIFT'
+            SHIFT: 'SHIFT',
+            
         });
+        this.pauseKey = this.input.keyboard.addKey('ESC');
     }
 
     // Update()
     update()
     {
+        // ----- PAUSA ----- //
+        if (Phaser.Input.Keyboard.JustDown(this.pauseKey))
+        {
+            if (!this.scene.isActive('Pause'))
+    {
+            this.scene.pause();
+            this.scene.launch('Pause');
+            this.scene.bringToTop('Pause');
+    }
+        };
+
         // ----- MATI ----- //
         this.mati.update(this.pili);
 

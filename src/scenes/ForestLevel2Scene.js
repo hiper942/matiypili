@@ -20,6 +20,9 @@ export default class ForestLevel2Scene extends Phaser.Scene
 
     preload()
     {
+        // --- FONDO DEL NIVEL ---
+        this.load.image('fondoBosque', 'assets/Escenario/Fondo.png');
+        
         // --- PERSONAJES --- //
         // = PILI = //
         // Pili Idle
@@ -111,6 +114,25 @@ export default class ForestLevel2Scene extends Phaser.Scene
     // Start()
     create()
     {
+        // --- MUSICA --- //
+        if (!this.sound.get('levelMusic'))
+        {
+            this.levelMusic = this.sound.add('levelMusic', {
+                loop: true,
+                volume: 0.4
+            });
+            this.levelMusic.play();
+        }
+        else
+        {
+            this.levelMusic = this.sound.get('levelMusic');
+        }
+        
+        // --- FONDO --- //
+        this.add.image(800, 450, 'fondoBosque')
+            .setDisplaySize(1600, 900)
+            .setDepth(-10);
+        
         // --- ANIAMCIONES --- //
         // = PILI = //
         // Idle
@@ -269,8 +291,8 @@ export default class ForestLevel2Scene extends Phaser.Scene
             [1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,1],
             [1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,1],
             [1,1,1,1,1,1,1,8,8,8,8,8,8,8,8,1,1,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1],
             [1,1,1,1,1,1,1,10,10,10,10,10,10,10,10,1,1,1,1,1,1,1,1,1,1],
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
         ]
 
         this.grid = new Grid(this, levelMatrix);
@@ -278,13 +300,21 @@ export default class ForestLevel2Scene extends Phaser.Scene
                 
         // = PUERTA = //
         this.door = new Door(this, this.grid.doorpos.x, this.grid.doorpos.y);
+        
+        // = DECORACIÓN FONDO = //
 
-        // = PERSONAJES = //
-        this.pili = new Pili(this, this.grid.piliSpawn.x, this.grid.piliSpawn.y);
-        this.pili.sprite.y -= this.pili.sprite.body.height / 2;
-
+        // = PERSONAJES 1 = //
         this.mati = new Mati(this, this.grid.matiSpawn.x, this.grid.matiSpawn.y);
         this.mati.sprite.y -= this.mati.sprite.body.height / 2;
+
+        // = DECORACIÓN FRENTE = //
+        this.grid.decoPos.forEach(deco => {
+            this.grass = new Decoration(this, deco.x, deco.y, this.grid.grass(deco.row, deco.col));
+        });
+
+        // = PERSONAJES 2 = //
+        this.pili = new Pili(this, this.grid.piliSpawn.x, this.grid.piliSpawn.y);
+        this.pili.sprite.y -= this.pili.sprite.body.height / 2;
 
         // --- FISICAS --- //
         // = COLISIONES = //
@@ -342,13 +372,25 @@ export default class ForestLevel2Scene extends Phaser.Scene
             D: 'D',
             W: 'W',
             SPACE: 'SPACE',
-            SHIFT: 'SHIFT'
+            SHIFT: 'SHIFT',
+            
         });
+        this.pauseKey = this.input.keyboard.addKey('ESC');
     }
 
     // Update()
     update()
     {
+        // ----- PAUSA ----- //
+        if (Phaser.Input.Keyboard.JustDown(this.pauseKey))
+        {
+
+            this.scene.pause();
+
+            this.scene.launch('Pause');
+            this.scene.bringToTop('Pause');
+        };
+        
         // ----- MATI ----- //
         this.mati.update(this.pili);
 

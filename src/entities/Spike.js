@@ -6,8 +6,8 @@ export default class Spike
         this.onTouch = onTouch;        
 
         this.sprite = scene.physics.add.staticSprite(x, y, 'spike');
-        this.sprite.setOrigin(0.5, 0.5);
-        this.sprite.setOffset(20,0);
+        this.sprite.setOrigin(0.5, 0);
+        this.sprite.setScale(1, 0.5);
 
         // Marcar para debug si quieres
         this.sprite.isSpike = true;

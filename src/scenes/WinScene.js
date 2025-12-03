@@ -9,6 +9,11 @@ export default class WinScene extends Phaser.Scene
 
     create()
     {
+        if (this.sound.get('levelMusic'))
+        {
+            this.sound.get('levelMusic').stop();
+        }
+        
         //Fondo
         this.add.image(800, 450, 'winScene').setDisplaySize(1600, 900);
 
