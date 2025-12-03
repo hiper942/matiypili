@@ -99,6 +99,13 @@ export default class ForestLevel2Scene extends Phaser.Scene
         this.load.image('bridgeR', "assets/Escenario/Puente/puenteDerecha.png");
         this.load.image('bridgeM', "assets/Escenario/Puente/puenteCentro.png");
         this.load.image('bridgeL', "assets/Escenario/Puente/puenteIzquierda.png");
+
+        // = TILES = //
+        this.load.spritesheet('platformTiles', "assets/Escenario/Tiles/SpriteSheet/tilemap.png",
+        {
+            frameWidth: 64,
+            frameHeight: 64
+        });
     }
 
     // Start()
@@ -255,7 +262,7 @@ export default class ForestLevel2Scene extends Phaser.Scene
             [1,0,0,0,0,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1],
             [1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
             [1,0,0,0,0,0,0,1,1,0,0,1,9,1,1,1,1,0,0,1,1,1,1,0,1],
-            [1,0,5,0,4,0,0,1,0,0,0,1,0,0,2,1,0,0,0,1,0,0,0,0,1],
+            [1,0,4,0,5,0,0,1,0,0,0,1,0,0,2,1,0,0,0,1,0,0,0,0,1],
             [1,1,1,1,1,0,0,1,0,0,1,1,1,1,1,1,10,10,1,0,0,0,0,0,1],
             [1,1,1,1,1,0,0,1,0,7,0,1,0,0,0,1,1,1,0,0,0,1,1,1,1],
             [1,1,1,1,1,0,0,1,1,1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,1],

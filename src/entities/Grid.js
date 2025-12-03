@@ -303,6 +303,8 @@ export default class Grid
             // 24: L y R plataforma
             case (L | R):
                 return 24;
+            case (L | R):
+                return 24;
             case (L | R | DR):
                 return 24;
             case (L | R | DL):
@@ -321,13 +323,13 @@ export default class Grid
                 return 24;
             case (L | R | UL | UR | DL):
                 return 24;
-            case (L | R | UL | UR | DR):
-                return 24;
             case (L | R | UL | DL | DR):
                 return 24;
             case (L | R | UR | DR | DL):
                 return 24;
             case (L | R | UR | DR | DL | UL):
+                return 24;
+            case (L | R | U):
                 return 24;
 
             // 25: T y R plataforma
@@ -356,6 +358,10 @@ export default class Grid
             case (L | R | DR):
                 return 22;
             case (L | R | UR | DR):
+                return 22;
+            case (L | R | UR | DR | UL):
+                return 22;
+            case (L | R | UL | UR | DR):
                 return 22;
 
             // 23: TL, L plataforma
@@ -387,6 +393,9 @@ export default class Grid
             case (L | DL | D | U):
                 return 8;
 
+            case (L | DL | D | DR):
+                return 8;
+
             // 7: L, BL, B, BR, R plataforma
             case (L | DL | D | DR | R):
                 return 7;
@@ -397,11 +406,17 @@ export default class Grid
             case (L | DL | D | DR | R | UR):
                 return 7;
 
+            case (L | DL | D | DR | R | UR | UL):
+                return 7;
+
             // 6: B, BR, R plataforma
             case (D | DR | R):
                 return 6;
-
             case (D | DR | R | U):
+                return 6;
+            case (D | DR | R | DL):
+                return 6;
+            case (D | DR | R | DL | U):
                 return 6;
 
             // 9: T, TR, R, BR, B plataforma
@@ -414,6 +429,10 @@ export default class Grid
 
             // 10: T, TR, R, BR, B, BL, L, TL plataforma (rodeado)
             case (U | UR | R | DR | D | DL | L | UL):
+                return 10;
+            case (U | R | DR | D | DL | L | UL):
+                return 10;
+            case (U | UR | R | DR | D | DL | L):
                 return 10;
 
             // ---------- POR DEFECTO ----------
