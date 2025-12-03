@@ -11,11 +11,11 @@ import Grid from '../entities/Grid.js';
 import { MoveCharacterCommand } from '../commands/MoveCharacterCommand.js';
 import { JumpCharacterCommand } from '../commands/JumpCharacterCommand.js';
 
-export default class TutorialLevelScene extends Phaser.Scene
+export default class ForestLevel2Scene extends Phaser.Scene
 {
     constructor()
     {
-        super('TutorialLevelScene');
+        super('ForestLevel2Scene');
     }
 
     preload()
@@ -85,6 +85,7 @@ export default class TutorialLevelScene extends Phaser.Scene
             frameWidth: 256,
             frameHeight: 256
         });
+
         // = BOTON = //
         this.load.image('crystalOff', "assets/Escenario/Boton/cristalApagado.png");
         this.load.image('crystalMid', "assets/Escenario/Boton/cristalIntermedio.png");
@@ -94,10 +95,10 @@ export default class TutorialLevelScene extends Phaser.Scene
         this.load.image('pressureOff', "assets/Escenario/Placa/pressureOff.png");
         this.load.image('pressureOn', "assets/Escenario/Placa/pressureOn.png");
 
-        // = CESPED = //
-        this.load.image('grassR', "assets/Escenario/Tiles/cespedDerecha.png");
-        this.load.image('grassM', "assets/Escenario/Tiles/cespedCentro.png");
-        this.load.image('grassL', "assets/Escenario/Tiles/cespedIzquierda.png");
+        // = PUENTE = //
+        this.load.image('bridgeR', "assets/Escenario/Puente/puenteDerecha.png");
+        this.load.image('bridgeM', "assets/Escenario/Puente/puenteCentro.png");
+        this.load.image('bridgeL', "assets/Escenario/Puente/puenteIzquierda.png");
     }
 
     // Start()
@@ -246,23 +247,22 @@ export default class TutorialLevelScene extends Phaser.Scene
         // 9 = Trampilla
         // 10 = Pinchos
         // 11 = Placa de Presión
-        // 12 = Decoración
 
         const levelMatrix = 
         [
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,2,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,1,1,1],
-            [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1],
-            [1,0,4,0,1,10,1,0,0,0,0,0,1,0,0,0,0,1,1,1,0,0,0,0,1],
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,1,1,1],
-            [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,12,12,12,12,12,6,0,12,12,12,12,12,12,12,12,12,12,12,12,12,0,3,0,1],
-            [1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1],
+            [1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,1,1,0,0,1,9,1,1,1,1,0,0,1,1,1,1,0,1],
+            [1,0,5,0,4,0,0,1,0,0,0,1,0,0,2,1,0,0,0,1,0,0,0,0,1],
+            [1,1,1,1,1,0,0,1,0,0,1,1,1,1,1,1,10,10,1,0,0,0,0,0,1],
+            [1,1,1,1,1,0,0,1,0,7,0,1,0,0,0,1,1,1,0,0,0,1,1,1,1],
+            [1,1,1,1,1,0,0,1,1,1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,1],
+            [1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,1],
+            [1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,1],
+            [1,1,1,1,1,1,1,8,8,8,8,8,8,8,8,1,1,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,10,10,10,10,10,10,10,10,1,1,1,1,1,1,1,1,1,1],
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
         ]
 
@@ -271,21 +271,13 @@ export default class TutorialLevelScene extends Phaser.Scene
                 
         // = PUERTA = //
         this.door = new Door(this, this.grid.doorpos.x, this.grid.doorpos.y);
-        
-        // = DECORACIÓN FONDO = //
 
-        // = PERSONAJES 1 = //
-        this.mati = new Mati(this, this.grid.matiSpawn.x, this.grid.matiSpawn.y);
-        this.mati.sprite.y -= this.mati.sprite.body.height / 2;
-
-        // = DECORACIÓN FRENTE = //
-        this.grid.decoPos.forEach(deco => {
-            this.grass = new Decoration(this, deco.x, deco.y, this.grid.grass(deco.row, deco.col));
-        });
-
-        // = PERSONAJES 2 = //
+        // = PERSONAJES = //
         this.pili = new Pili(this, this.grid.piliSpawn.x, this.grid.piliSpawn.y);
         this.pili.sprite.y -= this.pili.sprite.body.height / 2;
+
+        this.mati = new Mati(this, this.grid.matiSpawn.x, this.grid.matiSpawn.y);
+        this.mati.sprite.y -= this.mati.sprite.body.height / 2;
 
         // --- FISICAS --- //
         // = COLISIONES = //
@@ -362,7 +354,7 @@ export default class TutorialLevelScene extends Phaser.Scene
         //----- PUERTA -----//
         if (!this.door.open && this.grid.switch.active) this.door.openDoor();
 
-        if (this.door) this.door.update(this.mati, this.pili, 'ForestLevelScene');
+        if (this.door) this.door.update(this.mati, this.pili, 'WinScene');
 
         //----- BOTON -----//
         this.grid.buttons.forEach(btn => btn.update(this.mati));

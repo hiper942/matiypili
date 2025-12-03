@@ -2,6 +2,7 @@ import Phaser, { Physics } from 'phaser';
 import MenuScene from './scenes/MenuScene.js';
 import ForestLevelScene from './scenes/ForestLevelScene.js';
 import TutorialLevelScene from './scenes/TutorialLevelScene.js';
+import ForestLevel2Scene from './scenes/ForestLevel2Scene.js';
 import WinScene from './scenes/WinScene.js';
 import DeathScene from './scenes/DeathScene.js';
 
@@ -17,7 +18,7 @@ const config = {
             debug: false
         }
     },
-    scene: [MenuScene, ForestLevelScene, TutorialLevelScene, WinScene, DeathScene],
+    scene: [MenuScene, ForestLevelScene, TutorialLevelScene, ForestLevel2Scene, WinScene, DeathScene],
     backgroundColor: '#8e9423ff',
 }
 
