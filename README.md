@@ -1,5 +1,5 @@
 # Mati & Pili
-<img src="./img/Portada.png" width=1024 height=1024>
+<img src="./public/assets/Portada.png" width=1024 height=1024>
 En lo más profundo de una tranquila selva habita Pili, una gigante piedra que custodia la tranquilidad de la naturaleza. Un día, se encuentra con Mati, un niño perdido. Aunque no comparten ni palabras, pronto descubren una gran conexión entre ellos; Pili escucha los pensamientos de Mati, y Mati siente la selva a través de Pili.
 Juntos emprenden un viaje para devolver la luz a los santuarios del bosque, apagados por el mundo exterior.
 
@@ -120,7 +120,7 @@ Cada uno responde de forma distinta a la gravedad, la inercia y el peso, por lo 
 Estas dinámicas ayudan a la coordinación, elevando la dificultad de manera natural a medida que avanza la aventura.
 
 ## Escenarios
-<img src="./public/assets/Escenario.png" width=1024 height=1024>
+<img src="./public/assets/Escenario.png" width=1024 height=670>
 
 ### Ambientación principal
 El bosque de Almanza, un entorno natural mágico. Su estética en sí mezcla desde una tranquilidad hasta el misterio, con colores cálidos y vegetación exuberante.
@@ -183,12 +183,109 @@ En escala suave. La curva de aprendizaje se apoya en la cooperación de ambos m�
 ### Rejugabilidad
 La experiencia emocional es distinta dependiendo de con quién se juegue.
 
+
+## Programacion
+La programación de Mati & Pili se basa en un sistema modular y simple, dividido en escenas, entidades y un generador de niveles. Está diseñado para que las mecánicas cooperativas funcionen de forma clara y sin complejidad innecesaria.
+
+### Arquitectura general
+- Desarrollado en Phaser 3.
+- Uso de escenas independientes (menú, niveles, victoria, muerte).
+- Físicas arcade para movimiento, colisiones y empuje.
+- Cada elemento del juego (personajes, rocas, botones, puerta, pinchos…) se implementa como una clase propia.
+- Esto permite añadir mecánicas sin afectar al resto del sistema.
+
+###  Sistema de Grid
+El Grid genera el nivel a partir de una matriz numérica donde cada número representa un tipo de objeto:
+- 0 → Vacío
+- 1 → Plataforma
+- 2 → Palanca
+- 3 → Puerta
+- 4 → Spawn de Mati
+- 5 → Spawn de Pili
+- 6 → Roca empujable
+- 7 → Botón
+- 8 → Puente activable
+- 9 → Trampilla
+- 10 → Pinchos
+- 11 → Placa de presión
+- 12 → Decoración
+
+### Funciones principales del Grid:
+- Instancia objetos según su número.
+- Añade plataformas al grupo físico del escenario.
+- Guarda posiciones de aparición y puerta.
+- Registra los objetos interactivos y los activa mediante IDs compartidos.
+- Aplica autotiling para variar las plataformas visualmente.
+
+### Personajes y físicas
+#### Mati
+- Salto alto.
+- Dash con cooldown.
+- Movimiento rápido y ligero.
+- Puede activar botones y mecanismos.
+- Puede subirse sobre Pili.
+- Control con WASD.
+
+#### Pili
+- Movimiento lento y pesado.
+- Puede empujar rocas.
+- Actúa como plataforma para Mati.
+- No puede saltar alto ni entrar en huecos pequeños.
+- Control con flechas.
+
+Ambos están diseñados para complementarse:
+*Mati* → precisión y agilidad.
+*Pili* → fuerza y soporte.
+
+### Objetos interactivos
+**Cada elemento tiene su propio comportamiento:**
+- Roca → empujable, con masa y fricción.
+- Botón → se activa al tocarlo, cambia textura y activa puentes.
+- Puente → aparece/desaparece según su botón asociado.
+- Trampilla → se abre y deja caer una caja.
+- Palanca → animación que abre la puerta.
+- Placa de presión → detecta peso (Mati, Pili o rocas).
+- Pinchos → matan al instante.
+- Puerta → solo activa la transición si Mati y Pili pasan juntos.
+
+### Escenas
+**Cada escena:**
+Carga sus recursos y animaciones.
+Genera el nivel con el Grid.
+Crea a Mati y Pili.
+Establece colisiones.
+Actualiza mecánicas e interacciones en cada frame.
+
+**Escenas del proyecto:**
+- MenuScene
+- TutorialLevelScene
+- ForestLevelScene
+- ForestLevel2Scene
+- WinScene
+- DeathScene
+
+### Sistema de muerte y victoria
+**Muerte**: cualquier personaje que toque pinchos pasa a DeathScene.
+**Victoria**: la puerta requiere que ambos personajes atraviesen la zona de salida simultáneamente.
+
 ## Música
 La música ambiental del bosque está diseñada para acompañar la atmósfera tranquila y mágica del entorno natural de _Mati&Pili_. Se compone de una base melódica suave, reforzada con sonidos ambientales que recuerdan la vida y movimiento del bosque.
 
 La música no busca imponer un ritmo en concreto, sino acompañar el flujo del entorno.
 
 El objetivo de esta música es crear una inmersión emocional absoluta, en la que el jugador sienta lo vivo que está el bosque, convirtiendose casi en un personaje más dentro de la historia.
+
+## Bocetos e imagenes utilizadas
+Aqui se muestran varias imagenes de bocetos o assets que se utilizan el el juego
+
+<img src=".\public\assets\Recursos\matiYpili.PNG" width=780 height=512>
+<img src=".\public\assets\Recursos\turnaround.PNG" width=1024 height=512>
+<img src=".\public\assets\Recursos\boceto1.PNG" width=780 height=512>
+<img src=".\public\assets\Recursos\palanca.PNG" width=780 height=512>
+<img src=".\public\assets\Recursos\boceto2.PNG" width=780 height=512>
+<img src=".\public\assets\Recursos\cristal.PNG" width=780 height=512>
+<img src=".\public\assets\Recursos\boceto3.PNG" width=780 height=512>
+<img src=".\public\assets\Recursos\puerta.PNG" width=780 height=512>
 
 ## Marketing
 ### Estrategia de difusión
