@@ -1,5 +1,5 @@
 # Mati & Pili
-<img src="./img/Portada.png" width=1024 height=1024>
+<img src="./public/assets/Portada.png" width=1024 height=1024>
 En lo más profundo de una tranquila selva habita Pili, una gigante piedra que custodia la tranquilidad de la naturaleza. Un día, se encuentra con Mati, un niño perdido. Aunque no comparten ni palabras, pronto descubren una gran conexión entre ellos; Pili escucha los pensamientos de Mati, y Mati siente la selva a través de Pili.
 Juntos emprenden un viaje para devolver la luz a los santuarios del bosque, apagados por el mundo exterior.
 
@@ -114,103 +114,55 @@ Cada jugador controlará un personaje que tendrá mecánicas únicas que se debe
 El sistema de físicas combina precisión y simplicidad para reforzar la cooperación entre ambos.
 Cada uno responde de forma distinta a la gravedad, la inercia y el peso, por lo que se logra una variedad y dificultad progresiva.
 
-- Mati posee físicas ligeras: mayor impulso en saltos, mayor velocidad de movimiento y capacidad de realizar doble salto. Puede ser desplazado fácilmente por plataformas móviles, corrientes de agua...
-- Pili, por su parte, tiene físicas pesadas: movimientos lentos y estables, menor salto, pero con alta resistencia. Su peso permite mantener estructuras en equilibrio, activar ciertas placas de presión...
+- Mati posee físicas ligeras: mayor impulso en saltos, mayor velocidad de movimiento y capacidad de realizar un dash. 
+- Pili, por su parte, tiene físicas pesadas: movimientos lentos y estables, menor salto, pero con alta resistencia. 
 
 Estas dinámicas ayudan a la coordinación, elevando la dificultad de manera natural a medida que avanza la aventura.
 
 ## Escenarios
-<img src="./img/Escenario.png" width=1024 height=1024>
+<img src="./public/assets/Escenario.png" width=1024 height=670>
 
 ### Ambientación principal
 El bosque de Almanza, un entorno natural mágico. Su estética en sí mezcla desde una tranquilidad hasta el misterio, con colores cálidos y vegetación exuberante.
 
 ### Diseño visual y sensorial
-Luz filtrada por ramas de árboles, reflejos dorados.
-Efectos de partículas (luciérnagas, polvo…).
-Ríos, troncos caídos, santuarios cubiertos de musgo.
+Bosque con plataformas de roca, hoja y árboles
+El escenario es similar en todos los niveles, con un tileset, solo cambia la disposición de las plataformas y de los puzzles
+
 
 ### Estructura del mundo
 Cada nivel representa una zona del bosque con un santuario que ha perdido su brillo, el cual debe de activarse de nuevo.
 Los niveles se conectan visualmente aparentando un camino seguido, aunque se seleccionan desde un mapa central. Eso sí, se van desbloqueando después de pasar el nivel anterior para seguir una linealidad.
 
-### Progresión ambiental
-- Claro del encuentro: naturaleza pacífica, tutorial.
-- Puentes de musgo: introducción a los saltos combinados.
-- Raíces profundas: puzles de mayor complejidad.
-- Cascadas cristalinas: introducción a las mecánicas en agua.
-- Templo de la Niebla: cambio de terreno, plataformas ocultas e introducción al Golpe de naturaleza de Pili.
-- Eco de las montañas: evolución de saltos combinados.
-- Bosque lumínico: espacio nocturno con puzles jugando con las luces.
-- Ruinas suspendidas: cooperación aérea.
-- Caverna: separación temporal de ambos.
-- Santuario del Rocío: reencuentro, espacio en un amanecer y final.
 
 ## Niveles
-### NIVEL 1 - Claro del Encuentro
-- Objetivo: introducción controles básicos.
-- Mecánicas: moverse, saltar, subirse a Pili, accionar un interruptor.
-- Enemigos: ninguno.
-- Ambientación: clara del bosque, luz cálida.
-- Emoción: primera unión.
+### NIVEL 1 - Claro del Encuentro (Tutorial)
+Elementos del nivel:
+- Montarse en Pili para llegar a lugares altos
+- Dash de Mati
+- Pili empuja cajas
+- Pinchos que matan
+- Hueco que Pili debe rellenar 
+- Palanca que abre la puerta final
+- Ambos deben cruzar la puerta para finalizar el nivel
 
 ### NIVEL 2 - Puentes de musgo
-- Objetivo: introducción al salto triple de Mati.
-- Mecánicas: salto triple de Mati.
-- Puzle: Mati debe accionar un puente para Pili.
-- Enemigos: raíces errantes.
+Elementos del nivel:
+- Un cristal que, al interactuar con el, actical el puente
+- Puente que permite que Pili y Mati cruzan juntos
+- Plataformas más separadas para obligar a usar el puente o caer a los pinchos
 
 ### NIVEL 3 - Raíces profundas
-- Objetivo: mayor unión entre jugadores.
-- Puzle: ambos deben accionar placas a la vez.
-- Enemigos: plantas dormilonas.
-
-### NIVEL 4 - Cascadas cristalinas
-- Objetivo: introducción a mecánicas en agua.
-- Mecánicas: Pili como plataforma para Mati en aguas profundas.
-- Puzle: abrir paso entre las cascadas para Mati con Pili.
-- Ambientación: cascadas brillantes gigantes con sus respectivos riachuelos.
-
-### NIVEL 5 - Templo de la Niebla
-- Objetivo: introducción a la mecánica de visibilidad con el Golpe de Naturaleza de Pili y cooperación para iluminar el camino.
-- Mecánicas: Golpe de Naturaleza de Pili.
-- Enemigos: espíritus oscuros.
-- Ambientación: templo oscuro pero manteniendo la magia del bosque.
-
-### NIVEL 6 - Eco de las montañas
-- Objetivo: mayor unión entre jugadores mediante una mayor complejidad de parkour.
-- Enemigos: raíces errantes y espíritus oscuros. 
-- Ambientación: montañas altas con su brillo mágico en el anochecer.
-- Emoción: en el nivel se empieza a ver el progreso de devolver la luz al bosque, sensación de que la unión de los jugadores tiene sus resultados.
-
-### NIVEL 7 - Bosque lumínico
-- Objetivo: introducción a puzles con luces.
-- Enemigos: plantas dormilonas.
-- Ambientación: parte del bosque en la noche con una magia especial.
-- Emoción: serenidad y madurez emocional del viaje.
-
-### NIVEL 8 - Ruinas suspendidas
-- Objetivo: introducción a parkour flotante.
-- Mecánicas: Pili puede lanzar a Mati a plataformas lejanas.
-- Enemigos: espíritus oscuros.
-- Emoción: riesgo y confianza.
-
-### NIVEL 9 - Caverna
-- Objetivo: que los jugadores logren avanzar por su cuenta, control alternado.
-- Enemigos: todos.
-- Ambientación: cueva oscura con setas luminiscentes que van iluminando el camino.
-- Emoción: confianza en el otro cuando uno no está presente.
-
-### NIVEL 10 - Santuario del Rocío
-- Objetivo: encender de nuevo el último santuario.
-- Enemigos: todos.
-- Ambientación: parte del bosque más sagrado al amanecer.
-- Emoción: volver a ver el bosque con su verdadera luz.
-- Cinemática final del bosque restaurado.
+Elementos del nivel:
+- Una placa de presión
+- Al activarse, se abre una trampilla
+- De la trampilla cae una caja 
+- Pili debe mover esa caja a un punto para que los dos puedan cruzar
+- El objetivo final, al igual que los otros niveles, es llegar a la puerta juntos. 
 
 ## Progreso del juego
 ### Sistema de avance
-Cada nivel completado activa un nuevo santuario. El progreso se ve en el mapa central a medida que se pasan los niveles, se observa cómo vuelve la luz por las zonas que se han pasado. Sistema simple de selección de nivel desbloqueado.
+Cada nivel completado activa el siguiente. Son niveles lineales: 1 -> 2 -> 3
 
 ### Guardado
 Guardado automático tras cada nivel. 
@@ -221,31 +173,119 @@ Movimiento.
 Saltos y peso.
 Seguridad e interruptores dobles.
 Sincronización y consciencia.
-Luz y visibilidad.
 Aumento de dificultad.
-Juego con luces.
-Lanzamiento.
 Separación.
 Unión final.
 
-### Diagrama de flujo
-<img src="./img/Diagrama.png" width=1024 height=1024>
-
 ### Dificultad
-En escala suave. La curva de aprendizaje se apoya en la cooperación de ambos más que en la misma complejidad en parkour o puzles.
+En escala suave. La curva de aprendizaje se apoya en la cooperación de ambos más que en la misma complejidad en parkour o puzzles. Es de dificultad suave, con niveles no muy complicados
 
 ### Rejugabilidad
 La experiencia emocional es distinta dependiendo de con quién se juegue.
 
+
+## Programacion
+La programación de Mati & Pili se basa en un sistema modular y simple, dividido en escenas, entidades y un generador de niveles. Está diseñado para que las mecánicas cooperativas funcionen de forma clara y sin complejidad innecesaria.
+
+### Arquitectura general
+- Desarrollado en Phaser 3.
+- Uso de escenas independientes (menú, niveles, victoria, muerte).
+- Físicas arcade para movimiento, colisiones y empuje.
+- Cada elemento del juego (personajes, rocas, botones, puerta, pinchos…) se implementa como una clase propia.
+- Esto permite añadir mecánicas sin afectar al resto del sistema.
+
+###  Sistema de Grid
+El Grid genera el nivel a partir de una matriz numérica donde cada número representa un tipo de objeto:
+- 0 → Vacío
+- 1 → Plataforma
+- 2 → Palanca
+- 3 → Puerta
+- 4 → Spawn de Mati
+- 5 → Spawn de Pili
+- 6 → Roca empujable
+- 7 → Botón
+- 8 → Puente activable
+- 9 → Trampilla
+- 10 → Pinchos
+- 11 → Placa de presión
+- 12 → Decoración
+
+### Funciones principales del Grid:
+- Instancia objetos según su número.
+- Añade plataformas al grupo físico del escenario.
+- Guarda posiciones de aparición y puerta.
+- Registra los objetos interactivos y los activa mediante IDs compartidos.
+- Aplica autotiling para variar las plataformas visualmente.
+
+### Personajes y físicas
+#### Mati
+- Salto alto.
+- Dash con cooldown.
+- Movimiento rápido y ligero.
+- Puede activar botones y mecanismos.
+- Puede subirse sobre Pili.
+- Control con WASD.
+
+#### Pili
+- Movimiento lento y pesado.
+- Puede empujar rocas.
+- Actúa como plataforma para Mati.
+- No puede saltar alto ni entrar en huecos pequeños.
+- Control con flechas.
+
+Ambos están diseñados para complementarse:
+*Mati* → precisión y agilidad.
+*Pili* → fuerza y soporte.
+
+### Objetos interactivos
+**Cada elemento tiene su propio comportamiento:**
+- Roca → empujable, con masa y fricción.
+- Botón → se activa al tocarlo, cambia textura y activa puentes.
+- Puente → aparece/desaparece según su botón asociado.
+- Trampilla → se abre y deja caer una caja.
+- Palanca → animación que abre la puerta.
+- Placa de presión → detecta peso (Mati, Pili o rocas).
+- Pinchos → matan al instante.
+- Puerta → solo activa la transición si Mati y Pili pasan juntos.
+
+### Escenas
+**Cada escena:**
+Carga sus recursos y animaciones.
+Genera el nivel con el Grid.
+Crea a Mati y Pili.
+Establece colisiones.
+Actualiza mecánicas e interacciones en cada frame.
+
+**Escenas del proyecto:**
+- MenuScene
+- TutorialLevelScene
+- ForestLevelScene
+- ForestLevel2Scene
+- WinScene
+- DeathScene
+
+### Sistema de muerte y victoria
+**Muerte**: cualquier personaje que toque pinchos pasa a DeathScene.
+**Victoria**: la puerta requiere que ambos personajes atraviesen la zona de salida simultáneamente.
+
 ## Música
 La música ambiental del bosque está diseñada para acompañar la atmósfera tranquila y mágica del entorno natural de _Mati&Pili_. Se compone de una base melódica suave, reforzada con sonidos ambientales que recuerdan la vida y movimiento del bosque.
 
-En los mapas de día, predominan las flautas de viento, percusiones de madera... Estas se entrelazan con el sonido ambiental del viento moviendo hojas, el movimiento del agua de un arroyo cercano, el crujir de ramas y cantos de pájaros. El conjunto transmite una armonía y conexión con el bosque, consiguiendo una sensación de serenidad mientras los jugadores exploran y pasan los niveles.
 La música no busca imponer un ritmo en concreto, sino acompañar el flujo del entorno.
 
-Durante los niveles nocturnos, la composición se transforma en una versión más misteriosa. Se baja la intensidad de los instrumentos, dando brillo a los sonidos naturales: grillos, gúhos, viento suave, aullidos lejanos de lobos... La melodía mantiene su carácter relajado, pero con un aire más melacólico, reflejando el paso del día a la noche en el bosque.
-
 El objetivo de esta música es crear una inmersión emocional absoluta, en la que el jugador sienta lo vivo que está el bosque, convirtiendose casi en un personaje más dentro de la historia.
+
+## Bocetos e imagenes utilizadas
+Aqui se muestran varias imagenes de bocetos o assets que se utilizan el el juego
+
+<img src=".\public\assets\Recursos\matiYpili.PNG" width=780 height=512>
+<img src=".\public\assets\Recursos\turnaround.PNG" width=1024 height=512>
+<img src=".\public\assets\Recursos\boceto1.PNG" width=780 height=512>
+<img src=".\public\assets\Recursos\palanca.PNG" width=780 height=512>
+<img src=".\public\assets\Recursos\boceto2.PNG" width=780 height=512>
+<img src=".\public\assets\Recursos\cristal.PNG" width=780 height=512>
+<img src=".\public\assets\Recursos\boceto3.PNG" width=780 height=512>
+<img src=".\public\assets\Recursos\puerta.PNG" width=780 height=512>
 
 ## Marketing
 ### Estrategia de difusión
