@@ -141,7 +141,7 @@ export default class Grid
                     // Pinchos
                     case 10:
                     {
-                        const spike = new Spike(this.scene, x, y, this.cellSize, this.cellSize, (who) => this.scene.onSpikeTouched(who));
+                        const spike = new Spike(this.scene, x, y, (who) => this.scene.onSpikeTouched(who));
                         this.spikes.push(spike);
                         break;
                     }
