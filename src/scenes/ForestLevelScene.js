@@ -19,6 +19,9 @@ export default class ForestLevelScene extends Phaser.Scene
 
     preload()
     {
+        // --- FONDO DEL NIVEL ---
+        this.load.image('fondoBosque', 'assets/Escenario/Fondo.png');
+
         // --- PERSONAJES --- //
         // = PILI = //
         // Pili Idle
@@ -110,6 +113,10 @@ export default class ForestLevelScene extends Phaser.Scene
     // Start()
     create()
     {
+        this.add.image(800, 450, 'fondoBosque')
+            .setDisplaySize(1600, 900)
+            .setDepth(-10);
+
         // --- ANIAMCIONES --- //
         // = PILI = //
         // Idle
