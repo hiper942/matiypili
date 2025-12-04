@@ -13,6 +13,12 @@ const config = {
     width: 1600,
     height: 896,
     parent: 'game-container',
+
+    scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+    },
+
     physics: {
         default: 'arcade',
         arcade: {
@@ -20,6 +26,7 @@ const config = {
             debug: false
         }
     },
+    
     scene: [MenuScene, Pause, Settings, TutorialLevelScene, ForestLevelScene, ForestLevel2Scene, WinScene, DeathScene],
     backgroundColor: '#8e9423ff',
 }
