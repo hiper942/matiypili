@@ -103,6 +103,18 @@ export default class TutorialLevelScene extends Phaser.Scene
         this.load.image('grassM', "assets/Escenario/Tiles/cespedCentro.png");
         this.load.image('grassL', "assets/Escenario/Tiles/cespedIzquierda.png");
 
+        // = DECORACIONES = //
+        this.load.image('fenceR', "assets/Escenario/Tiles/cespedDerecha.png");
+        this.load.image('fenceL', "assets/Escenario/Tiles/cespedDerecha.png");
+
+        this.load.image('lamp', "assets/Escenario/Decorations/decorations/lamp.png");
+
+        this.load.image('sign', "assets/Escenario/Decorations/decorations/sign.png");
+
+        this.load.image('rock1', "assets/Escenario/Decorations/decorations/rock_1.png");
+        this.load.image('sign2', "assets/Escenario/Decorations/decorations/rock_2.png");
+        this.load.image('sign3', "assets/Escenario/Decorations/decorations/rock_3.png");
+
         // = TILES = //
         this.load.spritesheet('platformTiles', "assets/Escenario/Tiles/SpriteSheet/tilemap.png",
         {
@@ -282,7 +294,6 @@ export default class TutorialLevelScene extends Phaser.Scene
         // 9 = Trampilla
         // 10 = Pinchos
         // 11 = Placa de Presión
-        // 12 = Decoración
 
         const levelMatrix = 
         [
@@ -295,16 +306,40 @@ export default class TutorialLevelScene extends Phaser.Scene
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,0,0,0,0,0,0,1],
             [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,1,1,1],
             [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,12,12,12,12,12,6,0,12,12,12,12,12,12,12,12,12,12,12,12,12,0,3,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,5,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,1],
             [1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
         ]
 
-        this.grid = new Grid(this, levelMatrix);
+        // --- DECORACION --- //
+        // 1 = Decoración Back
 
-                
+        // DECORACION FRONT //
+        // 2 = Cesped
+        // 
+
+        const decoMatrix = 
+        [
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,2,2,2,2,2,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        ]
+
+        this.grid = new Grid(this, levelMatrix, decoMatrix);
+
         // = PUERTA = //
         this.door = new Door(this, this.grid.doorpos.x, this.grid.doorpos.y);
         
@@ -315,8 +350,11 @@ export default class TutorialLevelScene extends Phaser.Scene
         this.mati.sprite.y -= this.mati.sprite.body.height / 2;
 
         // = DECORACIÓN FRENTE = //
-        this.grid.decoPos.forEach(deco => {
-            this.grass = new Decoration(this, deco.x, deco.y, this.grid.grass(deco.row, deco.col));
+        this.grid.decoFront.forEach(deco =>
+        {
+            const texture = this.grid.grass(deco.row, deco.col);
+            const decoration = new Decoration(this, deco.x, deco.y, texture);
+            decoration.sprite.setDepth(20);
         });
 
         // = PERSONAJES 2 = //
@@ -374,7 +412,8 @@ export default class TutorialLevelScene extends Phaser.Scene
 
         // --- INPUT --- //
         this.cursors = this.input.keyboard.createCursorKeys();
-        this.keys = this.input.keyboard.addKeys({
+        this.keys = this.input.keyboard.addKeys(
+        {
             A: 'A',
             D: 'D',
             W: 'W',
@@ -392,11 +431,11 @@ export default class TutorialLevelScene extends Phaser.Scene
         if (Phaser.Input.Keyboard.JustDown(this.pauseKey))
         {
             if (!this.scene.isActive('Pause'))
-    {
+            {
             this.scene.pause();
             this.scene.launch('Pause');
             this.scene.bringToTop('Pause');
-    }
+            }
         };
 
         // ----- MATI ----- //

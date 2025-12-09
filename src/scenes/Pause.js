@@ -32,7 +32,8 @@ export default class Pause extends Phaser.Scene
             .setOrigin(0);
 
         // Texto
-        this.add.text(800, 150, 'PAUSA', {
+        this.add.text(800, 150, 'PAUSA',
+        {
             fontSize: '80px',
             color: '#ffffff'
         }).setOrigin(0.5);
@@ -42,7 +43,8 @@ export default class Pause extends Phaser.Scene
             .setInteractive({ useHandCursor: true })
             .on('pointerover', () => continuarBtn.setTexture('btnReanudarOn'))
             .on('pointerout',  () => continuarBtn.setTexture('btnReanudarOff'))
-            .on('pointerdown', () => {
+            .on('pointerdown', () =>
+            {
                 if (this.sound.get('levelMusic'))
                 {
                     this.sound.get('levelMusic').resume();

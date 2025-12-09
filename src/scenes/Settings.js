@@ -37,16 +37,21 @@ export default class SettingsScene extends Phaser.Scene
             .setDepth(0);
 
 
-        this.add.text(800, 120, 'AJUSTES', {
+        this.add.text(800, 120, 'AJUSTES',
+        {
             color: '#ffffff',
             fontSize: '80px'
-        }).setOrigin(0.5);
+        })
+        .setOrigin(0.5);
 
         // = SLIDER VOLUMEN MÚSICA = //
-        this.add.text(350, 270, 'Volumen Música', { 
+        this.add.text(350, 270, 'Volumen Música',
+        { 
             fontSize: '40px', 
             color: '#fff' 
-        }).setOrigin(0,0.5).setDepth(2);
+        })
+        .setOrigin(0,0.5)
+        .setDepth(2);
 
         const minX = 750;
         const maxX= 1100;
@@ -59,14 +64,15 @@ export default class SettingsScene extends Phaser.Scene
         // HANDLE usando btnAjustes (más grande para que se vea)
         const handle = this.add.image( minX + (this.sound.volume * (maxX - minX)), y,
             'btnAjustes')
-            .setScale(1)      // <-- Más visible
+            .setScale(1)
             .setInteractive({ draggable: true })
             .setDepth(2)
             .setScrollFactor(0);
 
         this.input.setDraggable(handle);
 
-        handle.on("drag", (pointer, x) => {
+        handle.on("drag", (pointer, x) =>
+        {
             x = Phaser.Math.Clamp(x, minX, maxX);
             handle.x = x;
 
@@ -76,10 +82,13 @@ export default class SettingsScene extends Phaser.Scene
 
 
         // = BOTÓN FULLSCREEN = //
-        this.add.text(400, 570, 'Pantalla Completa', { 
+        this.add.text(400, 570, 'Pantalla Completa',
+        { 
             fontSize: '40px', 
             color: '#fff' 
-        }).setOrigin(0, 0.5).setDepth(2);
+        })
+        .setOrigin(0, 0.5)
+        .setDepth(2);
 
         const fullscreenBtn = this.add.image(900, 570, 'btnAjustes')
             .setScale(1)
@@ -87,15 +96,19 @@ export default class SettingsScene extends Phaser.Scene
             .setInteractive({ useHandCursor: true })
             .setScrollFactor(0);
 
-        fullscreenBtn.on('pointerdown', () => {
-                if (this.scale.isFullscreen) {
-                    this.scale.stopFullscreen();
-                    this.scale.resize(1600,896);
-                } else {
-                    this.scale.startFullscreen();
-                    this.scale.resize(1980,1080);
-                }
-            });
+        fullscreenBtn.on('pointerdown', () =>
+        {
+            if (this.scale.isFullscreen)
+            {
+                this.scale.stopFullscreen();
+                this.scale.resize(1600,896);
+            }
+            else
+            {
+                this.scale.startFullscreen();
+                this.scale.resize(1980,1080);
+            }
+        });
 
         // = BOTÓN VOLVER = //
         const volverBtn = this.add.image(800, 780, 'btnVolverOff')
@@ -104,5 +117,5 @@ export default class SettingsScene extends Phaser.Scene
             .on('pointerover', () => volverBtn.setTexture('btnVolverOn'))
             .on('pointerout',  () => volverBtn.setTexture('btnVolverOff'))
             .on('pointerdown', () => this.scene.start('MenuScene'));
-    }
+        }
 }

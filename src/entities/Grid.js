@@ -11,10 +11,11 @@ import Decoration from "./Decoration.js";
 
 export default class Grid
 {
-    constructor(scene, matrix, cellSize = 64)
+    constructor(scene, matrix, deco, cellSize = 64)
     {
         this.scene = scene;
-        this.matrix = matrix;
+        this.levelMatrix = matrix;
+        this.decoMatrix = deco;
         this.cellSize = cellSize;
 
         this.platforms = this.scene.physics.add.staticGroup();
@@ -25,7 +26,8 @@ export default class Grid
         this.buttons = [];
         this.spikes = [];
         this.pressurePlates = [];
-        this.decoPos = [];
+        this.decoFront = [];
+        this.decoBack = [];
 
         this.matiSpawn = null;
         this.piliSpawn = null;
@@ -38,12 +40,12 @@ export default class Grid
 
     build()
     {
-        for (let row = 0; row < this.matrix.length; row++)
+        for (let row = 0; row < this.levelMatrix.length; row++)
             {
-            for (let col = 0; col < this.matrix[row].length; col++)
+            for (let col = 0; col < this.levelMatrix[row].length; col++)
                 {
 
-                const tile = this.matrix[row][col];
+                const tile = this.levelMatrix[row][col];
                 const x = col * this.cellSize + this.cellSize / 2;
                 const y = row * this.cellSize + this.cellSize / 2;
 
@@ -154,16 +156,60 @@ export default class Grid
                         break;
                     }
 
-                    // Decoración
-                    case 12:
+                    default:
+                        console.warn("Level: Tile unknown: ", tile);
+                        break;
+                }
+            }
+        }
+
+        for (let row = 0; row < this.decoMatrix.length; row++)
+        {
+            for (let col = 0; col < this.decoMatrix[row].length; col++)
+            {
+                
+                const tile = this.decoMatrix[row][col];
+                const x = col * this.cellSize + this.cellSize / 2;
+                const y = row * this.cellSize + this.cellSize / 2;
+
+                if (this.debug) this.drawDebugCell(x, y);
+                
+                switch (tile)
+                {    
+                    case 0:
                     {
-                        const temp = {x, y, row, col};
-                        this.decoPos.push(temp);
+                        break;
+                    }
+
+                    // - DECORACION BACK - //
+                    // Bush
+                    case 1:
+                    {
+                        const bush = new Decoration();
+                        bush.sprite.setDepth(-5);
+                        this.decoBack.push(bush);
+                        break;
+                    }
+
+                    // - DECORACION FRONT - //
+                    // Cesped
+                    case 2:
+                    {
+                        const temp = { x, y, row, col };
+                        this.decoFront.push(temp);
+                        break;
+                    }
+
+                    case 3:
+                    {
+                        const lamp = new Decoration();
+                        lamp.sprite.setDepth(25);
+                        this.decoBack.push(lamp);
                         break;
                     }
 
                     default:
-                        console.warn("Grid: Tile unknown: ", tile);
+                        console.warn("Decoration: Tile unknown: ", tile);
                         break;
                 }
             }
@@ -173,8 +219,8 @@ export default class Grid
     grass(x, y)
     {
         const isGrass = (tile) => tile === 12;
-        const left = isGrass (this.matrix [x][y - 1]);
-        const right = isGrass (this.matrix [x][y + 1]);
+        const left = isGrass (this.decoMatrix [x][y - 1]);
+        const right = isGrass (this.decoMatrix [x][y + 1]);
 
         if (!left && right) return 'grassL';
         if (left && right) return 'grassM';
@@ -184,8 +230,8 @@ export default class Grid
     bridge(row, col)
     {
         const isBridge = (tile) => tile === 8;
-        const left = this.matrix[row][col - 1] === 8;
-        const right = this.matrix[row][col + 1] === 8;
+        const left = this.levelMatrix[row][col - 1] === 8;
+        const right = this.levelMatrix[row][col + 1] === 8;
 
         if (!left && right) return 'bridgeL';
         if (left && right) return 'bridgeM';
@@ -205,8 +251,8 @@ export default class Grid
         const DL = 64;
         const DR = 128;
 
-        const rows = this.matrix.length;
-        const cols = this.matrix[0].length;
+        const rows = this.levelMatrix.length;
+        const cols = this.levelMatrix[0].length;
 
         const atTop    = (row === 0);
         const atBottom = (row === rows - 1);
@@ -428,15 +474,15 @@ export default class Grid
                 return 10;
             case (U | UR | R | DR | D | DL | L):
                 return 10;
-                
+
             default:
-                return 21;
+                return 21; // La cruzeta
         }
     }
 
     getAutotileMask(row, col)
     {
-        const t = this.matrix;
+        const t = this.levelMatrix;
         const isP = (r, c) => t[r] && t[r][c] === 1;
 
         let mask = 0;
