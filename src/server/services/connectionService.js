@@ -11,7 +11,10 @@ export function createConnectionService() {
 
   // Limpiar sesiones inactivas periódicamente
   const cleanupInterval = setInterval(() => {
-    // Implementar
+    // 
+    // const disconnectedSessions.push(sessionId);
+    console.log("[ConnectionService] ");
+
   }, CLEANUP_INTERVAL);
 
   return {
@@ -21,6 +24,8 @@ export function createConnectionService() {
      * @returns {number} Número total de sesiones conectadas
      */
     updateConnection(sessionId) {
+      
+
       connectedSessions.set(sessionId, Date.now());
       return connectedSessions.size;
     },

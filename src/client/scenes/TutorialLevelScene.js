@@ -11,7 +11,7 @@ import Grid from '../entities/Grid.js';
 
 import { MoveCharacterCommand } from '../commands/MoveCharacterCommand.js';
 import { JumpCharacterCommand } from '../commands/JumpCharacterCommand.js';
-import { connectionManager } from 'client/services/ConnectionManager.js';
+import { connectionManager } from '../services/ConnectionManager.js';
 
 export default class TutorialLevelScene extends Phaser.Scene
 {
