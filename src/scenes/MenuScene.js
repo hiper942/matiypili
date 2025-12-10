@@ -7,26 +7,9 @@ export default class MenuScene extends Phaser.Scene{
         this.load.image('winScene', 'assets/Menus/FondoMenuVictoria.png');
         this.load.image('deathScene', 'assets/Menus/FondoMenuMuerte.png');
 
-        // Botones ON/OFF
-        this.load.image('btnJugarOff', 'assets/Menus/botonJugarApagado.PNG');
-        this.load.image('btnJugarOn',  'assets/Menus/botonJugarEncendido.PNG');
+       
 
-        this.load.image('btnCreditosOff', 'assets/Menus/botonCreditosApagado.PNG');
-        this.load.image('btnCreditosOn',  'assets/Menus/botonCreditosEncendido.PNG');
 
-        this.load.image('btnVolverOff', 'assets/Menus/botonVolverApagado.PNG');
-        this.load.image('btnVolverOn',  'assets/Menus/botonVolverEncendido.PNG');
-
-        this.load.image('btnReiniciarOff', 'assets/Menus/botonReiniciarApagado.PNG');
-        this.load.image('btnReiniciarOn',  'assets/Menus/botonReiniciarEncendido.PNG');
-
-        this.load.image('btnSalirOff', 'assets/Menus/botonSalirApagado.PNG');
-        this.load.image('btnSalirOn',  'assets/Menus/botonSalirEncendido.PNG');
-
-        this.load.audio('menuMusic', 'assets/Musica/menu.mp3');
-        this.load.audio('levelMusic', 'assets/Musica/level.mp3');
-
-        this.load.image('btnstt', "assets/Menus/ajustes.png");
     }
 
     constructor(){
@@ -54,7 +37,7 @@ export default class MenuScene extends Phaser.Scene{
             .on('pointerdown', () =>
             {
                 this.menuMusic.stop();
-                this.scene.start('TutorialLevelScene');
+                this.scene.start('ForestLevel2Scene');
             })
 
         // Boton Creditos

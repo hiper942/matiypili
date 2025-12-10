@@ -41,9 +41,9 @@ export default class Grid
     build()
     {
         for (let row = 0; row < this.levelMatrix.length; row++)
-            {
+        {
             for (let col = 0; col < this.levelMatrix[row].length; col++)
-                {
+            {
 
                 const tile = this.levelMatrix[row][col];
                 const x = col * this.cellSize + this.cellSize / 2;
@@ -182,12 +182,35 @@ export default class Grid
                     }
 
                     // - DECORACION BACK - //
-                    // Bush
+                    // Lamp
                     case 1:
                     {
-                        const bush = new Decoration();
-                        bush.sprite.setDepth(-5);
-                        this.decoBack.push(bush);
+                        const lamp = { x, y, texture: 'lamp' };
+                        this.decoBack.push(lamp);
+                        break;
+                    }
+
+                    // Tutorial arrows
+                    case 3:
+                    {
+                        const arrows = { x, y, texture: 'tutoARROWS', type: 'raw' };
+                        this.decoBack.push(arrows);
+                        break;
+                    }
+
+                    // Tutorial wasd
+                    case 4:
+                    {
+                        const wasd = { x, y, texture: 'tutoWASD', type: 'raw' };
+                        this.decoBack.push(wasd);
+                        break;
+                    }
+
+                    // Tutorial shift
+                    case 5:
+                    {
+                        const shift = { x, y, texture: 'tutoSHIFT', type: 'raw' };
+                        this.decoBack.push(shift);
                         break;
                     }
 
@@ -195,18 +218,12 @@ export default class Grid
                     // Cesped
                     case 2:
                     {
-                        const temp = { x, y, row, col };
-                        this.decoFront.push(temp);
+                        const grass = { x, y, row, col, type: 'grass' };
+                        this.decoFront.push(grass);
                         break;
                     }
 
-                    case 3:
-                    {
-                        const lamp = new Decoration();
-                        lamp.sprite.setDepth(25);
-                        this.decoBack.push(lamp);
-                        break;
-                    }
+                    
 
                     default:
                         console.warn("Decoration: Tile unknown: ", tile);
@@ -216,17 +233,24 @@ export default class Grid
         }
     }
 
-    grass(x, y)
+    grass(row, col)
     {
-        const isGrass = (tile) => tile === 12;
-        const left = isGrass (this.decoMatrix [x][y - 1]);
-        const right = isGrass (this.decoMatrix [x][y + 1]);
+    const matrix = this.decoMatrix;
 
-        if (!left && right) return 'grassL';
-        if (left && right) return 'grassM';
-        if (left && !right) return 'grassR';
+    if (!matrix[row] || matrix[row][col] !== 2) return null;
+
+    const isGrass = tile => tile === 2;
+
+    const left  = (matrix[row][col - 1] !== undefined) ? isGrass(matrix[row][col - 1]) : false;
+    const right = (matrix[row][col + 1] !== undefined) ? isGrass(matrix[row][col + 1]) : false;
+
+    if (!left && right) return 'grassL';
+    if (left && right) return 'grassM';
+    if (left && !right) return 'grassR';
+
+    return 'grassM';
     }
-
+    
     bridge(row, col)
     {
         const isBridge = (tile) => tile === 8;

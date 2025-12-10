@@ -19,116 +19,6 @@ export default class TutorialLevelScene extends Phaser.Scene
         super('TutorialLevelScene');
     }
 
-    preload()
-    {
-        // --- FONDO DEL NIVEL ---
-        this.load.image('fondoBosque', 'assets/Escenario/Fondo.png');
-        
-        // --- PERSONAJES --- //
-        // = PILI = //
-        // Pili Idle
-        this.load.spritesheet('piliIdle', 'assets/Pili/idlePili.png',
-        {
-            frameWidth: 256, 
-            frameHeight: 256 
-        });
-
-        // Pili Walk
-        this.load.spritesheet('piliWalk', 'assets/Pili/walkPili.png',
-        {
-            frameWidth: 256, 
-            frameHeight: 256 
-        });
-
-        // = MATI = //
-        // Mati Idle
-        this.load.spritesheet('matiIdle', 'assets/Mati/idleMati.png',
-        {
-            frameWidth: 256,
-            frameHeight: 256
-        });
-
-        // Mati Walk
-        this.load.spritesheet('matiWalk', 'assets/Mati/walkMati.png',
-        {
-            frameWidth: 256,
-            frameHeight: 256
-        });
-
-        // Mati Dash
-        this.load.spritesheet('matiDash', 'assets/Mati/dashMati.png',
-        {
-            frameWidth: 256,
-            frameHeight: 256
-        });
-
-        // Mati Jump
-        this.load.spritesheet('matiJump', 'assets/Mati/jumpMati.png',
-        {
-            frameWidth: 256,
-            frameHeight: 256
-        });
-
-        // Mati Fall
-        this.load.spritesheet('matiFall', 'assets/Mati/fallMati.png',
-        {
-            frameWidth: 256,
-            frameHeight: 256
-        });
-
-        // = INTERRUPTOR = //
-        this.load.spritesheet('switchActivation', 'assets/Escenario/Palanca/palanca.png',
-        {
-            frameWidth: 128,
-            frameHeight: 128
-        });
-
-        // = PUERTA = //
-        this.load.spritesheet('doorOpen', 'assets/Escenario/Puerta/puertaAnim.png',
-        {
-            frameWidth: 256,
-            frameHeight: 256
-        });
-        // = BOTON = //
-        this.load.image('crystalOff', "assets/Escenario/Boton/cristalApagado.png");
-        this.load.image('crystalMid', "assets/Escenario/Boton/cristalIntermedio.png");
-        this.load.image('crystalOn', "assets/Escenario/Boton/cristalEncendido.png");
-
-        // = PLACA DE PRESIÓN = //
-        this.load.image('pressureOff', "assets/Escenario/Placa/pressureOff.png");
-        this.load.image('pressureOn', "assets/Escenario/Placa/pressureOn.png");
-
-        // = CESPED = //
-        this.load.image('grassR', "assets/Escenario/Tiles/cespedDerecha.png");
-        this.load.image('grassM', "assets/Escenario/Tiles/cespedCentro.png");
-        this.load.image('grassL', "assets/Escenario/Tiles/cespedIzquierda.png");
-
-        // = DECORACIONES = //
-        this.load.image('fenceR', "assets/Escenario/Tiles/cespedDerecha.png");
-        this.load.image('fenceL', "assets/Escenario/Tiles/cespedDerecha.png");
-
-        this.load.image('lamp', "assets/Escenario/Decorations/decorations/lamp.png");
-
-        this.load.image('sign', "assets/Escenario/Decorations/decorations/sign.png");
-
-        this.load.image('rock1', "assets/Escenario/Decorations/decorations/rock_1.png");
-        this.load.image('sign2', "assets/Escenario/Decorations/decorations/rock_2.png");
-        this.load.image('sign3', "assets/Escenario/Decorations/decorations/rock_3.png");
-
-        // = TILES = //
-        this.load.spritesheet('platformTiles', "assets/Escenario/Tiles/SpriteSheet/tilemap.png",
-        {
-            frameWidth: 64,
-            frameHeight: 64
-        });
-
-        // = PINCHOS = //
-        this.load.image('spike', "assets/Escenario/Pinchos/pinchos.png");
-
-        // = ROCA = //
-        this.load.image('rock', "assets/Escenario/Pedroloo/PiedraPili.png");
-    }
-
     // Start()
     create()
     {
@@ -151,134 +41,6 @@ export default class TutorialLevelScene extends Phaser.Scene
             .setDisplaySize(1600, 900)
             .setDepth(-10);
         
-        // --- ANIAMCIONES --- //
-        // = PILI = //
-        // Idle
-        this.anims.create(
-        {
-            key: 'piliIdle',
-            frames: this.anims.generateFrameNumbers('piliIdle',
-            {
-                start: 0,
-                end: 19
-            }),
-
-            frameRate: 8,
-            repeat: -1
-        });
-
-        // Walk
-        this.anims.create(
-        {
-            key: 'piliWalk',
-            frames: this.anims.generateFrameNumbers('piliWalk',
-            {
-                start: 0,
-                end: 37
-            }),
-
-            frameRate: 18,
-            repeat: -1
-        });
-
-        // = MATI = //
-        // Idle
-        this.anims.create(
-        {
-            key: 'matiIdle',
-            frames: this.anims.generateFrameNumbers('matiIdle',
-            {
-                start: 0,
-                end: 12
-            }),
-
-            frameRate: 14,
-            repeat: -1
-        });
-
-        // Walk
-        this.anims.create(
-        {
-            key: 'matiWalk',
-            frames: this.anims.generateFrameNumbers('matiWalk',
-            {
-                start: 0,
-                end: 19
-            }),
-
-            frameRate: 18,
-            repeat: -1
-        });
-
-        // Dash
-        this.anims.create(
-        {
-            key: 'matiDash',
-            frames: this.anims.generateFrameNumbers('matiDash',
-            {
-                start: 0,
-                end: 14
-            }),
-
-            frameRate: 60,
-            repeat: 0
-        });
-
-        // Jump
-        this.anims.create(
-        {
-            key: 'matiJump',
-            frames: this.anims.generateFrameNumbers('matiJump',
-                {
-                    start: 0,
-                    end: 22
-                }
-            ),
-            frameRate: 34
-        });
-
-        // Fall
-        this.anims.create(
-        {
-            key: 'matiFall',
-            frames: this.anims.generateFrameNames('matiFall',
-            {
-                start: 0,
-                end: 9
-            }
-            ),
-            frameRate: 34,
-            repeat: -1
-        });
-
-        // = PALANCA = //
-        this.anims.create(
-        {
-            key: 'switchActivation',
-            frames: this.anims.generateFrameNames('switchActivation',
-                {
-                    start: 0,
-                    end: 9
-                }
-            ),
-            frameRate: 12,
-            repeat: 0
-        });
-
-        // = PUERTA = //
-        this.anims.create(
-        {
-            key: 'doorOpen',
-            frames: this.anims.generateFrameNames('doorOpen',
-                {
-                    start: 0,
-                    end: 12
-                }
-            ),
-            frameRate: 8,
-            repeat: 0
-        });
-
         // --- NIVEL --- //
         // = GRID = //
 
@@ -318,19 +80,21 @@ export default class TutorialLevelScene extends Phaser.Scene
 
         // DECORACION FRONT //
         // 2 = Cesped
-        // 
+        // 3 = Flechas
+        // 4 = WASD
+        // 5 = SHIFT
 
         const decoMatrix = 
         [
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,4,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,2,2,2,2,2,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -345,6 +109,12 @@ export default class TutorialLevelScene extends Phaser.Scene
         
         // = DECORACIÓN FONDO = //
 
+        this.grid.decoBack.forEach(deco =>
+        {
+            const dec = new Decoration(this, deco.x, deco.y, deco.texture);
+            dec.sprite.setDepth(-5);
+        });
+
         // = PERSONAJES 1 = //
         this.mati = new Mati(this, this.grid.matiSpawn.x, this.grid.matiSpawn.y);
         this.mati.sprite.y -= this.mati.sprite.body.height / 2;
@@ -352,9 +122,21 @@ export default class TutorialLevelScene extends Phaser.Scene
         // = DECORACIÓN FRENTE = //
         this.grid.decoFront.forEach(deco =>
         {
-            const texture = this.grid.grass(deco.row, deco.col);
-            const decoration = new Decoration(this, deco.x, deco.y, texture);
-            decoration.sprite.setDepth(20);
+            if (deco.type === "grass")
+            {
+                const texture = this.grid.grass(deco.row, deco.col);
+                const decoration = new Decoration(this, deco.x, deco.y, texture);
+                decoration.sprite.setDepth(20);
+            }
+        });
+
+        this.grid.decoFront.forEach(deco =>
+        {
+            if (deco.type === "raw")
+            {
+                const dec = new Decoration(this, deco.x, deco.y, deco.texture);
+                dec.sprite.setDepth(22);
+            }
         });
 
         // = PERSONAJES 2 = //
@@ -450,7 +232,7 @@ export default class TutorialLevelScene extends Phaser.Scene
         //----- PUERTA -----//
         if (!this.door.open && this.grid.switch.active) this.door.openDoor();
 
-        if (this.door) this.door.update(this.mati, this.pili, 'ForestLevelScene');
+        if (this.door) this.door.update(this.mati, this.pili, 'ForestLevel1Scene');
 
         //----- BOTON -----//
         this.grid.buttons.forEach(btn => btn.update(this.mati));

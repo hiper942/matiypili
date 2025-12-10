@@ -1,33 +1,54 @@
 import Phaser, { Physics } from 'phaser';
+import LoadScreen from './scenes/LoadScreen.js';
 import MenuScene from './scenes/MenuScene.js';
-import ForestLevelScene from './scenes/ForestLevelScene.js';
+import CreditsScene from './scenes/CreditsScene.js';
 import TutorialLevelScene from './scenes/TutorialLevelScene.js';
+import ForestLevel1Scene from './scenes/ForestLevel1Scene.js';
 import ForestLevel2Scene from './scenes/ForestLevel2Scene.js';
+import ForestLevel3Scene from './scenes/ForestLevel3Scene.js';
+import BootScene from './scenes/BootScene.js';
 import WinScene from './scenes/WinScene.js';
 import DeathScene from './scenes/DeathScene.js';
 import Pause from './scenes/Pause.js';
-import Settings from './scenes/Settings.js'
+import Settings from './scenes/Settings.js';
 
-const config = {
+const config = 
+{
     type: Phaser.AUTO,
     width: 1600,
-    height: 896,
+    height: 900,
     parent: 'game-container',
 
-    scale: {
+    scale: 
+    {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
     },
 
-    physics: {
+    physics: 
+    {
         default: 'arcade',
-        arcade: {
+        arcade: 
+        {
             gravity: { y: 900 },
-            debug: false
+            debug: true
         }
     },
     
-    scene: [MenuScene, Pause, Settings, TutorialLevelScene, ForestLevelScene, ForestLevel2Scene, WinScene, DeathScene],
+    scene: [
+        LoadScreen,
+        BootScene,
+        MenuScene,
+        CreditsScene,
+        Settings,
+        Pause,
+        WinScene,
+        DeathScene,
+        TutorialLevelScene,
+        ForestLevel1Scene,
+        ForestLevel2Scene,
+        ForestLevel3Scene
+    ],
     backgroundColor: '#8e9423ff',
 }
 

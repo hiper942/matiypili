@@ -7,19 +7,6 @@ export default class Pause extends Phaser.Scene
         super('Pause');
     }
 
-    preload() {
-    this.load.image('btnReanudarOff', 'assets/Menus/botonReanudarApagado.PNG');
-    this.load.image('btnReanudarOn',  'assets/Menus/botonReanudarEncendido.PNG');
-
-    this.load.image('btnSalirOff',  'assets/Menus/botonSalirApagado.PNG');
-    this.load.image('btnSalirOn',   'assets/Menus/botonSalirEncendido.PNG');
-
-    this.load.image('btnRestartOff',  'assets/Menus/botonReiniciarApagado.PNG');
-    this.load.image('btnRestartOn',   'assets/Menus/botonReiniciarEncendido.PNG');
-
-    this.load.image('backPause', 'assets/Menus/FondoMenuPausa.PNG'); // o el fondo correcto
-}
-
     create()
     {
         if (this.sound.get('levelMusic'))
@@ -60,7 +47,8 @@ export default class Pause extends Phaser.Scene
             .setInteractive({ useHandCursor: true })
             .on('pointerover', () => menuBtn.setTexture('btnSalirOn'))
             .on('pointerout',  () => menuBtn.setTexture('btnSalirOff'))
-            .on('pointerdown', () => {
+            .on('pointerdown', () =>
+            {
                 this.scene.stop();
                 this.scene.stop('TutorialLevelScene');
                 this.scene.stop('ForestLevelScene');
@@ -69,10 +57,10 @@ export default class Pause extends Phaser.Scene
             });
 
         // Botón Volver al Menú
-        const restartBtn = this.add.image(800, 750, 'btnRestartOff')
+        const restartBtn = this.add.image(800, 750, 'btnReiniciarOff')
             .setInteractive({ useHandCursor: true })
-            .on('pointerover', () => restartBtn.setTexture('btnRestartOn'))
-            .on('pointerout',  () => restartBtn.setTexture('btnRestartOff'))
+            .on('pointerover', () => restartBtn.setTexture('btnReiniciarOn'))
+            .on('pointerout',  () => restartBtn.setTexture('btnReiniciarOff'))
             .on('pointerdown', () =>
             {
                 this.scene.stop();

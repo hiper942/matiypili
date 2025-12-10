@@ -8,7 +8,8 @@ export default class Door
         // Sprite estático de colisión
         this.sprite = scene.physics.add.sprite(x, y, 'doorOpen', 0)
             .setDisplaySize(256, 256)
-            .setOrigin(0.325, 0.8375);
+            .setOrigin(0.325, 0.85)
+            .setDepth(-2);
 
         this.sprite.body.setSize(64, 96);
         this.sprite.body.setOffset(48, 128);

@@ -9,7 +9,8 @@ export default class Pili
         // Carga sprite
         this.sprite = scene.physics.add.sprite(x, y, 'piliIdle')
             .setOrigin(0.5, 0.5)
-            .setCollideWorldBounds(true);
+            .setCollideWorldBounds(true)
+            .setDepth(-1);
 
         // Reescala a 128x128
         this.sprite.setScale(0.9);

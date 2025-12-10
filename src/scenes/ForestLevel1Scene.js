@@ -11,11 +11,11 @@ import Decoration from '../entities/Decoration.js';
 import { MoveCharacterCommand } from '../commands/MoveCharacterCommand.js';
 import { JumpCharacterCommand } from '../commands/JumpCharacterCommand.js';
 
-export default class ForestLevel2Scene extends Phaser.Scene
+export default class ForestLevel1Scene extends Phaser.Scene
 {
     constructor()
     {
-        super('ForestLevel2Scene');
+        super('ForestLevel1Scene');
     }
 
     // Start()
@@ -38,11 +38,10 @@ export default class ForestLevel2Scene extends Phaser.Scene
         // --- FONDO --- //
         this.add.image(800, 450, 'fondoBosque')
             .setDisplaySize(1600, 900)
-            .setDepth(-10);
+            .setDepth(-50);
 
         // --- NIVEL --- //
         // = GRID = //
-
         // 0 = Vacio
         // 1 = Plataforma
         // 2 = Interruptor
@@ -55,33 +54,33 @@ export default class ForestLevel2Scene extends Phaser.Scene
         // 9 = Trampilla
         // 10 = Pinchos
         // 11 = Placa de Presión
+        // 12 = Cesped
 
         const levelMatrix = 
         [
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,6,0,1,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,9,9,9,1,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,4,0,5,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,11,0,0,3,0,1],
-            [1,1,1,1,1,1,1,8,8,8,8,8,8,8,8,1,1,1,1,1,1,1,1,1,1],
-            [1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1],
-            [1,1,1,1,1,1,1,10,10,10,10,10,10,10,10,1,1,1,1,1,1,1,1,1,1],
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,7,0,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,1],
+            [1,0,4,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,3,0,1],
+            [1,1,1,1,1,1,1,1,1,8,8,8,8,8,8,8,8,8,8,8,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,10,10,10,10,10,10,10,10,10,10,10,1,1,1,1,1],
         ]
-
         // --- DECORACION --- //
         // 1 = Decoración Back
-        // 3 = FLECHAS
-        // 4 = WASD
-        // 5 = SHIFT
 
         // DECORACION FRONT //
         // 2 = Cesped
+        // 3 = Flechas
+        // 4 = WASD
+        // 5 = SHIFT
 
         const decoMatrix = 
         [
@@ -94,7 +93,7 @@ export default class ForestLevel2Scene extends Phaser.Scene
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,2,2,2,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -124,7 +123,6 @@ export default class ForestLevel2Scene extends Phaser.Scene
             if (deco.type === "grass")
             {
                 const texture = this.grid.grass(deco.row, deco.col);
-                if (!texture) return;
                 const decoration = new Decoration(this, deco.x, deco.y, texture);
                 decoration.sprite.setDepth(20);
             }
@@ -231,7 +229,7 @@ export default class ForestLevel2Scene extends Phaser.Scene
         //----- PUERTA -----//
         if (!this.door.open && this.grid.switch.active) this.door.openDoor();
 
-        if (this.door) this.door.update(this.mati, this.pili, 'ForestLevel3Scene');
+        if (this.door) this.door.update(this.mati, this.pili, 'ForestLevel2Scene');
 
         //----- BOTON -----//
         this.grid.buttons.forEach(btn => btn.update(this.mati));

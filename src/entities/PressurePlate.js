@@ -6,7 +6,8 @@ export default class PressurePlate
         this.id = id;
         this.active = false;
 
-        this.sprite = scene.physics.add.staticSprite(x, y, 'pressureOff');
+        this.sprite = scene.physics.add.sprite(x, y, 'pressure');
+        this.sprite.setImmovable(true);
         this.sprite.isPressurePlate = true;
         this.sprite.interactiveID;
 
@@ -41,18 +42,21 @@ export default class PressurePlate
     on()
     {
         this.active = true;
-        this.sprite.setTexture('pressureOn');
+        this.sprite.play('pressOn');
 
         this.scene.grid.interactives.forEach(obj =>
         {
-            if (obj.id === this.id) obj.activate();
+            if (obj.id === this.id)
+            {
+                obj.activate();
+            }
         });
     }
 
     off()
     {
         this.active = false;
-        this.sprite.setTexture('pressureOff');
+        this.sprite.play('pressOff');
 
         this.scene.grid.interactives.forEach(obj =>
         {
