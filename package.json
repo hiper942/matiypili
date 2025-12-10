@@ -5,7 +5,8 @@
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack serve --mode development --open",
-    "start": "node server.js",
+    "dev:server": "node src/server/index.js",
+    "start": "npm run build && node src/server/index.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
