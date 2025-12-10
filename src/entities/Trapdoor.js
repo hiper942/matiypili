@@ -24,6 +24,6 @@ export default class Trapdoor
         if (!this.active) return;
         this.active = false;
 
-        this.sprite.enableBodyody(false, this.sprite.x, this.sprite.y, true, true);
+        this.sprite.enableBody(false, this.sprite.x, this.sprite.y, true, true);
     }
 }

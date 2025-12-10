@@ -67,7 +67,7 @@ export default class ForestLevel2Scene extends Phaser.Scene
             [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
             [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
             [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,4,0,5,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,11,0,0,3,0,1],
+            [1,4,0,5,0,7,2,0,0,0,0,0,0,0,0,0,0,0,0,11,0,0,3,0,1],
             [1,1,1,1,1,1,1,8,8,8,8,8,8,8,8,1,1,1,1,1,1,1,1,1,1],
             [1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1],
             [1,1,1,1,1,1,1,10,10,10,10,10,10,10,10,1,1,1,1,1,1,1,1,1,1],
@@ -107,7 +107,6 @@ export default class ForestLevel2Scene extends Phaser.Scene
         this.door = new Door(this, this.grid.doorpos.x, this.grid.doorpos.y);
         
         // = DECORACIÓN FONDO = //
-
         this.grid.decoBack.forEach(deco =>
         {
             const dec = new Decoration(this, deco.x, deco.y, deco.texture);
@@ -212,7 +211,6 @@ export default class ForestLevel2Scene extends Phaser.Scene
         // ----- PAUSA ----- //
         if (Phaser.Input.Keyboard.JustDown(this.pauseKey))
         {
-
             this.scene.pause();
 
             this.scene.launch('Pause');
@@ -240,7 +238,7 @@ export default class ForestLevel2Scene extends Phaser.Scene
         if (this.grid.spikes) this.grid.spikes.forEach(spike => spike.update(this.mati, this.pili));
 
         //----- PLACA DE PRESIÓN -----//
-        if (this.grid.pressurePlates) this.grid.pressurePlates.forEach(press => press.update(this.pressure))
+        if (this.grid.pressurePlates) this.grid.pressurePlates.forEach(press => press.update(this.pressure));
     }
 
     onSpikeTouched(who)

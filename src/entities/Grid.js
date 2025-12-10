@@ -157,8 +157,10 @@ export default class Grid
                     }
 
                     default:
+                    {
                         console.warn("Level: Tile unknown: ", tile);
                         break;
+                    }
                 }
             }
         }
@@ -223,11 +225,11 @@ export default class Grid
                         break;
                     }
 
-                    
-
                     default:
+                    {
                         console.warn("Decoration: Tile unknown: ", tile);
                         break;
+                    }
                 }
             }
         }
@@ -235,20 +237,20 @@ export default class Grid
 
     grass(row, col)
     {
-    const matrix = this.decoMatrix;
+        const matrix = this.decoMatrix;
 
-    if (!matrix[row] || matrix[row][col] !== 2) return null;
+        if (!matrix[row] || matrix[row][col] !== 2) return null;
 
-    const isGrass = tile => tile === 2;
+        const isGrass = tile => tile === 2;
 
-    const left  = (matrix[row][col - 1] !== undefined) ? isGrass(matrix[row][col - 1]) : false;
-    const right = (matrix[row][col + 1] !== undefined) ? isGrass(matrix[row][col + 1]) : false;
+        const left  = (matrix[row][col - 1] !== undefined) ? isGrass(matrix[row][col - 1]) : false;
+        const right = (matrix[row][col + 1] !== undefined) ? isGrass(matrix[row][col + 1]) : false;
 
-    if (!left && right) return 'grassL';
-    if (left && right) return 'grassM';
-    if (left && !right) return 'grassR';
+        if (!left && right) return 'grassL';
+        if (left && right) return 'grassM';
+        if (left && !right) return 'grassR';
 
-    return 'grassM';
+        return 'grassM';
     }
     
     bridge(row, col)

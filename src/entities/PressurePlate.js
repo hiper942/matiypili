@@ -6,10 +6,9 @@ export default class PressurePlate
         this.id = id;
         this.active = false;
 
-        this.sprite = scene.physics.add.sprite(x, y, 'pressure');
+        this.sprite = scene.physics.add.staticSprite(x, y, 'pressure');
         this.sprite.setImmovable(true);
         this.sprite.isPressurePlate = true;
-        this.sprite.interactiveID;
 
         this.sensor = scene.add.rectangle(x, y, 64, 32, 0x00ff00, 0);
         scene.physics.add.existing(this.sensor, false);
@@ -17,19 +16,21 @@ export default class PressurePlate
         this.sensor.body.immovable = true;
     }
 
-    update(objOnTop)
+    update(objectsOnTop)
     {
+        if (!objectsOnTop || objectsOnTop.length === 0) return;
+
         let somethingOnTop = false;
 
-        objOnTop.forEach(obj =>
+        objectsOnTop.forEach(obj =>
         {
+            if (!obj || !obj.sprite) return;
+
             if (this.scene.physics.overlap(obj.sprite, this.sensor))
-            {
                 somethingOnTop = true;
-            }
         });
 
-        if(somethingOnTop && !this.active)
+        if (somethingOnTop && !this.active)
         {
             this.on();
         }
@@ -46,7 +47,7 @@ export default class PressurePlate
 
         this.scene.grid.interactives.forEach(obj =>
         {
-            if (obj.id === this.id)
+            if (obj.id === this.id && obj.activate)
             {
                 obj.activate();
             }
