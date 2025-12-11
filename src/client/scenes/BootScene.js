@@ -55,7 +55,10 @@ export default class BootScene extends Phaser.Scene {
         this.load.image('tutoSHIFT', 'assets/Tutorial/Shift.png');
         this.load.image('tutoARROWS', 'assets/Tutorial/Flechas.png');
 
-        // ---- MENÚ ----
+        // ---- INTERFACES ---- //
+        this.load.image('frame', 'assets/Escenario/Marco.PNG');
+
+        // ---- MENÚS ----
         this.load.image('menuScene', 'assets/Menus/FondoMenu.png');
         this.load.image('deathScene', 'assets/Menus/FondoMenuMuerte.png');
         this.load.image('winScene', 'assets/Menus/FondoMenuVictoria.png');

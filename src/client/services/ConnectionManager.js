@@ -30,7 +30,8 @@ export class ConnectionManager {
    */
   async checkConnection() {
     try {
-      const response = await fetch('/api/connected', {
+      const response = await fetch('/api/connected', 
+      {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
