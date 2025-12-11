@@ -5,9 +5,9 @@ import { connectionManager } from '../services/ConnectionManager';
  * Escena que se muestra cuando se pierde la conexión con el servidor
  * Pausa el resto de escenas y comprueba continuamente hasta que se restablezca
  */
-export class ConnectionLostScene extends Phaser.Scene {
+export default class DisconectionScene extends Phaser.Scene {
     constructor() {
-        super('ConnectionLostScene');
+        super('DisconectionScene');
         this.reconnectCheckInterval = null;
     }
 
@@ -18,25 +18,25 @@ export class ConnectionLostScene extends Phaser.Scene {
 
     create() {
         // Fondo semi-transparente
-        this.add.rectangle(400, 300, 800, 600, 0x000000, 0.8);
+        this.add.rectangle(800, 450, 1600, 900, 0x000000, 0.8);
 
         // Título
-        this.add.text(400, 200, 'CONEXIÓN PERDIDA', {
-            fontSize: '48px',
+        this.add.text(800, 300, 'CONEXIÓN PERDIDA', {
+            fontSize: '96px',
             color: '#ff0000',
             fontStyle: 'bold'
         }).setOrigin(0.5);
 
         // Mensaje
-        this.statusText = this.add.text(400, 300, 'Intentando reconectar...', {
-            fontSize: '24px',
+        this.statusText = this.add.text(800, 500, 'Intentando reconectar...', {
+            fontSize: '48px',
             color: '#ffff00'
         }).setOrigin(0.5);
 
         // Contador de intentos
         this.attemptCount = 0;
-        this.attemptText = this.add.text(400, 350, 'Intentos: 0', {
-            fontSize: '18px',
+        this.attemptText = this.add.text(800, 600, 'Intentos: 0', {
+            fontSize: '36px',
             color: '#ffffff'
         }).setOrigin(0.5);
 

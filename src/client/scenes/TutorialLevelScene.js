@@ -41,6 +41,11 @@ export default class TutorialLevelScene extends Phaser.Scene
         this.add.image(800, 450, 'fondoBosque')
             .setDisplaySize(1600, 900)
             .setDepth(-10);
+
+        // --- INTERFAZ --- //
+        this.add.image(800, 450, 'frame')
+            .setDisplaySize(1600, 900)
+            .setDepth(30);
         
         // --- NIVEL --- //
         // = GRID = //
@@ -208,7 +213,7 @@ export default class TutorialLevelScene extends Phaser.Scene
 
         this.connectionListener = (data) =>
         {
-            if  (!data.connected && this.scene.isActive())
+            if  (!data.connected)
             {
                 this.onConnectionLost();
             }
@@ -258,7 +263,7 @@ export default class TutorialLevelScene extends Phaser.Scene
     {
         this.scene.pause();
 
-        this.scene.launch('DisconectionScene', { previousScene: 'TutorialScene' });
+        this.scene.launch('DisconectionScene', { previousScene: 'TutorialLevelScene' });
     }
 
     onSpikeTouched(who)

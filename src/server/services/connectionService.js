@@ -11,9 +11,27 @@ export function createConnectionService() {
 
   // Limpiar sesiones inactivas periódicamente
   const cleanupInterval = setInterval(() => {
-    // 
-    // const disconnectedSessions.push(sessionId);
-    console.log("[ConnectionService] ");
+    
+    const disconnectedSessions = [];
+
+    for (const [sessionId, lastActive] of connectedSessions.entries())
+    {
+      if (Date.now() - lastActive > CONNECTION_TIMEOUT)
+      {
+        disconnectedSessions.push(sessionId);
+      }
+    }
+
+    disconnectedSessions.forEach(sessionId =>
+      {
+        connectedSessions.delete(sessionId);
+        console.log("[ConnectionService] Sesion desconectada por timeout: ", sessionId);
+      });
+
+    if (disconnectedSessions.length > 0)
+    {
+      console.log(`[ConnectionService] Sesiones activas restantes: ${connectedSessions.size}`);
+    }
 
   }, CLEANUP_INTERVAL);
 

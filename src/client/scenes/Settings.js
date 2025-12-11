@@ -117,5 +117,5 @@ export default class SettingsScene extends Phaser.Scene
             .on('pointerover', () => volverBtn.setTexture('btnVolverOn'))
             .on('pointerout',  () => volverBtn.setTexture('btnVolverOff'))
             .on('pointerdown', () => this.scene.start('MenuScene'));
-        }
+    }
 }
