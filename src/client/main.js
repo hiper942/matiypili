@@ -12,6 +12,7 @@ import DeathScene from './scenes/DeathScene.js';
 import Pause from './scenes/Pause.js';
 import Settings from './scenes/Settings.js';
 import DisconectionScene from './scenes/DisconectionScene.js';
+import PartyScene from './scenes/PartyScene.js';
 
 const config = 
 {
@@ -49,7 +50,8 @@ const config =
         ForestLevel1Scene,
         ForestLevel2Scene,
         ForestLevel3Scene,
-        DisconectionScene
+        DisconectionScene,
+        PartyScene
     ],
     backgroundColor: '#8e9423ff',
 }

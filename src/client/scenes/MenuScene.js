@@ -50,10 +50,16 @@ export default class MenuScene extends Phaser.Scene{
             color: '#ffff00'
         }).setOrigin(0.5);
 
-        const onlineBtn = this.add.text(400, 390, 'Online Multiplayer (Not available)', {
+        const onlineBtn = this.add.text(400, 390, 'Online Multiplayer', {
             fontSize: '24px',
-            color: '#ff6666',
-        }).setOrigin(0.5);
+            color: '#00ff00',
+        }).setOrigin(0.5)
+        .setInteractive({useHandCursor: true})
+        .on('pointerover', () => onlineBtn.setColor('#00ff88'))
+        .on('pointerout', () => onlineBtn.setColor('#00ff00'))
+        .on('pointerdown', () => {
+            this.scene.start('PartyScene');
+        });
 
         // Listener para cambios de conexión
         this.connectionListener = (data) => {

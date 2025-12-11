@@ -21,7 +21,8 @@
   "description": "En lo más profundo de una tranquila selva habita Pili, una gigante piedra que custodia la tranquilidad de la naturaleza. Un día, se encuentra con Mati, un niño perdido. Aunque no comparten ni palabras, pronto descubren una gran conexión entre ellos; Pili escucha los pensamientos de Mati, y Mati siente la selva a través de Pili.",
   "dependencies": {
     "express": "^5.1.0",
-    "phaser": "^3.90.0"
+    "phaser": "^3.90.0",
+    "ws": "^8.18.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

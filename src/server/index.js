@@ -1,11 +1,15 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { WebSocketServer } from 'ws';
+import { createServer } from 'http';
 
 // Servicios (factory functions)
 import { createUserService } from './services/userService.js';
 import { createMessageService } from './services/messageService.js';
 import { createConnectionService } from './services/connectionService.js';
+import { createGameRoomService } from './services/gameRoomService.js';
+import { createMatchmakingService } from './services/matchmakingService.js';
 
 // Controladores (factory functions)
 import { createUserController } from './controllers/userController.js';
@@ -29,6 +33,8 @@ const __dirname = path.dirname(__filename);
 const userService = createUserService();
 const messageService = createMessageService(userService);  // messageService depende de userService
 const connectionService = createConnectionService();
+const gameRoomService = createGameRoomService();
+const matchmakingService = createMatchmakingService(gameRoomService);
 
 // 2. Crear controladores inyectando servicios (capa de lógica)
 const userController = createUserController(userService);
@@ -105,13 +111,62 @@ app.use((err, req, res, next) => {
   });
 });
 
+// ==================== WEBSOCKET SERVER ====================
+
+const server = createServer(app);
+const wss = new WebSocketServer({ server });
+
+wss.on('connection', (ws) => {
+  console.log('Cliente WebSocket conectado');
+
+  ws.on('message', (message) => {
+    try {
+      const data = JSON.parse(message);
+      // Aqui hay que cambiar todo
+      switch (data.type) {
+        case 'joinQueue':
+          matchmakingService.joinQueue(ws);
+          break;
+
+        case 'leaveQueue':
+          matchmakingService.leaveQueue(ws);
+          break;
+
+        case 'paddleMove':
+          gameRoomService.handlePaddleMove(ws, data.y);
+          break;
+
+        case 'goal':
+          gameRoomService.handleGoal(ws, data.side);
+          break;
+
+        default:
+          console.log('Mensaje desconocido:', data.type);
+      }
+    } catch (error) {
+      console.error('Error procesando mensaje:', error);
+    }
+  });
+
+  ws.on('close', () => {
+    console.log('Cliente WebSocket desconectado');
+    matchmakingService.leaveQueue(ws);
+    gameRoomService.handleDisconnect(ws);
+  });
+
+  ws.on('error', (error) => {
+    console.error('Error en WebSocket:', error);
+  });
+});
+
 // ==================== INICIO DEL SERVIDOR ====================
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log('========================================');
   console.log('  SERVIDOR DE CHAT PARA VIDEOJUEGO');
   console.log('========================================');
   console.log(`  Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`  WebSocket disponible en ws://localhost:${PORT}`);
   console.log(`  `);
   console.log(`  🎮 Juego: http://localhost:${PORT}`);
   console.log(`  `);
@@ -127,3 +182,4 @@ app.listen(PORT, () => {
   console.log(`   - POST   /api/messages`);
   console.log('========================================\n');
 });
+
