@@ -36,7 +36,7 @@ export default class ForestLevel1Scene extends Phaser.Scene
         }
 
         // --- FONDO --- //
-        this.add.image(800, 450, 'fondoBosque')
+        this.add.image(800, 450, 'fondoBosque1')
             .setDisplaySize(1600, 900)
             .setDepth(-50);
 

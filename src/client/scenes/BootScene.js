@@ -8,7 +8,8 @@ export default class BootScene extends Phaser.Scene
     preload() 
     {
         // ---- FONDO ---- //
-        this.load.image('fondoBosque', 'assets/Escenario/Fondo.png');
+        this.load.image('fondoBosque1', 'assets/Escenario/Fondo.PNG');
+        this.load.image('fondoBosque2', 'assets/Escenario/Fondo.png');
 
         // ---- MATI ---- //
         this.load.spritesheet('matiIdle', 'assets/Mati/idleMati.png', { frameWidth: 256, frameHeight: 256 });
@@ -89,7 +90,7 @@ export default class BootScene extends Phaser.Scene
 
         // ---- INTERFACES ---- //
         this.load.image('frame', 'assets/Escenario/Marco.PNG');
-
+        this.load.image('light', 'assets/Escenario/Luz.PNG');
         // ---- MENÚS ---- //
         this.load.image('menuScene', 'assets/Menus/FondoMenu.png');
         this.load.image('deathScene', 'assets/Menus/FondoMenuMuerte.png');

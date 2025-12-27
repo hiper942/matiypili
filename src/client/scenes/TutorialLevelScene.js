@@ -38,7 +38,7 @@ export default class TutorialLevelScene extends Phaser.Scene
         }
         
         // --- FONDO --- //
-        this.add.image(800, 450, 'fondoBosque')
+        this.add.image(800, 450, 'fondoBosque2')
             .setDisplaySize(1600, 900)
             .setDepth(-10);
 
@@ -46,6 +46,11 @@ export default class TutorialLevelScene extends Phaser.Scene
         this.add.image(800, 450, 'frame')
             .setDisplaySize(1600, 900)
             .setDepth(30);
+
+        // --- LUZ --- //
+        this.add.image(800, 450, 'light')
+            .setDisplaySize(1600, 900)
+            .setDepth(29);
         
         // --- NIVEL --- //
         // = GRID = //
