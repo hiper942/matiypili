@@ -34,7 +34,7 @@ export default class Grid
         this.piliSpawn = null;
 
         // Esto poner false en la entrega
-        this.debug = false;
+        this.debug = true;
 
         this.build();
     }
@@ -178,51 +178,119 @@ export default class Grid
                 if (this.debug) this.drawDebugCell(x, y);
                 
                 switch (tile)
-                {    
+                {
                     case 0:
-                    {
                         break;
-                    }
 
-                    // - DECORACION BACK - //
-                    // Lamp
                     case 1:
-                    {
-                        const lamp = { x, y, texture: 'lamp' };
-                        this.decoBack.push(lamp);
+                        this.decoBack.push({ x, y, texture: 'lamp' });
                         break;
-                    }
 
-                    // Tutorial arrows
+                    case 2:
+                        this.decoBack.push({ x, y, texture: 'branch' });
+                        break;
+
                     case 3:
-                    {
-                        const arrows = { x, y, texture: 'tutoARROWS', type: 'raw' };
-                        this.decoBack.push(arrows);
+                        this.decoBack.push({ x, y, texture: 'tutoARROWS', type: 'raw' });
                         break;
-                    }
 
-                    // Tutorial wasd
                     case 4:
-                    {
-                        const wasd = { x, y, texture: 'tutoWASD', type: 'raw' };
-                        this.decoBack.push(wasd);
+                        this.decoBack.push({ x, y, texture: 'tutoWASD', type: 'raw' });
                         break;
-                    }
 
-                    // Tutorial shift
                     case 5:
-                    {
-                        const shift = { x, y, texture: 'tutoSHIFT', type: 'raw' };
-                        this.decoBack.push(shift);
+                        this.decoBack.push({ x, y, texture: 'tutoSHIFT', type: 'raw' });
                         break;
-                    }
+
+                    case 6:
+                        this.decoBack.push({ x, y, texture: 'bushL' });
+                        break;
+
+                    case 7:
+                        this.decoBack.push({ x, y, texture: 'bushS' });
+                        break;
+
+                    case 8:
+                        this.decoBack.push({ x, y, texture: 'yellowCristal' });
+                        break;
+
+                    case 9:
+                        this.decoBack.push({ x, y, texture: 'greenCristal' });
+                        break;
+
+                    case 10:
+                        this.decoBack.push({ x, y, texture: 'vine1' });
+                        break;
+
+                    case 11:
+                        this.decoBack.push({ x, y, texture: 'vine2' });
+                        break;
+
+                    case 12:
+                        this.decoBack.push({ x, y, texture: 'vine3' });
+                        break;
+
+                    case 13:
+                        this.decoBack.push({ x, y, texture: 'vine4' });
+                        break;
+
+                    case 14:
+                        this.decoBack.push({ x, y, texture: 'vineL' });
+                        break;
+
+                    case 15:
+                        this.decoBack.push({ x, y, texture: 'mossR' });
+                        break;
+
+                    case 16:
+                        this.decoBack.push({ x, y, texture: 'mossL' });
+                        break;
+
+                    case 17:
+                        this.decoBack.push({ x, y, texture: 'mossB' });
+                        break;
+
+                    case 18:
+                        this.decoBack.push({ x, y, texture: 'mossT' });
+                        break;
+
+                    case 19:
+                        this.decoBack.push({ x, y, texture: 'mossU' });
+                        break;
+
+                    case 20:
+                        this.decoBack.push({ x, y, texture: 'mossCornerR' });
+                        break;
+
+                    case 21:
+                        this.decoBack.push({ x, y, texture: 'mossCornerL' });
+                        break;
+
+                    case 22:
+                        this.decoBack.push({ x, y, texture: 'stoneL' });
+                        break;
+
+                    case 23:
+                        this.decoBack.push({ x, y, texture: 'stoneM' });
+                        break;
+
+                    case 24:
+                        this.decoBack.push({ x, y, texture: 'stoneS' });
+                        break;
+
+                    case 25:
+                        this.decoBack.push({ x, y, texture: 'shrooms1' });
+                        break;
+
+                    case 26:
+                        this.decoBack.push({ x, y, texture: 'shrooms2' });
+                        break;
 
                     default:
-                    {
-                        console.warn("Decoration: Tile unknown: ", tile);
+                        console.warn("Decoration: Tile unknown:", tile);
                         break;
-                    }
                 }
+
             }
         }
 

@@ -104,17 +104,40 @@ export default class TutorialLevelScene extends Phaser.Scene
         ]
 
         // = DECORACION BACK = //
+        // 1 = Lampara
+        // 2 = Rama
         // 3 = Flechas
         // 4 = WASD
         // 5 = SHIFT
+        // 6 = Arbusto Grande
+        // 7 = Arbusto Peque
+        // 8 = Cristal Amarillo
+        // 9 = Cristal Verde
+        // 10 = Liana1
+        // 11 = Liana2
+        // 12 = Liana3
+        // 13 = Liana4
+        // 14 = Liana Grande
+        // 15 = Musgo Derecha
+        // 16 = Musgo Izquierda
+        // 17 = Musgo Abajo
+        // 18 = Musgo Cima
+        // 19 = Musgo Arriba
+        // 20 = Musgo Esquina Derecha
+        // 21 = Musgo Esquina Izquierda
+        // 22 = Piedra Grande
+        // 23 = Piedra Mediana
+        // 24 = Piedra Pequeña
+        // 25 = Dos Setas
+        // 26 = Tres Setas
 
         const backMatrix = 
         [
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,4,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,1,2,3,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,0],
+            [0,26,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -132,11 +155,14 @@ export default class TutorialLevelScene extends Phaser.Scene
         this.door = new Door(this, this.grid.doorpos.x, this.grid.doorpos.y);
         
         // = DECORACIÓN FONDO = //
-
         this.grid.decoBack.forEach(deco =>
         {
             const dec = new Decoration(this, deco.x, deco.y, deco.texture);
             dec.sprite.setDepth(-5);
+            if (deco.texture == 'lamp')
+            {
+                dec.sprite.setOffset(0, 32);
+            }
         });
 
         // = PERSONAJES 1 = //

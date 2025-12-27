@@ -1,9 +1,12 @@
-export default class BootScene extends Phaser.Scene {
-    constructor() {
+export default class BootScene extends Phaser.Scene 
+{
+    constructor() 
+    {
         super('BootScene');
     }
 
-    preload() {
+    preload() 
+    {
         // ---- FONDO ---- //
         this.load.image('fondoBosque', 'assets/Escenario/Fondo.png');
 
@@ -47,6 +50,37 @@ export default class BootScene extends Phaser.Scene {
         this.load.image('grassM', 'assets/Escenario/Tiles/cespedCentro.png');
         this.load.image('grassR', 'assets/Escenario/Tiles/cespedDerecha.png');
 
+        this.load.image('bushS', 'assets/Escenario/Decoraciones/Arbusto.PNG');
+        this.load.image('bushL', 'assets/Escenario/Decoraciones/ArbustoGrande.PNG');
+
+        this.load.image('yellowCristal', 'assets/Escenario/Decoraciones/CristalAmarillo.PNG');
+        this.load.image('greenCristal', 'assets/Escenario/Decoraciones/CristalVerde.PNG');
+
+        this.load.image('lamp', 'assets/Escenario/Decoraciones/Farolillo.PNG');
+
+        this.load.image('vine1', 'assets/Escenario/Decoraciones/Liana1.PNG');
+        this.load.image('vine2', 'assets/Escenario/Decoraciones/Liana2.PNG');
+        this.load.image('vine3', 'assets/Escenario/Decoraciones/LianasArbol.PNG');
+        this.load.image('vine4', 'assets/Escenario/Decoraciones/LianasArbolFinal.PNG');
+        this.load.image('vineL', 'assets/Escenario/Decoraciones/LianaGrande.PNG');
+
+        this.load.image('mossR', 'assets/Escenario/Decoraciones/MusgoArbolDerecha.PNG');
+        this.load.image('mossL', 'assets/Escenario/Decoraciones/MusgoArbolIzquierda.PNG');
+        this.load.image('mossB', 'assets/Escenario/Decoraciones/MusgoFinalAbajo.PNG');
+        this.load.image('mossT', 'assets/Escenario/Decoraciones/MusgoFinalArriba.PNG');
+        this.load.image('mossU', 'assets/Escenario/Decoraciones/MusgoHorizontal.PNG');
+        this.load.image('mossCornerR', 'assets/Escenario/Decoraciones/MusgoRamaFinalDerecha.PNG');
+        this.load.image('mossCornerL', 'assets/Escenario/Decoraciones/MusgoRamaFinalIzquierda.PNG');
+
+        this.load.image('stoneL', 'assets/Escenario/Decoraciones/PiedraGrande.PNG');
+        this.load.image('stoneM', 'assets/Escenario/Decoraciones/PiedraMediana.PNG');
+        this.load.image('stoneS', 'assets/Escenario/Decoraciones/PiedraPequeña.PNG');
+
+        this.load.image('branch', 'assets/Escenario/Decoraciones/planta.PNG');
+
+        this.load.image('shrooms1', 'assets/Escenario/Decoraciones/Setas2.PNG');
+        this.load.image('shrooms2', 'assets/Escenario/Decoraciones/Setas3.PNG');
+
         // ---- TUTORIALES ---- //
         this.load.image('tutoWASD', 'assets/Tutorial/WASD.png');
         this.load.image('tutoSHIFT', 'assets/Tutorial/Shift.png');
@@ -85,8 +119,9 @@ export default class BootScene extends Phaser.Scene {
         this.load.audio('levelMusic', 'assets/Musica/level.mp3');
     }
 
-    create() {
-        // ---- ANIMACIONES ----
+    create()
+    {
+        // ---- ANIMACIONES ---- //
         this.anims.create({
             key: 'piliIdle',
             frames: this.anims.generateFrameNumbers('piliIdle', { start: 0, end: 19 }),
