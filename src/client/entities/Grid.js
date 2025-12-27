@@ -262,6 +262,10 @@ export default class Grid
                         this.decoFront.push({ x: x, y: y, texture: 'branch' });
                         break;
 
+                    case 4:
+                        this.decoFront.push({ x: x, y: y, texture: 'flies' });
+                        break;
+
                     case 10:
                         this.decoFront.push({ x: x, y: y + this.cellSize * 2, texture: 'vine1' });
                         break;

@@ -82,6 +82,8 @@ export default class BootScene extends Phaser.Scene
 
         this.load.image('shrooms1', 'assets/Escenario/Decoraciones/Setas2.PNG');
         this.load.image('shrooms2', 'assets/Escenario/Decoraciones/Setas3.PNG');
+        
+        this.load.spritesheet('fireflies', 'assets/Escenario/Decoraciones/luciernagas.png', { frameWidth: 128, frameHeight: 81 });
 
         // ---- TUTORIALES ---- //
         this.load.image('tutoWASD', 'assets/Tutorial/WASD.png');
@@ -130,6 +132,7 @@ export default class BootScene extends Phaser.Scene
             frameRate: 8,
             repeat: -1
         });
+
         this.anims.create({
             key: 'piliWalk',
             frames: this.anims.generateFrameNumbers('piliWalk', { start: 0, end: 37 }),
@@ -143,23 +146,27 @@ export default class BootScene extends Phaser.Scene
             frameRate: 14,
             repeat: -1
         });
+
         this.anims.create({
             key: 'matiWalk',
             frames: this.anims.generateFrameNumbers('matiWalk', { start: 0, end: 19 }),
             frameRate: 18,
             repeat: -1
         });
+
         this.anims.create({
             key: 'matiDash',
             frames: this.anims.generateFrameNumbers('matiDash', { start: 0, end: 14 }),
             frameRate: 60,
             repeat: 0
         });
+
         this.anims.create({
             key: 'matiJump',
             frames: this.anims.generateFrameNumbers('matiJump', { start: 0, end: 22 }),
             frameRate: 34
         });
+
         this.anims.create({
             key: 'matiFall',
             frames: this.anims.generateFrameNumbers('matiFall', { start: 0, end: 9 }),
@@ -192,6 +199,13 @@ export default class BootScene extends Phaser.Scene
             frameRate: 12,
             repeat: 0
         });
+
+        this.anims.create({
+            key: 'flies',
+            frames: this.anims.generateFrameNumbers('fireflies', { start: 0, end: 157 }),
+            frameRate: 24,
+            repeat: -1
+        })
 
         this.events.emit('boot-complete');
     }
