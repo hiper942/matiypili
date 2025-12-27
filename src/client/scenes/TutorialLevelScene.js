@@ -81,38 +81,42 @@ export default class TutorialLevelScene extends Phaser.Scene
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
         ]
 
-        // = DECORACION FRONT = //
-        // 1 = Cesped
-        
+        // = DECORACION BACK = //
+        // 3  = Flechas
+        // 4  = WASD
+        // 5  = SHIFT
+        // 6  = Arbusto Grande
+        // 7  = Arbusto Peque
+        // 8  = Cristal Amarillo
+        // 9  = Cristal Verde
+        // 22 = Piedra Grande
+        // 23 = Piedra Mediana
+        // 24 = Piedra Pequeña
+        // 25 = Dos Setas
+        // 26 = Tres Setas
 
-        const frontMatrix = 
+        const backMatrix = 
         [
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,4,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,18,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+            [0,0,0,0,0,6,0,0,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         ]
-
-        // = DECORACION BACK = //
-        // 1 = Lampara
-        // 2 = Rama
-        // 3 = Flechas
-        // 4 = WASD
-        // 5 = SHIFT
-        // 6 = Arbusto Grande
-        // 7 = Arbusto Peque
-        // 8 = Cristal Amarillo
-        // 9 = Cristal Verde
+        
+        // = DECORACION FRONT = //
+        // 1 = Cesped
+        // 2  = Lampara
+        // 3  = Rama
         // 10 = Liana1
         // 11 = Liana2
         // 12 = Liana3
@@ -125,26 +129,22 @@ export default class TutorialLevelScene extends Phaser.Scene
         // 19 = Musgo Arriba
         // 20 = Musgo Esquina Derecha
         // 21 = Musgo Esquina Izquierda
-        // 22 = Piedra Grande
-        // 23 = Piedra Mediana
-        // 24 = Piedra Pequeña
-        // 25 = Dos Setas
-        // 26 = Tres Setas
-
-        const backMatrix = 
+        // 27 = Liana arco
+    
+        const frontMatrix = 
         [
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,4,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,1,2,3,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,0],
-            [0,26,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,18,0,0,0,0,0,0,0,0,21,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,2,0,0,0,0,0,0,0,0,0,0,20,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+            [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         ]
@@ -159,10 +159,6 @@ export default class TutorialLevelScene extends Phaser.Scene
         {
             const dec = new Decoration(this, deco.x, deco.y, deco.texture);
             dec.sprite.setDepth(-5);
-            if (deco.texture == 'lamp')
-            {
-                dec.sprite.setOffset(0, 32);
-            }
         });
 
         // = PERSONAJES 1 = //
@@ -178,15 +174,8 @@ export default class TutorialLevelScene extends Phaser.Scene
                 const decoration = new Decoration(this, deco.x, deco.y, texture);
                 decoration.sprite.setDepth(20);
             }
-        });
-
-        this.grid.decoFront.forEach(deco =>
-        {
-            if (deco.type === "raw")
-            {
-                const dec = new Decoration(this, deco.x, deco.y, deco.texture);
-                dec.sprite.setDepth(22);
-            }
+            const dec = new Decoration(this, deco.x, deco.y, deco.texture);
+            dec.sprite.setDepth(22);
         });
 
         // = PERSONAJES 2 = //
@@ -305,9 +294,9 @@ export default class TutorialLevelScene extends Phaser.Scene
 
     onConnectionLost()
     {
-        this.scene.pause();
+        // this.scene.pause();
 
-        this.scene.launch('DisconectionScene', { previousScene: 'TutorialLevelScene' });
+        // this.scene.launch('DisconectionScene', { previousScene: 'TutorialLevelScene' });
     }
 
     onSpikeTouched(who)

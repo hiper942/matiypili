@@ -53,8 +53,8 @@ export default class BootScene extends Phaser.Scene
         this.load.image('bushS', 'assets/Escenario/Decoraciones/Arbusto.PNG');
         this.load.image('bushL', 'assets/Escenario/Decoraciones/ArbustoGrande.PNG');
 
-        this.load.image('yellowCristal', 'assets/Escenario/Decoraciones/CristalAmarillo.PNG');
-        this.load.image('greenCristal', 'assets/Escenario/Decoraciones/CristalVerde.PNG');
+        this.load.image('yellowCrystal', 'assets/Escenario/Decoraciones/CristalAmarillo.PNG');
+        this.load.image('greenCrystal', 'assets/Escenario/Decoraciones/CristalVerde.PNG');
 
         this.load.image('lamp', 'assets/Escenario/Decoraciones/Farolillo.PNG');
 
@@ -63,6 +63,7 @@ export default class BootScene extends Phaser.Scene
         this.load.image('vine3', 'assets/Escenario/Decoraciones/LianasArbol.PNG');
         this.load.image('vine4', 'assets/Escenario/Decoraciones/LianasArbolFinal.PNG');
         this.load.image('vineL', 'assets/Escenario/Decoraciones/LianaGrande.PNG');
+        this.load.image('vineArch', 'assets/Escenario/Decoraciones/archVine.png');
 
         this.load.image('mossR', 'assets/Escenario/Decoraciones/MusgoArbolDerecha.PNG');
         this.load.image('mossL', 'assets/Escenario/Decoraciones/MusgoArbolIzquierda.PNG');
