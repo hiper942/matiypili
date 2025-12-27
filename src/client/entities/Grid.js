@@ -11,11 +11,12 @@ import Decoration from "./Decoration.js";
 
 export default class Grid
 {
-    constructor(scene, matrix, deco, cellSize = 64)
+    constructor(scene, matrix, front, back, cellSize = 64)
     {
         this.scene = scene;
         this.levelMatrix = matrix;
-        this.decoMatrix = deco;
+        this.frontMatrix = front;
+        this.backMatrix = back;
         this.cellSize = cellSize;
 
         this.platforms = this.scene.physics.add.staticGroup();
@@ -165,12 +166,12 @@ export default class Grid
             }
         }
 
-        for (let row = 0; row < this.decoMatrix.length; row++)
+        for (let row = 0; row < this.backMatrix.length; row++)
         {
-            for (let col = 0; col < this.decoMatrix[row].length; col++)
+            for (let col = 0; col < this.backMatrix[row].length; col++)
             {
                 
-                const tile = this.decoMatrix[row][col];
+                const tile = this.backMatrix[row][col];
                 const x = col * this.cellSize + this.cellSize / 2;
                 const y = row * this.cellSize + this.cellSize / 2;
 
@@ -216,9 +217,36 @@ export default class Grid
                         break;
                     }
 
+                    default:
+                    {
+                        console.warn("Decoration: Tile unknown: ", tile);
+                        break;
+                    }
+                }
+            }
+        }
+
+        for (let row = 0; row < this.frontMatrix.length; row++)
+        {
+            for (let col = 0; col < this.frontMatrix[row].length; col++)
+            {
+                
+                const tile = this.frontMatrix[row][col];
+                const x = col * this.cellSize + this.cellSize / 2;
+                const y = row * this.cellSize + this.cellSize / 2;
+
+                if (this.debug) this.drawDebugCell(x, y);
+                
+                switch (tile)
+                {    
+                    case 0:
+                    {
+                        break;
+                    }
+
                     // - DECORACION FRONT - //
                     // Cesped
-                    case 2:
+                    case 1:
                     {
                         const grass = { x, y, row, col, type: 'grass' };
                         this.decoFront.push(grass);
@@ -237,13 +265,13 @@ export default class Grid
 
     grass(row, col)
     {
-        const matrix = this.decoMatrix;
+        const matrix = this.frontMatrix;
 
-        if (!matrix[row] || matrix[row][col] !== 2) return null;
+        if (!matrix[row] || matrix[row][col] !== 1) return null;
 
-        const isGrass = tile => tile === 2;
+        const isGrass = tile => tile === 1;
 
-        const left  = (matrix[row][col - 1] !== undefined) ? isGrass(matrix[row][col - 1]) : false;
+        const left = (matrix[row][col - 1] !== undefined) ? isGrass(matrix[row][col - 1]) : false;
         const right = (matrix[row][col + 1] !== undefined) ? isGrass(matrix[row][col + 1]) : false;
 
         if (!left && right) return 'grassL';

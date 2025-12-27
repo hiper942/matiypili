@@ -4,29 +4,25 @@ export default class BootScene extends Phaser.Scene {
     }
 
     preload() {
-        // ---- FONDO ----
+        // ---- FONDO ---- //
         this.load.image('fondoBosque', 'assets/Escenario/Fondo.png');
 
-        // ---- MATI ----
+        // ---- MATI ---- //
         this.load.spritesheet('matiIdle', 'assets/Mati/idleMati.png', { frameWidth: 256, frameHeight: 256 });
         this.load.spritesheet('matiWalk', 'assets/Mati/walkMati.png', { frameWidth: 256, frameHeight: 256 });
         this.load.spritesheet('matiDash', 'assets/Mati/dashMati.png', { frameWidth: 256, frameHeight: 256 });
         this.load.spritesheet('matiJump', 'assets/Mati/jumpMati.png', { frameWidth: 256, frameHeight: 256 });
         this.load.spritesheet('matiFall', 'assets/Mati/fallMati.png', { frameWidth: 256, frameHeight: 256 });
 
-        // ---- PILI ----
+        // ---- PILI ---- //
         this.load.spritesheet('piliIdle', 'assets/Pili/idlePili.png', { frameWidth: 256, frameHeight: 256 });
         this.load.spritesheet('piliWalk', 'assets/Pili/walkPili.png', { frameWidth: 256, frameHeight: 256 });
 
-        // ---- ESCENARIO / TILES ----
+        // ---- ESCENARIO / TILES ---- //
         this.load.spritesheet('platformTiles', 'assets/Escenario/Tiles/SpriteSheet/tilemap.png',
             { frameWidth: 64, frameHeight: 64 });
 
-        this.load.image('grassL', 'assets/Escenario/Tiles/cespedIzquierda.png');
-        this.load.image('grassM', 'assets/Escenario/Tiles/cespedCentro.png');
-        this.load.image('grassR', 'assets/Escenario/Tiles/cespedDerecha.png');
-
-        // ---- INTERACTIVOS ----
+        // ---- INTERACTIVOS ---- //
         this.load.spritesheet('switchActivation', 'assets/Escenario/Palanca/palanca.png',
             { frameWidth: 128, frameHeight: 128 });
 
@@ -46,11 +42,12 @@ export default class BootScene extends Phaser.Scene {
 
         this.load.spritesheet('pressure', 'assets/Escenario/Placa/placa.png', { frameWidth: 128, frameHeight: 128 });
 
-        // ---- DECORACIÓN ----
-        this.load.image('lamp', 'assets/Escenario/Decorations/decorations/lamp.png');
-        this.load.image('sign', 'assets/Escenario/Decorations/decorations/sign.png');
+        // ---- DECORACIÓN ---- //
+        this.load.image('grassL', 'assets/Escenario/Tiles/cespedIzquierda.png');
+        this.load.image('grassM', 'assets/Escenario/Tiles/cespedCentro.png');
+        this.load.image('grassR', 'assets/Escenario/Tiles/cespedDerecha.png');
 
-        // ---- TUTORIALES ----
+        // ---- TUTORIALES ---- //
         this.load.image('tutoWASD', 'assets/Tutorial/WASD.png');
         this.load.image('tutoSHIFT', 'assets/Tutorial/Shift.png');
         this.load.image('tutoARROWS', 'assets/Tutorial/Flechas.png');
@@ -58,7 +55,7 @@ export default class BootScene extends Phaser.Scene {
         // ---- INTERFACES ---- //
         this.load.image('frame', 'assets/Escenario/Marco.PNG');
 
-        // ---- MENÚS ----
+        // ---- MENÚS ---- //
         this.load.image('menuScene', 'assets/Menus/FondoMenu.png');
         this.load.image('deathScene', 'assets/Menus/FondoMenuMuerte.png');
         this.load.image('winScene', 'assets/Menus/FondoMenuVictoria.png');
@@ -83,7 +80,7 @@ export default class BootScene extends Phaser.Scene {
 
         this.load.image('btnstt', 'assets/Menus/ajustes.PNG');
 
-        // ---- MÚSICA ----
+        // ---- MÚSICA ---- //
         this.load.audio('menuMusic', 'assets/Musica/menu.mp3');
         this.load.audio('levelMusic', 'assets/Musica/level.mp3');
     }

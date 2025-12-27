@@ -81,16 +81,34 @@ export default class TutorialLevelScene extends Phaser.Scene
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
         ]
 
-        // --- DECORACION --- //
-        // 1 = Decoración Back
+        // = DECORACION FRONT = //
+        // 1 = Cesped
+        
 
-        // DECORACION FRONT //
-        // 2 = Cesped
+        const frontMatrix = 
+        [
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        ]
+
+        // = DECORACION BACK = //
         // 3 = Flechas
         // 4 = WASD
         // 5 = SHIFT
 
-        const decoMatrix = 
+        const backMatrix = 
         [
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -102,13 +120,13 @@ export default class TutorialLevelScene extends Phaser.Scene
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,2,2,2,2,2,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         ]
 
-        this.grid = new Grid(this, levelMatrix, decoMatrix);
+        this.grid = new Grid(this, levelMatrix, frontMatrix, backMatrix);
 
         // = PUERTA = //
         this.door = new Door(this, this.grid.doorpos.x, this.grid.doorpos.y);
@@ -130,7 +148,7 @@ export default class TutorialLevelScene extends Phaser.Scene
         {
             if (deco.type === "grass")
             {
-                const texture = this.grid.grass(deco.row, deco.col);
+                let texture = this.grid.grass(deco.row, deco.col);
                 const decoration = new Decoration(this, deco.x, deco.y, texture);
                 decoration.sprite.setDepth(20);
             }
@@ -229,9 +247,9 @@ export default class TutorialLevelScene extends Phaser.Scene
         {
             if (!this.scene.isActive('Pause'))
             {
-            this.scene.pause();
-            this.scene.launch('Pause');
-            this.scene.bringToTop('Pause');
+                this.scene.pause();
+                this.scene.launch('Pause');
+                this.scene.bringToTop('Pause');
             }
         };
 
