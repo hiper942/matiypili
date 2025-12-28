@@ -79,6 +79,25 @@ app.use((req, res, next) => {
 // Servir archivos estáticos del juego (dist/)
 app.use(express.static(path.join(__dirname, '../../dist')));
 
+function authMiddleware(req, res, next) {
+  const auth = req.headers.authorization;
+
+  if (!auth) {
+    return res.sendStatus(401);
+  }
+
+  const token = auth.replace('Bearer ', '');
+
+  const user = userService.getUserById(token);
+
+  if (!user) {
+    return res.sendStatus(401);
+  }
+
+  req.user = user;
+  next();
+}
+
 // ==================== RUTAS ====================
 
 app.use('/api/users', userRoutes);
@@ -89,6 +108,81 @@ app.use('/api/connected', connectionRoutes);
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
+
+// ==================== AUTH ====================
+
+// LOGIN
+app.post('/api/login', (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({ error: 'Datos incompletos' });
+  }
+
+  const user = userService.getUserByUsername(username);
+
+  if (!user) {
+    return res.status(401).json({ error: 'Usuario no existe' });
+  }
+
+  if (user.password !== password) {
+    return res.status(401).json({ error: 'Contraseña incorrecta' });
+  }
+
+  // Token simple (id del usuario)
+  res.json({
+    token: user.id,
+    username: user.username
+  });
+});
+
+// REGISTER
+app.post('/api/register', (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({ error: 'Datos incompletos' });
+  }
+
+  try {
+    userService.createUser({ username, password });
+    res.sendStatus(201);
+  } catch (e) {
+    res.status(409).json({ error: 'Usuario ya existe' });
+  }
+});
+
+
+// CHECK TOKEN
+app.get('/api/me', (req, res) => {
+  const auth = req.headers.authorization;
+
+  if (!auth) {
+    return res.sendStatus(401);
+  }
+
+  res.sendStatus(200);
+});
+
+// INFO CUENTA
+app.post('/api/record', authMiddleware, (req, res) => {
+  const { time } = req.body;
+  const user = req.user;
+
+  if (!time || time <= 0) {
+    return res.status(400).json({ error: 'Tiempo inválido' });
+  }
+
+  if (!user.bestTime || time < user.bestTime) {
+    user.bestTime = time;
+    return res.json({ newRecord: true, bestTime: time });
+  }
+
+  res.json({ newRecord: false, bestTime: user.bestTime });
+});
+
+
+
 
 // SPA Fallback - Servir index.html para todas las rutas que no sean API
 // Esto debe ir DESPUÉS de las rutas de la API y ANTES del error handler

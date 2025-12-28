@@ -11,7 +11,6 @@ import Grid from '../entities/Grid.js';
 
 import { MoveCharacterCommand } from '../commands/MoveCharacterCommand.js';
 import { JumpCharacterCommand } from '../commands/JumpCharacterCommand.js';
-import { connectionManager } from '../services/ConnectionManager.js';
 
 export default class TutorialLevelScene extends Phaser.Scene
 {
@@ -250,14 +249,8 @@ export default class TutorialLevelScene extends Phaser.Scene
         });
         this.pauseKey = this.input.keyboard.addKey('ESC');
 
-        this.connectionListener = (data) =>
-        {
-            if  (!data.connected)
-            {
-                this.onConnectionLost();
-            }
-        };
-        connectionManager.addListener(this.connectionListener);
+        // --- CRONO --- //
+        this.registry.set('runStartTime', Date.now());
     }
 
     // Update()
@@ -296,13 +289,6 @@ export default class TutorialLevelScene extends Phaser.Scene
 
         //----- PLACA DE PRESIÓN -----//
         if (this.grid.pressurePlates) this.grid.pressurePlates.forEach(press => press.update(this.pressure))
-    }
-
-    onConnectionLost()
-    {
-        // this.scene.pause();
-
-        // this.scene.launch('DisconectionScene', { previousScene: 'TutorialLevelScene' });
     }
 
     onSpikeTouched(who)

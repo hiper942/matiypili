@@ -13,6 +13,8 @@ import Pause from './scenes/Pause.js';
 import Settings from './scenes/Settings.js';
 import DisconectionScene from './scenes/DisconectionScene.js';
 import PartyScene from './scenes/PartyScene.js';
+import AuthCheckScene from './scenes/AuthCheckScene.js';
+import UserScene from './scenes/UserScene.js';
 
 const config = 
 {
@@ -20,6 +22,7 @@ const config =
     width: 1600,
     height: 900,
     parent: 'game-container',
+    dom: { createContainer: true },
 
     scale: 
     {
@@ -40,6 +43,8 @@ const config =
     scene: [
         LoadScreen,
         BootScene,
+        AuthCheckScene,
+        UserScene,
         MenuScene,
         CreditsScene,
         Settings,

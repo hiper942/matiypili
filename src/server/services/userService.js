@@ -16,18 +16,17 @@ export function createUserService() {
    */
   function createUser(userData) {
     // 1. Validar que el email no exista ya
-    const existingUser = users.find(u => u.email === userData.email);
+    const existingUser = users.find(u => u.username === userData.username);
     if (existingUser) {
-      throw new Error('El email ya está registrado');
+      throw new Error('El usuario ya está registrado');
     }
 
     // 2. Crear objeto usuario con id único y createdAt
     const newUser = {
       id: String(nextId),
-      email: userData.email,
-      name: userData.name,
-      avatar: userData.avatar || '',
-      level: userData.level || 1,
+      username: userData.username,
+      password: userData.password,
+      bestTime: null,
       createdAt: new Date().toISOString()
     };
 
@@ -48,7 +47,7 @@ export function createUserService() {
   function getAllUsers() {
     // TODO: Implementar
     // Retornar una copia del array de usuarios
-    throw new Error('getAllUsers() no implementado');
+    return users.map(u => ({ ...u }));
   }
 
   /**
@@ -63,14 +62,14 @@ export function createUserService() {
 
   /**
    * Busca un usuario por email
-   * @param {string} email - Email del usuario
+   * @param {string} username - Nombre del usuario
    * @returns {Object|null} Usuario encontrado o null
    */
-  function getUserByEmail(email) {
+  function getUserByUsername(username) {
     // TODO: Implementar
     // Buscar y retornar el usuario por email, o null si no existe
     // IMPORTANTE: Esta función será usada por el chat para verificar emails
-    throw new Error('getUserByEmail() no implementado');
+    return users.find(u => u.username === username) || null;
   }
 
   /**
@@ -86,7 +85,15 @@ export function createUserService() {
     // 3. Actualizar solo los campos permitidos (name, avatar, level)
     // 4. NO permitir actualizar id, email, o createdAt
     // 5. Retornar el usuario actualizado
-    throw new Error('updateUser() no implementado');
+    const user = users.find(u => u.id === id);
+    if (!user) return null;
+
+    // Campos permitidos
+    if (updates.bestTime !== undefined) {
+      user.bestTime = updates.bestTime;
+    }
+
+    return user;
   }
 
   /**
@@ -99,7 +106,11 @@ export function createUserService() {
     // 1. Buscar el índice del usuario
     // 2. Si existe, eliminarlo del array
     // 3. Retornar true si se eliminó, false si no existía
-    throw new Error('deleteUser() no implementado');
+    const index = users.findIndex(u => u.id === id);
+    if (index === -1) return false;
+
+    users.splice(index, 1);
+    return true;
   }
 
   // Exponer la API pública del servicio
@@ -107,7 +118,7 @@ export function createUserService() {
     createUser,
     getAllUsers,
     getUserById,
-    getUserByEmail,
+    getUserByUsername,
     updateUser,
     deleteUser
   };

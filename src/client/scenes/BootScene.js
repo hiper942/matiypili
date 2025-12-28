@@ -121,6 +121,10 @@ export default class BootScene extends Phaser.Scene
         // ---- MÚSICA ---- //
         this.load.audio('menuMusic', 'assets/Musica/menu.mp3');
         this.load.audio('levelMusic', 'assets/Musica/level.mp3');
+
+        // ---- LOGIN ---- //
+        this.load.html('loginForm', 'assets/ui/login.html');
+        this.load.html('registerForm', 'assets/ui/register.html');
     }
 
     create()
