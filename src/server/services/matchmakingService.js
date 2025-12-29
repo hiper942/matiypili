@@ -62,16 +62,14 @@ export function createMatchmakingService(gameRoomService) {
       // Notify both players
       player1.ws.send(JSON.stringify({
         type: 'gameStart',
-        role: 'player1',
+        playerIndex: 1,
         roomId,
-        ball: ballData
       }));
 
       player2.ws.send(JSON.stringify({
         type: 'gameStart',
-        role: 'player2',
+        playerIndex: 2,
         roomId,
-        ball: ballData
       }));
     }
   }

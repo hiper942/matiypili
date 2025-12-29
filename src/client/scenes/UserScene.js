@@ -10,9 +10,9 @@ export default class UserScene extends Phaser.Scene {
     const username = localStorage.getItem('username');
 
     // ===== NOMBRE ARRIBA =====
-    this.add.text(400, 60,
+    this.add.text(300, 100,
       username ? username.toUpperCase() : 'INVITADO',
-      { fontSize: '48px', color: '#ffffff' }
+      { fontSize: '128px', color: '#ffffff', align: 'left' }
     ).setOrigin(0.5);
 
     // ===== PERFIL =====
@@ -23,7 +23,7 @@ export default class UserScene extends Phaser.Scene {
     }
 
     // ===== BOTÓN VOLVER =====
-    this.add.text(50, 550, '← Volver', {
+    this.add.text(50, 800, '← Volver', {
       fontSize: '20px',
       color: '#ffffff'
     })
@@ -33,22 +33,22 @@ export default class UserScene extends Phaser.Scene {
 
   createLoginUI()
   {
-    this.usernameBox = this.add.rectangle(400, 240, 320, 50, 0xffffff)
+    this.usernameBox = this.add.rectangle(800, 400, 320, 50, 0xffffff)
         .setStrokeStyle(2, 0x000000)
         .setInteractive({ useHandCursor: true });
 
-    this.username = this.add.dom(400, 240, 'input', {
+    this.username = this.add.dom(800, 400, 'input', {
         type: 'text',
         name: 'username',
         placeholder: 'Username',
         style: `
-        width: 300px;
-        height: 40px;
-        background: transparent;
-        color: black;
-        font-size: 18px;
-        border: none;
-        outline: none;
+            width: 300px;
+            height: 40px;
+            background: transparent;
+            color: black;
+            font-size: 18px;
+            border: none;
+            outline: none;
         `
     });
 
@@ -64,22 +64,22 @@ export default class UserScene extends Phaser.Scene {
     // PASSWORD
     // =========================
 
-    this.passwordBox = this.add.rectangle(400, 300, 320, 50, 0xffffff)
+    this.passwordBox = this.add.rectangle(800, 500, 320, 50, 0xffffff)
         .setStrokeStyle(2, 0x000000)
         .setInteractive({ useHandCursor: true });
 
-    this.password = this.add.dom(400, 300, 'input', {
+    this.password = this.add.dom(800, 500, 'input', {
         type: 'password',
         name: 'password',
         placeholder: 'Contraseña',
         style: `
-        width: 300px;
-        height: 40px;
-        background: transparent;
-        color: black;
-        font-size: 18px;
-        border: none;
-        outline: none;
+            width: 300px;
+            height: 40px;
+            background: transparent;
+            color: black;
+            font-size: 18px;
+            border: none;
+            outline: none;
         `
     });
 
@@ -95,7 +95,7 @@ export default class UserScene extends Phaser.Scene {
     // BOTÓN LOGIN
     // =========================
 
-    this.add.text(400, 380, 'Iniciar Sesion', {
+    this.add.text(800, 650, 'Iniciar Sesion', {
         fontSize: '32px',
         color: '#ffffff'
     })
@@ -107,7 +107,7 @@ export default class UserScene extends Phaser.Scene {
     // BOTÓN REGISTER
     // =========================
 
-    this.add.text(400, 430, 'Registrarse', {
+    this.add.text(800, 700, 'Registrarse', {
         fontSize: '18px',
         color: '#cccccc'
     })
@@ -120,18 +120,18 @@ export default class UserScene extends Phaser.Scene {
     createProfileUI(username)
     {
         // ===== LEADERBOARD PLACEHOLDER =====
-        this.add.text(400, 200, 'LEADERBOARD', {
+        this.add.text(800, 200, 'LEADERBOARD', {
         fontSize: '32px',
         color: '#ffff00'
         }).setOrigin(0.5);
 
-        this.add.text(400, 260,
+        this.add.text(800, 450,
         '1. player1 - 00:12:34,123\n2. player2 - 00:13:10,456\n...',
         { fontSize: '20px', color: '#ffffff', align: 'center' }
         ).setOrigin(0.5);
 
         // ===== LOGOUT =====
-        this.add.text(400, 420, 'LOGOUT', {
+        this.add.text(1400, 800, 'LOGOUT', {
         fontSize: '28px',
         color: '#ff4444'
         })
@@ -156,7 +156,7 @@ export default class UserScene extends Phaser.Scene {
         });
 
         if (!res.ok) {
-            this.err = this.add.text(400, 470, 'Algo salió mal...', {
+            this.err = this.add.text(800, 600, 'Algo salió mal...', {
                 fontSize: '18px',
                 color: '#00ff00'
             })
@@ -191,7 +191,7 @@ export default class UserScene extends Phaser.Scene {
         // tras registrar → vuelve a login
         console.log('Usuario creado, inicie sesion');
 
-        this.err = this.add.text(400, 470, 'Cuenta creada. Inicie Sesion.',
+        this.err = this.add.text(800, 600, 'Cuenta creada. Inicie Sesion.',
             {
                 fontSize: '18px',
                 color: '#00ff00'

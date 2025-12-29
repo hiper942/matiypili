@@ -47,7 +47,7 @@ export default class MenuScene extends Phaser.Scene{
                 }
 
                 this.registry.set('gameMode', 'online');
-                this.scene.start('PartyScene');
+                this.scene.start('LobbyScene');
             });
 
         // Boton Creditos

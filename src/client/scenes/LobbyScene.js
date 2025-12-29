@@ -1,9 +1,9 @@
 /**
  * Lobby Scene - Waiting for multiplayer matchmaking
  */
-export default class PartyScene extends Phaser.Scene {
+export default class LobbyScene extends Phaser.Scene {
   constructor() {
-    super({ key: 'PartyScene' });
+    super({ key: 'LobbyScene' });
     this.ws = null;
   }
 
@@ -107,11 +107,10 @@ export default class PartyScene extends Phaser.Scene {
       case 'gameStart':
         console.log('Game starting!', data);
         // Store game data and transition to multiplayer game scene
-        this.scene.start('TutorialLevelScene', {
+        this.scene.start('CharacterSelectScene', {
           ws: this.ws,
-          playerRole: data.role,
-          roomId: data.roomId,
-          initialBall: data.ball
+          playerIndex: data.playerIndex,
+          roomId: data.roomId
         });
         break;
 

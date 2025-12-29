@@ -12,9 +12,10 @@ import DeathScene from './scenes/DeathScene.js';
 import Pause from './scenes/Pause.js';
 import Settings from './scenes/Settings.js';
 import DisconectionScene from './scenes/DisconectionScene.js';
-import PartyScene from './scenes/PartyScene.js';
+import LobbyScene from './scenes/LobbyScene.js';
 import AuthCheckScene from './scenes/AuthCheckScene.js';
 import UserScene from './scenes/UserScene.js';
+import CharacterSelectScene from './scenes/CharacterSelectScene.js';
 
 const config = 
 {
@@ -56,7 +57,8 @@ const config =
         ForestLevel2Scene,
         ForestLevel3Scene,
         DisconectionScene,
-        PartyScene
+        LobbyScene,
+        CharacterSelectScene
     ],
     backgroundColor: '#8e9423ff',
 }
