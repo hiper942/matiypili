@@ -226,12 +226,12 @@ wss.on('connection', (ws) => {
           matchmakingService.leaveQueue(ws);
           break;
 
-        case 'paddleMove':
-          gameRoomService.handlePaddleMove(ws, data.y);
+        case 'selectCharacter':
+          gameRoomService.handleCharacterSelect(ws, data.character);
           break;
 
-        case 'goal':
-          gameRoomService.handleGoal(ws, data.side);
+        case 'playerReady':
+          gameRoomService.handlePlayerReady(ws);
           break;
 
         default:

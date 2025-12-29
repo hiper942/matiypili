@@ -19,11 +19,11 @@ export default class CharacterSelectScene extends Phaser.Scene {
 
         this.selectedCharacter = null;
         this.isReady = false;
-        /*
+        
         this.otherSelection = null;
         this.readyState = { 1: false, 2: false };
         this.hasConflict = false;
-        */
+        
 
         const borderColor = this.playerIndex === 1 ? 0x0077ff : 0xff3333;
 
@@ -101,7 +101,7 @@ export default class CharacterSelectScene extends Phaser.Scene {
                     break;
 
                 case 'startGame':
-                    this.scene.start('GameScene', {
+                    this.scene.start('TutorialLevelScene', {
                         playerIndex: this.playerIndex,
                         character: data.players[this.playerIndex],
                         roomId: this.roomId
@@ -116,26 +116,26 @@ export default class CharacterSelectScene extends Phaser.Scene {
     ========================= */
 
     selectCharacter(character, color) {
-        if (this.isReady) return;
+    if (this.isReady) return;
 
-        this.selectedCharacter = character;
+    this.selectedCharacter = character;
 
-        this.matiCard.setStrokeStyle(
-            character === 'mati' ? 6 : 0,
-            color
-        );
+    this.matiCard.setStrokeStyle(
+        character === 'mati' ? 6 : 0,
+        color
+    );
 
-        this.piliCard.setStrokeStyle(
-            character === 'pili' ? 6 : 0,
-            color
-        );
+    this.piliCard.setStrokeStyle(
+        character === 'pili' ? 6 : 0,
+        color
+    );
 
-        this.socket.send(JSON.stringify({
-            type: 'selectCharacter',
-            character
-        }));
+    this.socket.send(JSON.stringify({
+        type: 'selectCharacter',
+        character
+    }));
 
-        this.readyBtn.setColor('#ffffff');
+    this.readyBtn.setColor('#ffffff');
     }
 
 
@@ -155,6 +155,83 @@ export default class CharacterSelectScene extends Phaser.Scene {
             type: 'playerReady'
         }));
     }
+
+    updateRemoteState(data) {
+        const borderColor = this.playerIndex === 1 ? 0x0077ff : 0xff3333;
+        const otherColor  = this.playerIndex === 1 ? 0xff3333 : 0x0077ff;
+
+        const myId = this.playerIndex;
+        const otherId = myId === 1 ? 2 : 1;
+
+        // Guardar estados
+        this.hasConflict = data.conflict;
+        this.readyState = data.ready;
+
+        // Mostrar selección del otro
+        if (data.selections[otherId]) {
+            if (data.selections[otherId] === 'mati') {
+            this.matiCard.setStrokeStyle(6, otherColor);
+            }
+            if (data.selections[otherId] === 'pili') {
+            this.piliCard.setStrokeStyle(6, otherColor);
+            }
+        }
+
+        // Iluminación de listo
+        if (data.ready[myId]) {
+            this.glowCard(this.selectedCharacter, borderColor);
+        }
+        if (data.ready[otherId]) {
+            this.glowCard(data.selections[otherId], otherColor);
+        }
+
+        // Conflicto → verde
+        if (data.conflict) {
+            const conflictedCharacter = data.selections[1];
+            // da igual 1 o 2, son iguales en conflicto
+
+            // Limpia bordes primero
+            this.matiCard.setStrokeStyle();
+            this.piliCard.setStrokeStyle();
+
+            if (conflictedCharacter === 'mati') {
+                this.matiCard.setStrokeStyle(6, 0x00ff00);
+            }
+
+            if (conflictedCharacter === 'pili') {
+                this.piliCard.setStrokeStyle(6, 0x00ff00);
+            }
+
+            this.readyBtn.setText('CONFLICTO');
+            this.readyBtn.setColor('#00ff00');
+
+            return; // 🔑 MUY IMPORTANTE
+        }
+        else if (!this.isReady)
+        {
+            this.readyBtn.setText('LISTO');
+            this.readyBtn.setColor('#ffffff');
+        }
+        else 
+        {            
+            this.readyBtn.setText('ESPERANDO...');
+            this.readyBtn.setColor('#777777');
+        }
+    }
+
+    glowCard(character, color) {
+        const card = character === 'mati' ? this.matiCard : this.piliCard;
+        card.setStrokeStyle(6, color);
+        card.setAlpha(1);
+    }
+
+    setConflictStyle() {
+
+
+
+    }
+
+
 
     /* =========================
        WARNING VISUAL

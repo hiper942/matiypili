@@ -24,6 +24,8 @@ export function createGameRoomService() {
         ws: player2Ws,
         score: 0
       },
+      selections: { 1: null, 2: null },
+      ready: { 1: false, 2: false },
       active: true,
       ballActive: true // Track if ball is in play (prevents duplicate goals)
     };
@@ -37,28 +39,71 @@ export function createGameRoomService() {
     return roomId;
   }
 
-  /**
-   * Handle paddle movement from a player
-   * @param {WebSocket} ws - Player's WebSocket
-   * @param {number} y - Paddle Y position
-   */
-  function handlePaddleMove(ws, y) {
-    const roomId = ws.roomId;
-    if (!roomId) return;
+  function getRoomBySocket(ws) {
+    return rooms.get(ws.roomId);
+  }
 
-    const room = rooms.get(roomId);
-    if (!room || !room.active) return;
+  function getPlayerIndex(room, ws) {
+    if (room.player1.ws === ws) return 1;
+    if (room.player2.ws === ws) return 2;
+    return null;
+  }
 
-    // Relay to the other player
-    const opponent = room.player1.ws === ws ? room.player2.ws : room.player1.ws;
+  function broadcast(room, payload) {
+    room.player1.ws.send(JSON.stringify(payload));
+    room.player2.ws.send(JSON.stringify(payload));
+  }
 
-    if (opponent.readyState === 1) { // WebSocket.OPEN
-      opponent.send(JSON.stringify({
-        type: 'paddleUpdate',
-        y
-      }));
+  function handleCharacterSelect(ws, character) {
+    const room = getRoomBySocket(ws);
+    if (!room) return;
+
+    const playerIndex = getPlayerIndex(room, ws);
+
+    room.selections[playerIndex] = character;
+
+    const conflict =
+      room.selections[1] &&
+      room.selections[2] &&
+      room.selections[1] === room.selections[2];
+
+    broadcast(room, {
+      type: 'selectionUpdate',
+      selections: room.selections,
+      ready: room.ready,
+      conflict
+    });
+  }
+
+  function handlePlayerReady(ws) {
+    const room = getRoomBySocket(ws);
+    if (!room) return;
+
+    const playerIndex = getPlayerIndex(room, ws);
+
+    const conflict =
+      room.selections[1] === room.selections[2];
+
+    if (conflict) return;
+
+    room.ready[playerIndex] = true;
+
+    broadcast(room, {
+      type: 'selectionUpdate',
+      selections: room.selections,
+      ready: room.ready,
+      conflict: false
+    });
+
+    if (room.ready[1] && room.ready[2]) {
+      broadcast(room, {
+        type: 'startGame',
+        players: room.selections
+      });
     }
   }
+
+
 
   function handlePlayerMovement(ws, velocity)
   {
@@ -68,90 +113,6 @@ export function createGameRoomService() {
     const room = rooms.get(roomId);
     if (!room || !room.active) return;
 
-  }
-
-  /**
-   * Handle goal event from a player
-   * @param {WebSocket} ws - Player's WebSocket
-   * @param {string} side - Which side scored ('left' or 'right')
-   */
-  function handleGoal(ws, side) {
-    const roomId = ws.roomId;
-    if (!roomId) return;
-
-    const room = rooms.get(roomId);
-    if (!room || !room.active) return;
-
-    // Prevent duplicate goal detection (both clients send goal event)
-    // Only process goal if ball is active
-    if (!room.ballActive) {
-      return; // Ball not in play, ignore goal
-    }
-    room.ballActive = false; // Mark ball as inactive until relaunched
-
-    // Update scores
-    // When ball hits LEFT goal (x=0), player2 scores (player1 missed)
-    // When ball hits RIGHT goal (x=800), player1 scores (player2 missed)
-    if (side === 'left') {
-      room.player2.score++;
-    } else if (side === 'right') {
-      room.player1.score++;
-    }
-
-    // Broadcast score update to both players
-    const scoreUpdate = {
-      type: 'scoreUpdate',
-      player1Score: room.player1.score,
-      player2Score: room.player2.score
-    };
-
-    room.player1.ws.send(JSON.stringify(scoreUpdate));
-    room.player2.ws.send(JSON.stringify(scoreUpdate));
-
-    // Check win condition (first to 2)
-    if (room.player1.score >= 2 || room.player2.score >= 2) {
-      const winner = room.player1.score >= 2 ? 'player1' : 'player2';
-
-      const gameOverMsg = {
-        type: 'gameOver',
-        winner,
-        player1Score: room.player1.score,
-        player2Score: room.player2.score
-      };
-
-      room.player1.ws.send(JSON.stringify(gameOverMsg));
-      room.player2.ws.send(JSON.stringify(gameOverMsg));
-
-      // Mark room as inactive
-      room.active = false;
-    } else {
-      // Relaunch ball after 1 second delay
-      setTimeout(() => {
-        if (room.active) {
-          // Generate new ball direction
-          const angle = (Math.random() * 60 - 30) * (Math.PI / 180); // -30 to 30 degrees
-          const speed = 300;
-          const ballData = {
-            x: 400,
-            y: 300,
-            vx: speed * Math.cos(angle),
-            vy: speed * Math.sin(angle)
-          };
-
-          // Send ball relaunch to both players
-          const relaunchMsg = {
-            type: 'ballRelaunch',
-            ball: ballData
-          };
-
-          room.player1.ws.send(JSON.stringify(relaunchMsg));
-          room.player2.ws.send(JSON.stringify(relaunchMsg));
-
-          // Mark ball as active again
-          room.ballActive = true;
-        }
-      }, 1000);
-    }
   }
 
   /**
@@ -192,9 +153,9 @@ export function createGameRoomService() {
 
   return {
     createRoom,
-    handlePaddleMove,
-    handleGoal,
     handleDisconnect,
-    getActiveRoomCount
+    getActiveRoomCount,
+    handleCharacterSelect,
+    handlePlayerReady
   };
 }
