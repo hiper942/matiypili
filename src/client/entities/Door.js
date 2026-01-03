@@ -30,17 +30,50 @@ export default class Door
         const matiInDoor = this.scene.physics.overlap(mati.sprite, this.trigger);
         const piliInDoor = this.scene.physics.overlap(pili.sprite, this.trigger);
 
-        if (matiInDoor && piliInDoor) this.scene.scene.start(nextLevel);
+        if (matiInDoor && piliInDoor && this.scene.localPlayer.isLocal)
+        {
+            this.scene.socket.send(JSON.stringify({
+                type: 'levelCompleted',
+                roomId: this.scene.roomId
+            }));
+
+            this.scene.scene.start(nextLevel);
+        }
+        else
+        {
+            this.scene.scene.start(nextLevel);
+        }
     }
 
     openDoor()
     {
         if (this.open) return;
-        this.open = true;
 
+        this.open = true;
         this.sprite.play('doorOpen');
 
-        this.sprite.on("animationcomplete", () =>
+        this.sprite.once("animationcomplete", () =>
+        {
+            this.sprite.body.enable = false;
+        });
+
+        if (this.scene.isOnline)
+        {
+            this.scene.socket.send(JSON.stringify({
+                type: 'doorOpened',
+                roomId: this.scene.roomId
+            }));
+        }
+    }
+
+    forceOpen()
+    {
+        if (this.open) return;
+
+        this.open = true;
+        this.sprite.play('doorOpen');
+
+        this.sprite.once("animationcomplete", () =>
         {
             this.sprite.body.enable = false;
         });

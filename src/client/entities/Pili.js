@@ -2,13 +2,14 @@ import { Physics } from "phaser";
 
 export default class Pili
 {
-    constructor(scene, x, y)
+    constructor(scene, x, y, isLocal = false)
     {
         this.scene = scene;
+        this.isLocal = isLocal;
 
         // Carga sprite
         this.sprite = scene.physics.add.sprite(x, y, 'piliIdle')
-            .setOrigin(0.5, 0.5)
+            .setOrigin(0.5)
             .setCollideWorldBounds(true)
             .setDepth(-1);
 
@@ -35,39 +36,63 @@ export default class Pili
 
     update()
     {
+        if (!this.isLocal) return;
+
         this.sprite.setVelocityX(0);
 
         this.topCollider.x = this.sprite.x;
         this.topCollider.y = this.sprite.body.top - 4;
 
-        if (!this.isPlatform)
+        // ===== INPUT =====
+        if (this.scene.isOnline)
         {
-            if(this.scene.cursors.left.isDown)
+            // ONLINE → WASD
+            if (this.scene.keys.A.isDown)
             {
                 this.sprite.flipX = true;
-                this.sprite.play('piliWalk', true);
                 this.sprite.setVelocityX(-this.baseSpeed);
+                this.sprite.play('piliWalk', true);
             }
-            else if(this.scene.cursors.right.isDown)
+            else if (this.scene.keys.D.isDown)
             {
                 this.sprite.flipX = false;
-                this.sprite.play('piliWalk', true);
                 this.sprite.setVelocityX(this.baseSpeed);
-            }
-            else if(this.scene.cursors.up.isDown && this.sprite.body.onFloor())
-            {
-                // animacion salto??
-                this.sprite.play('piliIdle', true);
-                this.sprite.setVelocityY(-this.jumpStrength);
+                this.sprite.play('piliWalk', true);
             }
             else
             {
                 this.sprite.play('piliIdle', true);
             }
+
+            if (this.scene.keys.W.isDown && this.sprite.body.onFloor())
+            {
+                this.sprite.setVelocityY(-this.jumpStrength);
+            }
         }
         else
         {
-            this.sprite.play('piliIdle', true);
+            // LOCAL → FLECHAS
+            if (this.scene.cursors.left.isDown)
+            {
+                this.sprite.flipX = true;
+                this.sprite.setVelocityX(-this.baseSpeed);
+                this.sprite.play('piliWalk', true);
+            }
+            else if (this.scene.cursors.right.isDown)
+            {
+                this.sprite.flipX = false;
+                this.sprite.setVelocityX(this.baseSpeed);
+                this.sprite.play('piliWalk', true);
+            }
+            else
+            {
+                this.sprite.play('piliIdle', true);
+            }
+
+            if (this.scene.cursors.up.isDown && this.sprite.body.onFloor())
+            {
+                this.sprite.setVelocityY(-this.jumpStrength);
+            }
         }
     }
 }

@@ -1,12 +1,16 @@
 import { Physics } from "phaser";
 
 export default class Mati {
-    constructor(scene, x, y) {
+    constructor(scene, x, y, isLocal = false)
+    {
         this.scene = scene;
+        this.isLocal = isLocal;
 
         this.sprite = scene.physics.add.sprite(x, y, 'matiIdle')
-            .setOrigin(0.5, 0.5)
-            .setCollideWorldBounds(true);
+            .setOrigin(0.5)
+            .setCollideWorldBounds(true)
+            .setDepth(0);
+            
 
         // Escala 64x64
         this.sprite.setScale(0.35);
@@ -28,7 +32,9 @@ export default class Mati {
         this.canDash = true;
     }
 
-    update(pili) {
+    update(pili)
+    {
+        if (!this.isLocal) return;
         if (this.isDashing) return;
 
         this.sprite.setVelocityX(0);

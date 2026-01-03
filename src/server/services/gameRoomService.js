@@ -103,17 +103,61 @@ export function createGameRoomService() {
     }
   }
 
+  function sendToOther(room, ws, payload) {
+    const to =
+      room.player1.ws === ws ? room.player2.ws :
+      room.player2.ws === ws ? room.player1.ws :
+      null;
 
+    if (to && to.readyState === 1) {
+      to.send(JSON.stringify(payload));
+    }
+  }
 
-  function handlePlayerMovement(ws, velocity)
-  {
-    const roomId = ws.roomId;
-    if (!roomId) return;
-
-    const room = rooms.get(roomId);
+  function handlePlayerState(ws, data) {
+    const room = getRoomBySocket(ws);
     if (!room || !room.active) return;
 
+    // opcional: validar roomId
+    if (data.roomId && data.roomId !== room.id) return;
+
+    sendToOther(room, ws, data);
   }
+
+  function handleRockState(ws, data) {
+    const room = getRoomBySocket(ws);
+    if (!room || !room.active) return;
+    if (data.roomId && data.roomId !== room.id) return;
+
+    sendToOther(room, ws, data);
+  }
+
+  function handleSwitchActivated(ws, data) {
+    const room = getRoomBySocket(ws);
+    if (!room || !room.active) return;
+    if (data.roomId && data.roomId !== room.id) return;
+
+    // broadcast a ambos (así se sincroniza siempre)
+    broadcast(room, data);
+  }
+
+  function handleDoorOpened(ws, data) {
+    const room = getRoomBySocket(ws);
+    if (!room || !room.active) return;
+    if (data.roomId && data.roomId !== room.id) return;
+
+    broadcast(room, data);
+  }
+
+  function handleLevelCompleted(ws, data) {
+    const room = getRoomBySocket(ws);
+    if (!room || !room.active) return;
+    if (data.roomId && data.roomId !== room.id) return;
+
+    broadcast(room, data);
+  }
+
+
 
   /**
    * Handle player disconnection
@@ -156,6 +200,11 @@ export function createGameRoomService() {
     handleDisconnect,
     getActiveRoomCount,
     handleCharacterSelect,
-    handlePlayerReady
+    handlePlayerReady,
+    handlePlayerState,
+    handleRockState,
+    handleSwitchActivated,
+    handleDoorOpened,
+    handleLevelCompleted
   };
 }

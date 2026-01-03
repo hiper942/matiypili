@@ -104,7 +104,8 @@ export default class CharacterSelectScene extends Phaser.Scene {
                     this.scene.start('TutorialLevelSceneOnline', {
                         playerIndex: this.playerIndex,
                         character: data.players[this.playerIndex],
-                        roomId: this.roomId
+                        roomId: this.roomId,
+                        socket: this.socket
                     });
                     break;
             }

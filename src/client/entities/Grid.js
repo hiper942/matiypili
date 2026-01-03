@@ -42,6 +42,8 @@ export default class Grid
 
     build()
     {
+        let rockCount = 0;
+        
         for (let row = 0; row < this.levelMatrix.length; row++)
         {
             for (let col = 0; col < this.levelMatrix[row].length; col++)
@@ -108,7 +110,7 @@ export default class Grid
                     // Roca
                     case 6:
                     {
-                        const rock = new Rock(this.scene, x, y);
+                        const rock = new Rock(this.scene, x, y, rockCount++);
                         this.rocks.push(rock);
                         break;
                     }

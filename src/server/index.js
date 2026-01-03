@@ -243,6 +243,26 @@ wss.on('connection', (ws) => {
           gameRoomService.handlePlayerReady(ws);
           break;
 
+        case 'playerState':
+          gameRoomService.handlePlayerState(ws, data);
+          break;
+        
+        case 'rockState':
+          gameRoomService.handleRockState(ws, data);
+          break;
+
+        case 'switchActivated':
+          gameRoomService.handleSwitchActivated(ws, data);
+          break;
+
+        case 'doorOpened':
+          gameRoomService.handleDoorOpened(ws, data);
+          break;
+
+        case 'levelCompleted':
+          gameRoomService.handleLevelCompleted(ws, data);
+          break;
+
         default:
           console.log('Mensaje desconocido:', data.type);
       }
