@@ -12,11 +12,11 @@ import Grid from '../entities/Grid.js';
 import { MoveCharacterCommand } from '../commands/MoveCharacterCommand.js';
 import { JumpCharacterCommand } from '../commands/JumpCharacterCommand.js';
 
-export default class TutorialLevelScene extends Phaser.Scene
+export default class TutorialLevelSceneOnline extends Phaser.Scene
 {
     constructor()
     {
-        super('TutorialLevelScene');
+        super('TutorialLevelSceneOnline');
     }
 
     // Start()
@@ -109,7 +109,7 @@ export default class TutorialLevelScene extends Phaser.Scene
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,6,0,0,7,0,0,0,0,0,0,22,24,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],

@@ -26,7 +26,7 @@ export function createUserService() {
       id: String(nextId),
       username: userData.username,
       password: userData.password,
-      bestTime: null,
+      bestTime: userData.bestTime ?? null,
       createdAt: new Date().toISOString()
     };
 

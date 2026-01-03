@@ -49,6 +49,7 @@ export default class UserScene extends Phaser.Scene {
             font-size: 18px;
             border: none;
             outline: none;
+            text-align: left;
         `
     });
 
@@ -117,31 +118,95 @@ export default class UserScene extends Phaser.Scene {
     }
 
 
-    createProfileUI(username)
-    {
-        // ===== LEADERBOARD PLACEHOLDER =====
-        this.add.text(800, 200, 'LEADERBOARD', {
-        fontSize: '32px',
-        color: '#ffff00'
+    async createProfileUI(username) {
+
+        // ===== TÍTULO =====
+        this.add.text(800, 150, 'LEADERBOARD', {
+            fontSize: '40px',
+            color: '#e0c097'
         }).setOrigin(0.5);
 
-        this.add.text(800, 450,
-        '1. player1 - 00:12:34,123\n2. player2 - 00:13:10,456\n...',
-        { fontSize: '20px', color: '#ffffff', align: 'center' }
+        // ===== OBTENER DATOS =====
+        const res = await fetch('/api/leaderboard');
+        const leaderboard = await res.json();
+
+        const myEntry = leaderboard.find(u => u.username === username);
+
+        // ===== MEJOR TIEMPO PERSONAL =====
+        this.add.rectangle(800, 300, 520, 80, 0x6f4e37)
+            .setStrokeStyle(3, 0x5a3e2b);
+
+        this.add.text(800, 280, 'TU MEJOR TIEMPO', {
+            fontSize: '22px',
+            color: '#e0c097'
+        }).setOrigin(0.5);
+
+        this.add.text(
+            800,
+            315,
+            myEntry ? this.formatTime(myEntry.bestTime) : '--:--.---',
+            {
+                fontSize: '36px',
+                color: '#ffffff'
+            }
         ).setOrigin(0.5);
 
+        // ===== TABLA =====
+        const startY = 400;
+        const rowHeight = 48;
+        const width = 600;
+
+        leaderboard.slice(0, 10).forEach((entry, index) => {
+            const y = startY + index * rowHeight;
+
+            const bgColor = index % 2 === 0 ? 0xb08968 : 0x9c6b4f;
+
+            // Fondo fila
+            this.add.rectangle(800, y, width, rowHeight, bgColor)
+                .setStrokeStyle(2, 0x5a3e2b);
+
+            // Resaltar usuario actual
+            if (entry.username === username) {
+                this.add.rectangle(800, y, width + 10, rowHeight + 6, 0xe0c097, 0.35)
+                    .setStrokeStyle(2, 0xffffff);
+            }
+
+            // Posición + nombre
+            this.add.text(520, y, `${index + 1}. ${entry.username}`, {
+                fontSize: '20px',
+                color: '#2b1d13'
+            }).setOrigin(0, 0.5);
+
+            // Tiempo
+            this.add.text(1080, y, this.formatTime(entry.bestTime), {
+                fontSize: '20px',
+                color: '#1f140d'
+            }).setOrigin(1, 0.5);
+        });
+
         // ===== LOGOUT =====
-        this.add.text(1400, 800, 'LOGOUT', {
-        fontSize: '28px',
-        color: '#ff4444'
+        this.add.text(1400, 820, 'LOGOUT', {
+            fontSize: '28px',
+            color: '#ffaaaa'
         })
         .setOrigin(0.5)
         .setInteractive()
         .on('pointerdown', () => {
-        localStorage.clear();
-        this.scene.restart();
+            localStorage.clear();
+            this.scene.restart();
         });
     }
+
+    formatTime(ms) {
+    if (ms == null) return '--:--.---';
+
+    const minutes = Math.floor(ms / 60000);
+    const seconds = Math.floor((ms % 60000) / 1000);
+    const millis  = ms % 1000;
+
+    return `${minutes}:${seconds.toString().padStart(2,'0')}.${millis.toString().padStart(3,'0')}`;
+}
+
 
     async login() {
         const username = this.username.node.value.trim();

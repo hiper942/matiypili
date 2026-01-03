@@ -22,7 +22,8 @@ export default class MenuScene extends Phaser.Scene{
         this.add.image(800, 450, 'menuScene').setDisplaySize(1600, 900);
 
         // Boton Jugar Local
-        const playBtn = this.add.image(300, 500, 'btnJugarOff')
+        const playBtn = this.add.image(200, 350, 'btnJugarOff')
+            .setScale(0.6)
             .setInteractive({ useHandCursor: true })
             .on('pointerover', () => playBtn.setTexture('btnJugarOn'))
             .on('pointerout',  () => playBtn.setTexture('btnJugarOff'))
@@ -33,8 +34,18 @@ export default class MenuScene extends Phaser.Scene{
                 this.scene.start('TutorialLevelScene');
             })
 
+        // Boton Usuario
+        this.add.text(300, 500, 'Usuario')
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerdown', () =>
+            {
+                this.scene.start('UserScene');
+            });
+
         // Boton Jugar Online
-        const onlineBtn = this.add.image(300, 400, 'btnJugarOff')
+        const onlineBtn = this.add.image(400, 650, 'btnJugarOff')
+            .setScale(0.6)
             .setInteractive({ useHandCursor: true })
             .on('pointerover', () => onlineBtn.setTexture('btnJugarOn'))
             .on('pointerout',  () => onlineBtn.setTexture('btnJugarOff'))
@@ -52,6 +63,7 @@ export default class MenuScene extends Phaser.Scene{
 
         // Boton Creditos
         const creditsBtn = this.add.image(500, 800, 'btnCreditosOff')
+            .setScale(0.75)
             .setInteractive({ useHandCursor: true })
             .on('pointerover', () => creditsBtn.setTexture('btnCreditosOn'))
             .on('pointerout',  () => creditsBtn.setTexture('btnCreditosOff'))
@@ -64,17 +76,10 @@ export default class MenuScene extends Phaser.Scene{
             .setInteractive({ useHandCursor: true })
             .on('pointerdown', () => this.scene.start('SettingsScene'));
 
-        // Boton Usuario
-        this.add.text(800, 50, 'Usuario')
-            .setOrigin(0.5)
-            .setInteractive({ useHandCursor: true })
-            .on('pointerdown', () =>
-            {
-                this.scene.start('UserScene');
-            });
+        
 
 
-        this.connectionText = this.add.text(400, 500, 'Servidor: Comprobando...',
+        this.connectionText = this.add.text(800, 800, 'Servidor: Comprobando...',
             {
                 fontSize: '18px',
                 color: '#ffff00'
@@ -90,19 +95,17 @@ export default class MenuScene extends Phaser.Scene{
 
     showWarning(text)
     {
-        const warning = this.add.text(400, 200, text,
+        const warning = this.add.text(800, 450, text,
         {
             fontSize: '24px',
             color: '#ff4444',
-            backgroundColor: '#000000',
+            backgroundColor: '#ffffff',
             padding: { x: 10, y: 6 }
         })
         .setOrigin(0.5);
 
         this.time.delayedCall(1000, () => warning.destroy());
     }
-
-    
 
     updateConnectionDisplay(data) {
         // Solo actualizar si el texto existe (la escena está creada)

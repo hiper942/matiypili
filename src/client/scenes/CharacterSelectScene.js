@@ -101,7 +101,7 @@ export default class CharacterSelectScene extends Phaser.Scene {
                     break;
 
                 case 'startGame':
-                    this.scene.start('TutorialLevelScene', {
+                    this.scene.start('TutorialLevelSceneOnline', {
                         playerIndex: this.playerIndex,
                         character: data.players[this.playerIndex],
                         roomId: this.roomId
@@ -224,14 +224,6 @@ export default class CharacterSelectScene extends Phaser.Scene {
         card.setStrokeStyle(6, color);
         card.setAlpha(1);
     }
-
-    setConflictStyle() {
-
-
-
-    }
-
-
 
     /* =========================
        WARNING VISUAL

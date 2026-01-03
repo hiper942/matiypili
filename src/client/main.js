@@ -3,6 +3,7 @@ import LoadScreen from './scenes/LoadScreen.js';
 import MenuScene from './scenes/MenuScene.js';
 import CreditsScene from './scenes/CreditsScene.js';
 import TutorialLevelScene from './scenes/TutorialLevelScene.js';
+import TutorialLevelSceneOnline from './scenes/TutorialLevelSceneOnline.js';
 import ForestLevel1Scene from './scenes/ForestLevel1Scene.js';
 import ForestLevel2Scene from './scenes/ForestLevel2Scene.js';
 import ForestLevel3Scene from './scenes/ForestLevel3Scene.js';
@@ -53,6 +54,7 @@ const config =
         WinScene,
         DeathScene,
         TutorialLevelScene,
+        TutorialLevelSceneOnline,
         ForestLevel1Scene,
         ForestLevel2Scene,
         ForestLevel3Scene,

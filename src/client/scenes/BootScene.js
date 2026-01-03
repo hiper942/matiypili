@@ -83,7 +83,7 @@ export default class BootScene extends Phaser.Scene
         this.load.image('shrooms1', 'assets/Escenario/Decoraciones/Setas2.PNG');
         this.load.image('shrooms2', 'assets/Escenario/Decoraciones/Setas3.PNG');
         
-        this.load.spritesheet('fireflies', 'assets/Escenario/Decoraciones/luciernagas.png', { frameWidth: 128, frameHeight: 81 });
+        this.load.spritesheet('fireflies', 'assets/Escenario/Decoraciones/luciernagas.png', { frameWidth: 128, frameHeight: 128 });
 
         // ---- TUTORIALES ---- //
         this.load.image('tutoWASD', 'assets/Tutorial/WASD.png');

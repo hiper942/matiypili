@@ -15,11 +15,13 @@ import { createMatchmakingService } from './services/matchmakingService.js';
 import { createUserController } from './controllers/userController.js';
 import { createMessageController } from './controllers/messageController.js';
 import { createConnectionController } from './controllers/connectionController.js';
+import { createLeaderboardController } from './controllers/leaderboardController.js';
 
 // Rutas (factory functions)
 import { createUserRoutes } from './routes/users.js';
 import { createMessageRoutes } from './routes/messages.js';
 import { createConnectionRoutes } from './routes/connections.js';
+import { createLeaderboardRoutes } from './routes/leaderboard.js';
 
 // Para obtener __dirname en ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -41,10 +43,14 @@ const userController = createUserController(userService);
 const messageController = createMessageController(messageService);
 const connectionController = createConnectionController(connectionService);
 
+const leaderboardController = createLeaderboardController(userService);
+
 // 3. Crear routers inyectando controladores (capa de rutas)
 const userRoutes = createUserRoutes(userController);
 const messageRoutes = createMessageRoutes(messageController);
 const connectionRoutes = createConnectionRoutes(connectionController);
+
+const leaderboardRoutes = createLeaderboardRoutes(leaderboardController);
 
 // ==================== SERVIDOR ====================
 
@@ -61,6 +67,9 @@ app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
   next();
 });
+
+
+app.use('/api', leaderboardRoutes);
 
 // CORS simple (permitir todas las peticiones)
 app.use((req, res, next) => {

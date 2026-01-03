@@ -8,6 +8,7 @@ import Bridge from "./Bridge.js";
 import Spike from "./Spike.js";
 import PressurePlate from "./PressurePlate.js";
 import Decoration from "./Decoration.js";
+import { Scale } from "phaser";
 
 export default class Grid
 {
@@ -263,7 +264,7 @@ export default class Grid
                         break;
 
                     case 4:
-                        this.decoFront.push({ x: x, y: y, texture: 'flies' });
+                        this.decoFront.push({ x: x, y: y, texture: 'fireflies', anim: 'flies', scale: 2 });
                         break;
 
                     case 10:
@@ -315,7 +316,7 @@ export default class Grid
                         break;
                         
                     case 27:
-                        this.decoFront.push({ x: x, y: y + this.cellSize, texture: 'vineArch'});
+                        this.decoFront.push({ x: x, y: y, texture: 'vineArch'});
                         break;
 
                     default:
