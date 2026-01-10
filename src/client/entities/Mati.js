@@ -1,6 +1,7 @@
 import { Physics } from "phaser";
 
-export default class Mati {
+export default class Mati
+{
     constructor(scene, x, y, isLocal = false)
     {
         this.scene = scene;
@@ -34,7 +35,7 @@ export default class Mati {
 
     update(pili)
     {
-        if (!this.isLocal) return;
+        if (this.scene.isOnline && !this.isLocal) return;
         if (this.isDashing) return;
 
         this.sprite.setVelocityX(0);

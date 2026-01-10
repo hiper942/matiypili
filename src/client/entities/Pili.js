@@ -28,25 +28,35 @@ export default class Pili
         this.topCollider = scene.add.rectangle(x, y - this.sprite.displayHeight / 2, this.sprite.displayWidth * 0.5 - 4, 6, 0x00ff00, 0);
         scene.physics.add.existing(this.topCollider, false);
 
+        this.topColliderOffsetY = 32;
+
         this.topCollider.body.allowGravity = false;
         this.topCollider.body.immovable = true;
+        this.topCollider.body.checkCollision.up = true;
+        this.topCollider.body.checkCollision.down = false;
+        this.topCollider.body.checkCollision.left = false;
+        this.topCollider.body.checkCollision.right = false;
 
         this.isPlatform = false;
     }
 
     update()
     {
-        if (!this.isLocal) return;
+        if (this.scene.isOnline && !this.isLocal) return;
 
         this.sprite.setVelocityX(0);
 
         this.topCollider.x = this.sprite.x;
-        this.topCollider.y = this.sprite.body.top - 4;
+        this.topCollider.y = this.sprite.y - this.topColliderOffsetY;
 
-        // ===== INPUT =====
+        // ===== INPUT ===== //
+
+        // bloqueo de movimiento si mati esta encima de pili
+        if (this.isPlatform) return;
+
         if (this.scene.isOnline)
         {
-            // ONLINE → WASD
+            // ONLINE -> WASD
             if (this.scene.keys.A.isDown)
             {
                 this.sprite.flipX = true;
@@ -71,7 +81,7 @@ export default class Pili
         }
         else
         {
-            // LOCAL → FLECHAS
+            // LOCAL -> FLECHAS
             if (this.scene.cursors.left.isDown)
             {
                 this.sprite.flipX = true;

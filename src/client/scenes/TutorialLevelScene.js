@@ -22,6 +22,9 @@ export default class TutorialLevelScene extends Phaser.Scene
     // Start()
     create()
     {
+        // --- ONLINE --- //
+        this.isOnline = false;
+        
         // --- MUSICA --- //
         if (!this.sound.get('levelMusic'))
         {

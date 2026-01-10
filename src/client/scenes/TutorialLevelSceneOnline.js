@@ -30,6 +30,9 @@ export default class TutorialLevelSceneOnline extends Phaser.Scene
     // Start()
     create()
     {        
+        // --- ONLIONE --- //
+        this.isOnline = true;
+        
         // --- MUSICA --- //
         if (!this.sound.get('levelMusic'))
         {
@@ -219,6 +222,10 @@ export default class TutorialLevelSceneOnline extends Phaser.Scene
 
         // --- FISICAS --- //
         // = COLISIONES = //
+
+        // Plataforma pili
+        this.physics.add.collider(this.mati.sprite, this.pili.topCollider);
+
         // Plataformas
         this.physics.add.collider(this.mati.sprite, this.grid.platforms);
         this.physics.add.collider(this.pili.sprite, this.grid.platforms);
@@ -287,7 +294,6 @@ export default class TutorialLevelSceneOnline extends Phaser.Scene
             W: 'W',
             SPACE: 'SPACE',
             SHIFT: 'SHIFT',
-            
         });
         this.pauseKey = this.input.keyboard.addKey('ESC');
 
@@ -297,7 +303,6 @@ export default class TutorialLevelSceneOnline extends Phaser.Scene
         this.registry.set('runStartTime', Date.now());
 
         // --- ONLINE --- //
-        this.isOnline = true;
 
         this.lastNetSend = 0;
         this.NET_RATE = 50; // ms -> 1000 / 50 = 20 veces/segundo para evitar lag innecesario
@@ -379,14 +384,24 @@ export default class TutorialLevelSceneOnline extends Phaser.Scene
         };
 
         // ----- PERSONAJE ----- //
-        if (this.localPlayer === this.mati)
+        if (this.localPlayer === this.mati) this.mati.update(this.pili);
+        else this.pili.update();
+
+        // = SINCRONIZAR TOP COLLIDERS (LOCAL Y REMOTO) = //
+        [this.mati, this.pili].forEach(player =>
         {
-            this.mati.update(this.pili);
-        }
-        else
-        {
-            this.pili.update();
-        }
+            if (player == this.pili)
+            {
+                const p = player;
+
+                if (!p.topCollider) return;
+
+                p.topCollider.x = p.sprite.x;
+                p.topCollider.y = p.sprite.y - p.topColliderOffsetY;
+
+                p.topCollider.body.updateFromGameObject();
+            }
+        });
 
         //----- INTERRUPTOR -----//        
         if (this.grid.switch && this.localPlayer === this.mati)
@@ -439,27 +454,42 @@ export default class TutorialLevelSceneOnline extends Phaser.Scene
             vx: p.body.velocity.x,
             vy: p.body.velocity.y,
             flipX: p.flipX,
-            anim: p.anims.currentAnim?.key ?? null
+            anim: p.anims.currentAnim?.key ?? null,
+            topColliderOffsetY: this.pili.topColliderOffsetY,
+            piliIsPlatform: this.pili.isPlatform
         }));
     }
 
-    applyRemoteState(data) {
-    const s = this.remotePlayer.sprite;
+    applyRemoteState(data)
+    {
+        const remote = this.remotePlayer.sprite;
+
+        if (remote == this.pili) remote.isPlatform = data.piliIsPlatform;
 
         // posición
-        s.x = data.x;
-        s.y = data.y;
+        remote.x = data.x;
+        remote.y = data.y;
+
+        if (remote.topCollider)
+        {
+            const offset = data.topColliderOffsetY ?? remote.topColliderOffsetY ?? 0;
+            remote.topCollider.y = data.y + offset;
+            
+            remote.topCollider.x = data.x;
+
+            remote.topCollider.body.updateFromGameObject();
+        }
 
         // velocidad
-        s.body.setVelocity(data.vx, data.vy);
+        remote.body.setVelocity(data.vx, data.vy);
 
         // orientación
-        s.flipX = data.flipX;
+        remote.flipX = data.flipX;
 
         // animación
-        if (data.anim && (!s.anims.currentAnim || s.anims.currentAnim.key !== data.anim))
+        if (data.anim && (!remote.anims.currentAnim || remote.anims.currentAnim.key !== data.anim))
         {
-            s.play(data.anim, true);
+            remote.play(data.anim, true);
         }
     }
 }
