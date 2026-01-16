@@ -21,6 +21,9 @@ export default class ForestLevel1Scene extends Phaser.Scene
     // Start()
     create()
     {
+        // --- ONLINE --- //
+        this.isOnline = false;
+        
         // --- MUSICA --- //
         if (!this.sound.get('levelMusic'))
         {
@@ -36,9 +39,19 @@ export default class ForestLevel1Scene extends Phaser.Scene
         }
 
         // --- FONDO --- //
-        this.add.image(800, 450, 'fondoBosque1')
+        this.add.image(800, 450, 'fondoBosque2')
             .setDisplaySize(1600, 900)
-            .setDepth(-50);
+            .setDepth(-10);
+
+        // --- INTERFAZ --- //
+        this.add.image(800, 450, 'frame')
+            .setDisplaySize(1600, 900)
+            .setDepth(30);
+
+        // --- LUZ --- //
+        this.add.image(800, 450, 'light')
+            .setDisplaySize(1600, 900)
+            .setDepth(29);
 
         // --- NIVEL --- //
         // = GRID = //
@@ -54,53 +67,95 @@ export default class ForestLevel1Scene extends Phaser.Scene
         // 9 = Trampilla
         // 10 = Pinchos
         // 11 = Placa de Presión
-        // 12 = Cesped
 
         const levelMatrix = 
         [
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
             [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
             [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,7,0,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,{ tag:7, type: 'interactable', id:1 },0,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
             [1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1],
             [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
             [1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
             [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
             [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,1],
             [1,0,4,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,3,0,1],
-            [1,1,1,1,1,1,1,1,1,8,8,8,8,8,8,8,8,8,8,8,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,{ tag:8, type: 'interactable', id:1 },{ tag:8, type: 'interactable', id:1 },{ tag:8, type: 'interactable', id:1 },{ tag:8, type: 'interactable', id:1 },{ tag:8, type: 'interactable', id:1 },{ tag:8, type: 'interactable', id:1 },{ tag:8, type: 'interactable', id:1 },{ tag:8, type: 'interactable', id:1 },{ tag:8, type: 'interactable', id:1 },{ tag:8, type: 'interactable', id:1 },{ tag:8, type: 'interactable', id:1 },1,1,1,1,1],
             [1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
             [1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
             [1,1,1,1,1,1,1,1,1,10,10,10,10,10,10,10,10,10,10,10,1,1,1,1,1],
         ]
-        // --- DECORACION --- //
-        // 1 = Decoración Back
 
-        // DECORACION FRONT //
-        // 2 = Cesped
-        // 3 = Flechas
-        // 4 = WASD
-        // 5 = SHIFT
+        // = DECORACION BACK = //
+        // 3  = Flechas
+        // 4  = WASD
+        // 5  = SHIFT
+        // 6  = Arbusto Grande
+        // 7  = Arbusto Peque
+        // 8  = Cristal Amarillo
+        // 9  = Cristal Verde
+        // 22 = Piedra Grande
+        // 23 = Piedra Mediana
+        // 24 = Piedra Pequeña
+        // 25 = Dos Setas
+        // 26 = Tres Setas
 
-        const decoMatrix = 
+        const backMatrix = 
         [
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,26,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,2,2,2,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,0],
+            [0,0,6,0,0,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         ]
 
-        this.grid = new Grid(this, levelMatrix, decoMatrix);
+        // = DECORACION FRONT = //
+        // 1  = Cesped
+        // 2  = Lampara
+        // 3  = Rama
+        // 4  = Luciernagas
+        // 10 = Liana1
+        // 11 = Liana2
+        // 12 = Liana3
+        // 13 = Liana4
+        // 14 = Liana Grande
+        // 15 = Musgo Derecha
+        // 16 = Musgo Izquierda
+        // 17 = Musgo Abajo
+        // 18 = Musgo Cima
+        // 19 = Musgo Arriba
+        // 20 = Musgo Esquina Derecha
+        // 21 = Musgo Esquina Izquierda
+        // 27 = Liana arco
+    
+        const frontMatrix = 
+        [
+            [0,0,0,0,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,19,2,20,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,21,0,0,0,0,0,0,0,0,0,0,0,0,0,21,0,0,0,0],
+            [13,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,17,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        ]
+
+        this.grid = new Grid(this, levelMatrix, frontMatrix, backMatrix);
 
         // = PUERTA = //
         this.door = new Door(this, this.grid.doorpos.x, this.grid.doorpos.y);
@@ -123,18 +178,34 @@ export default class ForestLevel1Scene extends Phaser.Scene
             if (deco.type === "grass")
             {
                 const texture = this.grid.grass(deco.row, deco.col);
+                if (!texture) return;
+
                 const decoration = new Decoration(this, deco.x, deco.y, texture);
                 decoration.sprite.setDepth(20);
-            }
-        });
 
-        this.grid.decoFront.forEach(deco =>
-        {
-            if (deco.type === "raw")
-            {
-                const dec = new Decoration(this, deco.x, deco.y, deco.texture);
-                dec.sprite.setDepth(22);
+                return;
             }
+
+            if (deco.anim)
+            {
+                const sprite = this.add.sprite(deco.x, deco.y, deco.texture);
+
+                sprite.play(deco.anim);
+                if (deco.texture === 'fireflies')
+                {
+                    sprite.setScale(2.5);
+                    sprite.setDepth(22);
+                    sprite.setOrigin(0.5, 0.625);
+                    
+                    return;
+                }
+                sprite.setDepth(22);
+                    
+                return;
+            }
+        
+            const dec = new Decoration(this, deco.x, deco.y, deco.texture);
+            dec.sprite.setDepth(22);
         });
 
         // = PERSONAJES 2 = //
@@ -204,25 +275,26 @@ export default class ForestLevel1Scene extends Phaser.Scene
         this.pauseKey = this.input.keyboard.addKey('ESC');
     }
 
-    // Update()
+     // Update()
     update()
     {
         // ----- PAUSA ----- //
         if (Phaser.Input.Keyboard.JustDown(this.pauseKey))
         {
-
-            this.scene.pause();
-
-            this.scene.launch('Pause');
-            this.scene.bringToTop('Pause');
+            if (!this.scene.isActive('Pause'))
+            {
+                this.scene.pause();
+                this.scene.launch('Pause');
+                this.scene.bringToTop('Pause');
+            }
         };
-        
+
         // ----- MATI ----- //
         this.mati.update(this.pili);
 
         // ----- PILI ----- //        
         this.pili.update();
-        
+
         //----- INTERRUPTOR -----//        
         if (this.grid.switch) this.grid.switch.update(this.mati);
 

@@ -38,11 +38,12 @@ const config =
         arcade: 
         {
             gravity: { y: 900 },
-            debug: true
+            debug: false
         }
     },
     
-    scene: [
+    scene:
+    [
         LoadScreen,
         BootScene,
         AuthCheckScene,

@@ -55,115 +55,123 @@ export default class Grid
 
                 if (this.debug) this.drawDebugCell(x, y);
 
-                switch (tile)
+                if (tile?.type === 'interactable')
                 {
-                    // Vacio
-                    case 0:
+                    switch (tile.tag)
                     {
-                        break;
-                    }
+                        // Boton
+                        case 7:
+                        {
+                            const btn = new Button(this.scene, x, y, tile.id);
+                            this.buttons.push(btn);
+                            break;
+                        }
 
-                    // Solido
-                    case 1: 
-                    {
-                        const img = this.getAutotile(row, col);
-                        const platform = new Platform(this.scene, x, y, img);
+                        // Puente
+                        case 8:
+                        {
+                            const img = this.bridge(row,col);
+                            const bridge = new Bridge(this.scene, x, y, tile.id, img);
+                            this.interactives.push(bridge);
 
-                        this.platforms.add(platform.sprite);
-                        break;
-                    }
-                    
-                    // Interruptor
-                    case 2: 
-                    { 
-                        const sw = new Switch(this.scene, x, y);
-                        this.switch = sw;
-                        break;
-                    }
-                    
-                    // Puerta
-                    case 3: 
-                    { 
-                        this.doorpos = { x, y };
+                            this.platforms.add(bridge.sprite);
+                            break;
+                        }
+
+                        // Trampilla
+                        case 9:
+                        {
+                            const trapdoor = new Trapdoor(this.scene, x, y, tile.id);
+                            this.interactives.push(trapdoor);
+
+                            this.platforms.add(trapdoor.sprite);
+                            break;
+                        }
                         
-                        /*
-                        const d = new Door(this.scene, x, y);
-                        this.door = d;
-                        */
-                        break;
+                        // Placa de presión
+                        case 11:
+                        {
+                            const plate = new PressurePlate(this.scene, x, y, tile.id);
+                            this.pressurePlates.push(plate);
+                            break;
+                        }
                     }
-
-                    // Spawn Mati
-                    case 4: 
+                }
+                else
+                {
+                    switch (tile)
                     {
-                        this.matiSpawn = { x, y };
-                        break;
-                    }
+                        // Vacio
+                        case 0:
+                        {
+                            break;
+                        }
 
-                    // Spawn Pili
-                    case 5: 
-                    {
-                        this.piliSpawn = { x, y };
-                        break;
-                    }
+                        // Solido
+                        case 1: 
+                        {
+                            const img = this.getAutotile(row, col);
+                            const platform = new Platform(this.scene, x, y, img);
 
-                    // Roca
-                    case 6:
-                    {
-                        const rock = new Rock(this.scene, x, y, rockCount++);
-                        this.rocks.push(rock);
-                        break;
-                    }
+                            this.platforms.add(platform.sprite);
+                            break;
+                        }
+                        
+                        // Interruptor
+                        case 2: 
+                        { 
+                            const sw = new Switch(this.scene, x, y);
+                            this.switch = sw;
+                            break;
+                        }
+                        
+                        // Puerta
+                        case 3: 
+                        { 
+                            this.doorpos = { x, y };
+                            
+                            /*
+                            const d = new Door(this.scene, x, y);
+                            this.door = d;
+                            */
+                            break;
+                        }
 
-                    // Boton
-                    case 7:
-                    {
-                        const btn = new Button(this.scene, x, y, 1);
-                        this.buttons.push(btn);
-                        break;
-                    }
+                        // Spawn Mati
+                        case 4: 
+                        {
+                            this.matiSpawn = { x, y };
+                            break;
+                        }
 
-                    // Puente
-                    case 8:
-                    {
-                        const img = this.bridge(row,col);
-                        const bridge = new Bridge(this.scene, x, y, 1, img);
-                        this.interactives.push(bridge);
+                        // Spawn Pili
+                        case 5: 
+                        {
+                            this.piliSpawn = { x, y };
+                            break;
+                        }
 
-                        this.platforms.add(bridge.sprite);
-                        break;
-                    }
+                        // Roca
+                        case 6:
+                        {
+                            const rock = new Rock(this.scene, x, y, rockCount++);
+                            this.rocks.push(rock);
+                            break;
+                        }
 
-                    // Trampilla
-                    case 9:
-                    {
-                        const trapdoor = new Trapdoor(this.scene, x, y, 2);
-                        this.interactives.push(trapdoor);
+                        // Pinchos
+                        case 10:
+                        {
+                            const spike = new Spike(this.scene, x, y, (who) => this.scene.onSpikeTouched(who));
+                            this.spikes.push(spike);
+                            break;
+                        }
 
-                        this.platforms.add(trapdoor.sprite);
-                        break;
-                    }
-
-                    // Pinchos
-                    case 10:
-                    {
-                        const spike = new Spike(this.scene, x, y, (who) => this.scene.onSpikeTouched(who));
-                        this.spikes.push(spike);
-                        break;
-                    }
-
-                    // Placa de presión
-                    case 11:
-                    {
-                        const plate = new PressurePlate(this.scene, x, y, 2);
-                        this.pressurePlates.push(plate);
-                        break;
-                    }
-
-                    default:
-                    {
-                        console.warn("Level: Tile unknown: ", tile);
-                        break;
+                        default:
+                        {
+                            console.warn("Level: Tile unknown: ", tile);
+                            break;
+                        }
                     }
                 }
             }
@@ -349,9 +357,9 @@ export default class Grid
     
     bridge(row, col)
     {
-        const isBridge = (tile) => tile === 8;
-        const left = this.levelMatrix[row][col - 1] === 8;
-        const right = this.levelMatrix[row][col + 1] === 8;
+        const isBridge = (tile) => tile?.tag === 8;
+        const left = this.levelMatrix[row][col - 1]?.tag === 8;
+        const right = this.levelMatrix[row][col + 1]?.tag === 8;
 
         if (!left && right) return 'bridgeL';
         if (left && right) return 'bridgeM';

@@ -21,6 +21,9 @@ export default class ForestLevel2Scene extends Phaser.Scene
     // Start()
     create()
     {
+        // --- ONLINE --- //
+        this.isOnline = false;
+        
         // --- MUSICA --- //
         if (!this.sound.get('levelMusic'))
         {
@@ -36,9 +39,19 @@ export default class ForestLevel2Scene extends Phaser.Scene
         }
 
         // --- FONDO --- //
-        this.add.image(800, 450, 'fondoBosque')
+        this.add.image(800, 450, 'fondoBosque2')
             .setDisplaySize(1600, 900)
             .setDepth(-10);
+        
+        // --- INTERFAZ --- //
+        this.add.image(800, 450, 'frame')
+            .setDisplaySize(1600, 900)
+            .setDepth(30);
+
+        // --- LUZ --- //
+        this.add.image(800, 450, 'light')
+            .setDisplaySize(1600, 900)
+            .setDepth(29);
 
         // --- NIVEL --- //
         // = GRID = //
@@ -59,31 +72,35 @@ export default class ForestLevel2Scene extends Phaser.Scene
         const levelMatrix = 
         [
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,6,0,1,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,9,9,9,1,0,0,1],
+            [1,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,1,0,2,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,6,0,1,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,1],
+            [1,1,1,{ tag: 9, type: 'interactable', id: 2 },{ tag: 9, type: 'interactable', id: 2 },1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
             [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
             [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,4,0,5,0,7,2,0,0,0,0,0,0,0,0,0,0,0,0,11,0,0,3,0,1],
-            [1,1,1,1,1,1,1,8,8,8,8,8,8,8,8,1,1,1,1,1,1,1,1,1,1],
+            [1,4,{ tag: 11, type: 'interactable', id: 1 },5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,{ tag: 7, type: 'interactable', id: 2 },0,0,3,0,1],
+            [1,1,1,1,1,1,1,{ tag: 8, type: 'interactable', id: 1 },{ tag: 8, type: 'interactable', id: 1 },{ tag: 8, type: 'interactable', id: 1 },{ tag: 8, type: 'interactable', id: 1 },{ tag: 8, type: 'interactable', id: 1 },{ tag: 8, type: 'interactable', id: 1 },{ tag: 8, type: 'interactable', id: 1 },{ tag: 8, type: 'interactable', id: 1 },1,1,1,1,1,1,1,1,1,1],
             [1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1],
             [1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1],
             [1,1,1,1,1,1,1,10,10,10,10,10,10,10,10,1,1,1,1,1,1,1,1,1,1]
         ]
+        // = DECORACION BACK = //
+        // 3  = Flechas
+        // 4  = WASD
+        // 5  = SHIFT
+        // 6  = Arbusto Grande
+        // 7  = Arbusto Peque
+        // 8  = Cristal Amarillo
+        // 9  = Cristal Verde
+        // 22 = Piedra Grande
+        // 23 = Piedra Mediana
+        // 24 = Piedra Pequeña
+        // 25 = Dos Setas
+        // 26 = Tres Setas
 
-        // --- DECORACION --- //
-        // 1 = Decoración Back
-        // 3 = FLECHAS
-        // 4 = WASD
-        // 5 = SHIFT
-
-        // DECORACION FRONT //
-        // 2 = Cesped
-
-        const decoMatrix = 
+        const backMatrix = 
         [
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -94,19 +111,57 @@ export default class ForestLevel2Scene extends Phaser.Scene
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,8,0,0,0,0,0,0,0,0,0,0,0,9,0,0,24,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         ]
 
-        this.grid = new Grid(this, levelMatrix, decoMatrix);
+        // = DECORACION FRONT = //
+        // 1  = Cesped
+        // 2  = Lampara
+        // 3  = Rama
+        // 4  = Luciernagas
+        // 10 = Liana1
+        // 11 = Liana2
+        // 12 = Liana3
+        // 13 = Liana4
+        // 14 = Liana Grande
+        // 15 = Musgo Derecha
+        // 16 = Musgo Izquierda
+        // 17 = Musgo Abajo
+        // 18 = Musgo Cima
+        // 19 = Musgo Arriba
+        // 20 = Musgo Esquina Derecha
+        // 21 = Musgo Esquina Izquierda
+        // 27 = Liana arco
+    
+        const frontMatrix = 
+        [
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,11,0,0,0,0,0],
+            [0,0,0,0,0,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,16],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,0,0,4,0,0,0],
+            [0,0,0,0,0,16,0,0,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,19,0,0,0,0,0,0,0,16],
+            [0,0,20,0,0,17,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,21,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        ]
+
+        this.grid = new Grid(this, levelMatrix, frontMatrix, backMatrix);
 
         // = PUERTA = //
         this.door = new Door(this, this.grid.doorpos.x, this.grid.doorpos.y);
         
         // = DECORACIÓN FONDO = //
+
         this.grid.decoBack.forEach(deco =>
         {
             const dec = new Decoration(this, deco.x, deco.y, deco.texture);
@@ -124,18 +179,33 @@ export default class ForestLevel2Scene extends Phaser.Scene
             {
                 const texture = this.grid.grass(deco.row, deco.col);
                 if (!texture) return;
+
                 const decoration = new Decoration(this, deco.x, deco.y, texture);
                 decoration.sprite.setDepth(20);
-            }
-        });
 
-        this.grid.decoFront.forEach(deco =>
-        {
-            if (deco.type === "raw")
-            {
-                const dec = new Decoration(this, deco.x, deco.y, deco.texture);
-                dec.sprite.setDepth(22);
+                return;
             }
+
+            if (deco.anim)
+            {
+                const sprite = this.add.sprite(deco.x, deco.y, deco.texture);
+
+                sprite.play(deco.anim);
+                if (deco.texture === 'fireflies')
+                {
+                    sprite.setScale(2.5);
+                    sprite.setDepth(22);
+                    sprite.setOrigin(0.5, 0.625);
+                    
+                    return;
+                }
+                sprite.setDepth(22);
+                    
+                return;
+            }
+        
+            const dec = new Decoration(this, deco.x, deco.y, deco.texture);
+            dec.sprite.setDepth(22);
         });
 
         // = PERSONAJES 2 = //
@@ -189,7 +259,12 @@ export default class ForestLevel2Scene extends Phaser.Scene
 
         // = INTERACCIONES = //
         // Quien puede pulsar
-        this.pressure = [this.mati, this.pili, this.grid.rocks];
+        this.pressure = [this.mati, this.pili];
+
+        this.grid.rocks.forEach(rock =>
+        {
+            this.pressure.push(rock);
+        });
 
         // --- INPUT --- //
         this.cursors = this.input.keyboard.createCursorKeys();
