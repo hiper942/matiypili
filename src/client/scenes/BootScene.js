@@ -63,7 +63,7 @@ export default class BootScene extends Phaser.Scene
         this.load.image('vine2', 'assets/Escenario/Decoraciones/Liana2.PNG');
         this.load.image('vine3', 'assets/Escenario/Decoraciones/LianasArbol.PNG');
         this.load.image('vine4', 'assets/Escenario/Decoraciones/LianasArbolFinal.PNG');
-        this.load.image('vineL', 'assets/Escenario/Decoraciones/LianaGrande.PNG');
+        this.load.image('vineL', 'assets/Escenario/Decoraciones/Liana3.PNG');
         this.load.image('vineArch', 'assets/Escenario/Decoraciones/archVine.png');
 
         this.load.image('mossR', 'assets/Escenario/Decoraciones/MusgoArbolDerecha.PNG');
