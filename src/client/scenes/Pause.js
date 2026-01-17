@@ -82,9 +82,13 @@ export default class Pause extends Phaser.Scene
 
     goToMenu()
     {
+        const gameScene = this.scene.get(this.targetSceneKey);
+
+        if (gameScene?.handleDisconnection) gameScene.handleDisconnection('exit_to_menu');
+        
+        this.scene.start('MenuScene');
         this.scene.stop(this.targetSceneKey);
         this.scene.stop();
-        this.scene.start('MenuScene');
     }
 
     goToSettings()

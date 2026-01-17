@@ -17,6 +17,8 @@ export default class TutorialLevelSceneOnline extends Phaser.Scene
     constructor()
     {
         super('TutorialLevelSceneOnline');
+        this.disconnected = false;
+        this.isOnline = true;
     }
 
     init(data)
@@ -29,10 +31,7 @@ export default class TutorialLevelSceneOnline extends Phaser.Scene
 
     // Start()
     create()
-    {        
-        // --- ONLIONE --- //
-        this.isOnline = true;
-        
+    {                
         // --- MUSICA --- //
         if (!this.sound.get('levelMusic'))
         {
@@ -303,7 +302,6 @@ export default class TutorialLevelSceneOnline extends Phaser.Scene
         this.registry.set('runStartTime', Date.now());
 
         // --- ONLINE --- //
-
         this.lastNetSend = 0;
         this.NET_RATE = 50; // ms -> 1000 / 50 = 20 veces/segundo para evitar lag innecesario
         
@@ -357,13 +355,28 @@ export default class TutorialLevelSceneOnline extends Phaser.Scene
                         rock.applyRemoteState(data);
                     }
                     break;
+                case 'playerDisconnected':
+                    this.handleDisconnection(data.reason || 'other_player_left');
+                    break;
             }
+        });
+
+        this.socket.addEventListener('close', () =>
+        {
+            this.handleDisconnection('connection_lost');
+        });
+
+        this.socket.addEventListener('error', () =>
+        {
+            this.handleDisconnection('socket_error');
         });
     }
 
     // Update()
     update()
     {
+        if (this.disconnected) return;
+        
         // ----- ONLINE ----- //
         const now = Date.now();
 
@@ -373,15 +386,7 @@ export default class TutorialLevelSceneOnline extends Phaser.Scene
         }
         
         // ----- PAUSA ----- //
-        if (Phaser.Input.Keyboard.JustDown(this.pauseKey))
-        {
-            if (!this.scene.isActive('Pause'))
-            {
-                this.scene.pause();
-                this.scene.launch('Pause');
-                this.scene.bringToTop('Pause');
-            }
-        };
+        if (Phaser.Input.Keyboard.JustDown(this.pauseKey)) this.openPause();
 
         // ----- PERSONAJE ----- //
         if (this.localPlayer === this.mati) this.mati.update(this.pili);
@@ -431,6 +436,15 @@ export default class TutorialLevelSceneOnline extends Phaser.Scene
 
         //----- PLACA DE PRESIÓN -----//
         if (this.grid.pressurePlates) this.grid.pressurePlates.forEach(press => press.update(this.pressure))
+    }
+
+    openPause()
+    {
+        if (this.scene.isActive('Pause')) return;
+
+        this.scene.pause(this.scene.key);
+        this.scene.launch('Pause', { target: this.scene.key });
+        this.scene.bringToTop('Pause');
     }
 
     onSpikeTouched(who)
@@ -491,5 +505,78 @@ export default class TutorialLevelSceneOnline extends Phaser.Scene
         {
             remote.play(data.anim, true);
         }
+    }
+
+    handleDisconnection(reason = 'unknown')
+    {
+        if (this.disconnected) return;
+        this.disconnected = true;
+
+        console.warn('[ONLINE] Disconnected:', reason);
+
+        const isVoluntary = reason === 'exit_to_menu';
+
+        // 1. Avisar al otro jugador si es salida voluntaria
+        if (isVoluntary && this.socket && this.socket.readyState === WebSocket.OPEN)
+        {
+            try
+            {
+                this.socket.send(JSON.stringify({
+                    type: 'playerDisconnected',
+                    roomId: this.roomId,
+                    playerIndex: this.playerIndex,
+                    reason
+                }));
+            }
+            catch (e)
+            {
+                console.warn('Failed to notify disconnection', e);
+            }
+        }
+
+        // 2. Cerrar el socket SOLO en salida voluntaria
+        if (isVoluntary && this.socket && this.socket.readyState === WebSocket.OPEN)
+        {
+            this.socket.close(1000, 'exit_to_menu');
+        }
+
+        // 3. Limpiar listeners (muy importante)
+        if (this.socket)
+        {
+            this.socket.onclose = null;
+            this.socket.onerror = null;
+            this.socket.onmessage = null;
+        }
+
+        // 4. Pausar escena actual
+        this.scene.pause();
+
+        // 5. Lanzar escena de desconexión
+        if (!this.scene.isActive('DisconnectionScene'))
+        {
+            this.scene.launch('DisconnectionScene', {
+                previousScene: this.scene.key,
+                reason
+            });
+        }
+    }
+
+    onReconnected(socket)
+    {
+        console.log('[ONLINE] Reconnected');
+
+        this.socket = socket;
+        this.disconnected = false;
+
+        // Volver a escuchar eventos
+        this.socket.addEventListener('close', () =>
+        {
+            this.handleDisconnection('connection_lost');
+        });
+
+        this.socket.addEventListener('error', () =>
+        {
+            this.handleDisconnection('socket_error');
+        });
     }
 }

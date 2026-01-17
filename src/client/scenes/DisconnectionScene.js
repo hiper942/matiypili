@@ -14,6 +14,7 @@ export default class DisconnectionScene extends Phaser.Scene {
     init(data) {
         // Guardar la escena que estaba activa cuando se perdió la conexión
         this.previousScene = data.previousScene;
+        this.reason = data.reason;
     }
 
     create() {
@@ -24,12 +25,17 @@ export default class DisconnectionScene extends Phaser.Scene {
         this.add.text(800, 300, 'CONEXIÓN PERDIDA', {
             fontSize: '96px',
             color: '#ff0000',
-            fontStyle: 'bold'
+            fontFamily: 'Rockwell'
         }).setOrigin(0.5);
 
         // Mensaje
-        this.statusText = this.add.text(800, 500, 'Intentando reconectar...', {
+        let message = 'Intentando reconectar...';
+
+        if (this.reason === 'exit_to_menu' || this.reason === 'other_player_left') message = 'El otro jugador ha salido al menú';
+
+        this.statusText = this.add.text(800, 500, message, {
             fontSize: '48px',
+            fontFamily: 'Rockwell',
             color: '#ffff00'
         }).setOrigin(0.5);
 
@@ -37,6 +43,7 @@ export default class DisconnectionScene extends Phaser.Scene {
         this.attemptCount = 0;
         this.attemptText = this.add.text(800, 600, 'Intentos: 0', {
             fontSize: '36px',
+            fontFamily: 'Rockwell',
             color: '#ffffff'
         }).setOrigin(0.5);
 
