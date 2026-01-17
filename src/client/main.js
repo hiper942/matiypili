@@ -6,13 +6,12 @@ import TutorialLevelScene from './scenes/TutorialLevelScene.js';
 import TutorialLevelSceneOnline from './scenes/TutorialLevelSceneOnline.js';
 import ForestLevel1Scene from './scenes/ForestLevel1Scene.js';
 import ForestLevel2Scene from './scenes/ForestLevel2Scene.js';
-import ForestLevel3Scene from './scenes/ForestLevel3Scene.js';
 import BootScene from './scenes/BootScene.js';
 import WinScene from './scenes/WinScene.js';
 import DeathScene from './scenes/DeathScene.js';
 import Pause from './scenes/Pause.js';
 import Settings from './scenes/Settings.js';
-import DisconectionScene from './scenes/DisconectionScene.js';
+import DisconnectionScene from './scenes/DisconnectionScene.js';
 import LobbyScene from './scenes/LobbyScene.js';
 import AuthCheckScene from './scenes/AuthCheckScene.js';
 import UserScene from './scenes/UserScene.js';
@@ -58,8 +57,7 @@ const config =
         TutorialLevelSceneOnline,
         ForestLevel1Scene,
         ForestLevel2Scene,
-        ForestLevel3Scene,
-        DisconectionScene,
+        DisconnectionScene,
         LobbyScene,
         CharacterSelectScene
     ],

@@ -22,11 +22,11 @@ export default class MenuScene extends Phaser.Scene{
         this.add.image(800, 450, 'menuScene').setDisplaySize(1600, 900);
 
         // Boton Jugar Local
-        const playBtn = this.add.image(200, 350, 'btnJugarOff')
+        const playBtn = this.add.image(300, 350, 'btnOfflineOff')
             .setScale(0.6)
             .setInteractive({ useHandCursor: true })
-            .on('pointerover', () => playBtn.setTexture('btnJugarOn'))
-            .on('pointerout',  () => playBtn.setTexture('btnJugarOff'))
+            .on('pointerover', () => playBtn.setTexture('btnOfflineOn'))
+            .on('pointerout',  () => playBtn.setTexture('btnOfflineOff'))
             .on('pointerdown', () =>
             {
                 this.menuMusic.stop();
@@ -35,7 +35,7 @@ export default class MenuScene extends Phaser.Scene{
             })
 
         // Boton Usuario
-        this.add.text(300, 500, 'Usuario')
+        this.add.text(400, 500, 'Usuario')
             .setOrigin(0.5)
             .setInteractive({ useHandCursor: true })
             .on('pointerdown', () =>
@@ -44,11 +44,11 @@ export default class MenuScene extends Phaser.Scene{
             });
 
         // Boton Jugar Online
-        const onlineBtn = this.add.image(400, 650, 'btnJugarOff')
+        const onlineBtn = this.add.image(500, 650, 'btnOnlineOff')
             .setScale(0.6)
             .setInteractive({ useHandCursor: true })
-            .on('pointerover', () => onlineBtn.setTexture('btnJugarOn'))
-            .on('pointerout',  () => onlineBtn.setTexture('btnJugarOff'))
+            .on('pointerover', () => onlineBtn.setTexture('btnOnlineOn'))
+            .on('pointerout',  () => onlineBtn.setTexture('btnOnlineOff'))
             .on('pointerdown', () => 
             {
                 if (!localStorage.getItem('token'))
@@ -62,35 +62,19 @@ export default class MenuScene extends Phaser.Scene{
             });
 
         // Boton Creditos
-        const creditsBtn = this.add.image(500, 800, 'btnCreditosOff')
+        const creditsBtn = this.add.image(600, 800, 'btnCreditosOff')
             .setScale(0.75)
             .setInteractive({ useHandCursor: true })
             .on('pointerover', () => creditsBtn.setTexture('btnCreditosOn'))
             .on('pointerout',  () => creditsBtn.setTexture('btnCreditosOff'))
             .on('pointerdown', () =>
-                alert(`Mati & Pili - Fase 2\nAutores: Olga, Ismael y Samuel`));
+                this.scene.start('CreditsScene'));
 
         // Boton Ajustes
         const settingsBtn = this.add.image(1500, 70, 'btnstt')
             .setScale(0.1)
             .setInteractive({ useHandCursor: true })
-            .on('pointerdown', () => this.scene.start('SettingsScene'));
-
-        
-
-
-        this.connectionText = this.add.text(800, 800, 'Servidor: Comprobando...',
-            {
-                fontSize: '18px',
-                color: '#ffff00'
-            }
-        ).setOrigin(0.5);
-
-        // Listener para cambios de conexión
-        this.connectionListener = (data) => {
-            this.updateConnectionDisplay(data);
-        };
-        connectionManager.addListener(this.connectionListener);
+            .on('pointerdown', () => this.scene.start('Settings', { target: this.scene.key }));
     }
 
     showWarning(text)
@@ -98,6 +82,7 @@ export default class MenuScene extends Phaser.Scene{
         const warning = this.add.text(800, 450, text,
         {
             fontSize: '24px',
+            fontFamily: 'Rockwell',
             color: '#ff4444',
             backgroundColor: '#ffffff',
             padding: { x: 10, y: 6 }
@@ -105,31 +90,5 @@ export default class MenuScene extends Phaser.Scene{
         .setOrigin(0.5);
 
         this.time.delayedCall(1000, () => warning.destroy());
-    }
-
-    updateConnectionDisplay(data) {
-        // Solo actualizar si el texto existe (la escena está creada)
-        if (!this.connectionText || !this.scene || !this.scene.isActive('MenuScene')) {
-            return;
-        }
-
-        try {
-            if (data.connected) {
-                this.connectionText.setText(`Servidor: ${data.count} usuario(s) conectado(s)`);
-                this.connectionText.setColor('#00ff00');
-            } else {
-                this.connectionText.setText('Servidor: Desconectado');
-                this.connectionText.setColor('#ff0000');
-            }
-        } catch (error) {
-            console.error('[MenuScene] Error updating connection display:', error);
-        }
-    }
-
-    shutdown() {
-        // Remover el listener
-        if (this.connectionListener) {
-            connectionManager.removeListener(this.connectionListener);
-        }
     }
 }

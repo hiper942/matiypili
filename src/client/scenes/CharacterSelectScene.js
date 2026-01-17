@@ -13,7 +13,8 @@ export default class CharacterSelectScene extends Phaser.Scene {
         this.roomId = data.roomId;
     }
 
-    create() {
+    create()
+    {
 
         console.log('Soy el jugador:', this.playerIndex);
 
@@ -23,22 +24,18 @@ export default class CharacterSelectScene extends Phaser.Scene {
         this.otherSelection = null;
         this.readyState = { 1: false, 2: false };
         this.hasConflict = false;
-        
 
-        const borderColor = this.playerIndex === 1 ? 0x0077ff : 0xff3333;
+        // ===== FONDO =====
+        this.add.image(800, 450, 'fondoPersonajes').setDepth(-10);
 
-        // ===== TÍTULO =====
-        this.add.text(400, 80, 'SELECCIÓN DE PERSONAJE', {
-            fontSize: '36px',
-            color: '#ffffff'
-        }).setOrigin(0.5);
-
+        // ===== JUGADOR =====
         this.add.text(
-            400,
-            130,
-            this.playerIndex === 1 ? 'Jugador 1' : 'Jugador 2',
+            800,
+            200,
+            this.playerIndex === 1 ? 'JUGADOR 1' : 'JUGADOR 2',
             {
                 fontSize: '28px',
+                fontFamily: 'Rockwell',
                 color: this.playerIndex === 1 ? '#3399ff' : '#ff5555'
             }
         ).setOrigin(0.5);
@@ -47,45 +44,51 @@ export default class CharacterSelectScene extends Phaser.Scene {
            CARTA MATI
         ========================= */
 
-        this.matiCard = this.add.rectangle(250, 350, 200, 280, 0x222222)
+        this.matiCard = this.add.image(430, 470, 'matiSplashOff')
+            .setDisplaySize(430, 580)
             .setInteractive({ useHandCursor: true });
 
-        this.add.text(250, 350, 'MATI', {
-            fontSize: '32px',
-            color: '#ffffff'
-        }).setOrigin(0.5);
-
         this.matiCard.on('pointerdown', () => {
-            this.selectCharacter('mati', borderColor);
+            this.selectCharacter('mati');
         });
 
         /* =========================
            CARTA PILI
         ========================= */
 
-        this.piliCard = this.add.rectangle(550, 350, 200, 280, 0x222222)
+        this.piliCard = this.add.image(1035, 470, 'piliSplashOff')
+            .setDisplaySize(700, 580)
             .setInteractive({ useHandCursor: true });
 
-        this.add.text(550, 350, 'PILI', {
-            fontSize: '32px',
-            color: '#ffffff'
-        }).setOrigin(0.5);
-
         this.piliCard.on('pointerdown', () => {
-            this.selectCharacter('pili', borderColor);
+            this.selectCharacter('pili');
         });
 
         /* =========================
            BOTÓN LISTO
         ========================= */
 
-        this.readyBtn = this.add.text(400, 600, 'LISTO', {
-            fontSize: '36px',
-            color: '#aaaaaa'
-        })
+        this.readyBtn = this.add.image(800, 800, 'btnListoOff')
             .setOrigin(0.5)
             .setInteractive({ useHandCursor: true })
             .on('pointerdown', () => this.confirmReady());
+
+        this.state = this.add.text(800, 800, '')
+            .setFontSize(48)
+            .setOrigin(0.5)
+            .setFontFamily('Rockwell')
+            .setVisible(false);
+
+        /* =========================
+        BOTON VOLVER AL MENU
+        ========================= */
+
+        const menuBtn = this.add.image(200, 800, 'btnSalirOff')
+                .setScale(0.5)
+                .setInteractive({ useHandCursor: true })
+                .on('pointerover', () => menuBtn.setTexture('btnSalirOn'))
+                .on('pointerout',  () => menuBtn.setTexture('btnSalirOff'))
+                .on('pointerdown', () => this.goToMenu());
 
         /* =========================
            SOCKET LISTENERS
@@ -116,27 +119,28 @@ export default class CharacterSelectScene extends Phaser.Scene {
        SELECCIÓN
     ========================= */
 
-    selectCharacter(character, color) {
-    if (this.isReady) return;
+    selectCharacter(character)
+    {
+        this.selectedCharacter = character;
 
-    this.selectedCharacter = character;
+        if (character === 'mati')
+        {
+            this.playerIndex === 1 ? this.matiCard.setTexture('matiSplashB') : this.matiCard.setTexture('matiSplashR');
+            this.otherSelection === 'pili' ? this.piliCard.setTexture(this.playerIndex === 1 ? 'piliSplashR' : 'piliSplashB') : this.piliCard.setTexture('piliSplashOff');
+        }
 
-    this.matiCard.setStrokeStyle(
-        character === 'mati' ? 6 : 0,
-        color
-    );
+        if (character === 'pili')
+        {
+            this.playerIndex === 1 ? this.piliCard.setTexture('piliSplashB') : this.piliCard.setTexture('piliSplashR');
+            this.otherSelection === 'mati' ? this.matiCard.setTexture(this.playerIndex === 1 ? 'matiSplashR' : 'matiSplashB') : this.matiCard.setTexture('matiSplashOff');
+        }
+        
+        this.socket.send(JSON.stringify({
+            type: 'selectCharacter',
+            character
+        }));
 
-    this.piliCard.setStrokeStyle(
-        character === 'pili' ? 6 : 0,
-        color
-    );
-
-    this.socket.send(JSON.stringify({
-        type: 'selectCharacter',
-        character
-    }));
-
-    this.readyBtn.setColor('#ffffff');
+        this.readyBtn.setTexture('btnListoOn');
     }
 
 
@@ -144,23 +148,24 @@ export default class CharacterSelectScene extends Phaser.Scene {
        CONFIRMAR LISTO
     ========================= */
 
-    confirmReady() {
+    confirmReady()
+    {
         if (!this.selectedCharacter || this.isReady || this.hasConflict) return;
 
         this.isReady = true;
 
-        this.readyBtn.setText('ESPERANDO...');
-        this.readyBtn.setColor('#777777');
+        this.readyBtn.active = false;
+        
+        this.state.setText('ESPERANDO...')
+            .setColor('#777777');
 
         this.socket.send(JSON.stringify({
             type: 'playerReady'
         }));
     }
 
-    updateRemoteState(data) {
-        const borderColor = this.playerIndex === 1 ? 0x0077ff : 0xff3333;
-        const otherColor  = this.playerIndex === 1 ? 0xff3333 : 0x0077ff;
-
+    updateRemoteState(data)
+    {
         const myId = this.playerIndex;
         const otherId = myId === 1 ? 2 : 1;
 
@@ -169,70 +174,71 @@ export default class CharacterSelectScene extends Phaser.Scene {
         this.readyState = data.ready;
 
         // Mostrar selección del otro
-        if (data.selections[otherId]) {
-            if (data.selections[otherId] === 'mati') {
-            this.matiCard.setStrokeStyle(6, otherColor);
+        if (data.selections[otherId])
+        {
+            if (data.selections[otherId] === 'mati')
+            {
+                otherId === 1 ? this.matiCard.setTexture('matiSplashR') : this.matiCard.setTexture('matiSplashB');
+                this.selectedCharacter === 'pili' ? this.piliCard.setTexture(otherId === 1 ? 'piliSplashB' : 'piliSplashR') : this.piliCard.setTexture('piliSplashOff');
             }
-            if (data.selections[otherId] === 'pili') {
-            this.piliCard.setStrokeStyle(6, otherColor);
+
+            if (data.selections[otherId] === 'pili')
+            {
+                otherId === 1 ? this.piliCard.setTexture('piliSplashR') : this.piliCard.setTexture('piliSplashB');
+                this.selectedCharacter === 'mati' ? this.matiCard.setTexture(otherId === 1 ? 'matiSplashB' : 'matiSplashR') : this.matiCard.setTexture('matiSplashOff');
             }
         }
 
-        // Iluminación de listo
-        if (data.ready[myId]) {
-            this.glowCard(this.selectedCharacter, borderColor);
-        }
-        if (data.ready[otherId]) {
-            this.glowCard(data.selections[otherId], otherColor);
-        }
-
-        // Conflicto → verde
-        if (data.conflict) {
+        // Conflicto -> verde
+        if (data.conflict)
+        {
             const conflictedCharacter = data.selections[1];
             // da igual 1 o 2, son iguales en conflicto
 
-            // Limpia bordes primero
-            this.matiCard.setStrokeStyle();
-            this.piliCard.setStrokeStyle();
-
-            if (conflictedCharacter === 'mati') {
-                this.matiCard.setStrokeStyle(6, 0x00ff00);
+            if (conflictedCharacter === 'mati')
+            {
+                this.matiCard.setTexture('matiSplashG');
+                this.piliCard.setTexture('piliSplashOff');
             }
 
-            if (conflictedCharacter === 'pili') {
-                this.piliCard.setStrokeStyle(6, 0x00ff00);
+            if (conflictedCharacter === 'pili')
+            {
+                this.piliCard.setTexture('piliSplashG');
+                this.matiCard.setTexture('matiSplashOff');
             }
 
-            this.readyBtn.setText('CONFLICTO');
-            this.readyBtn.setColor('#00ff00');
+            this.readyBtn.setVisible(false);
 
-            return; // 🔑 MUY IMPORTANTE
+            this.state.setText('CONFLICTO')
+                .setColor('#00ff00')
+                .setVisible(true);
+
+            return;
         }
         else if (!this.isReady)
         {
-            this.readyBtn.setText('LISTO');
-            this.readyBtn.setColor('#ffffff');
+            this.state.setVisible(false);
+            this.readyBtn.setVisible(true);
         }
         else 
         {            
-            this.readyBtn.setText('ESPERANDO...');
-            this.readyBtn.setColor('#777777');
+            this.readyBtn.setVisible(false);
+            this.state.setText('ESPERANDO...')
+                .setColor('#777777')
+                .setVisible(true);
         }
     }
 
-    glowCard(character, color) {
-        const card = character === 'mati' ? this.matiCard : this.piliCard;
-        card.setStrokeStyle(6, color);
-        card.setAlpha(1);
+    goToMenu()
+    {
+        this.scene.start('MenuScene');
     }
 
-    /* =========================
-       WARNING VISUAL
-    ========================= */
-
-    showWarning(text) {
-        const warning = this.add.text(400, 520, text, {
-            fontSize: '20px',
+    showWarning(text)
+    {
+        const warning = this.add.text(800, 520, text, {
+            fontSize: '64px',
+            fontFamily: 'Rockwell',
             color: '#ff4444',
             backgroundColor: '#000000',
             padding: { x: 10, y: 6 }

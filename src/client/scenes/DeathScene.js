@@ -3,6 +3,12 @@ export default class DeathScene extends Phaser.Scene
     constructor()
     {
         super('DeathScene');
+        this.targetSceneKey = null;
+    }
+
+    init(data)
+    {
+        this.targetSceneKey = data.key;
     }
 
     create()
@@ -27,6 +33,6 @@ export default class DeathScene extends Phaser.Scene
             .setInteractive({ useHandCursor: true })
             .on('pointerover', () => volverBtn.setTexture('btnVolverOn'))
             .on('pointerout',  () => volverBtn.setTexture('btnVolverOff'))
-            .on('pointerdown', () => this.scene.start('MenuScene'));
+            .on('pointerdown', () => this.scene.start(this.targetSceneKey));
     }
 }

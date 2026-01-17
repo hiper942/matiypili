@@ -1,10 +1,16 @@
 import Phaser from 'phaser';
+import { connectionManager } from '../services/ConnectionManager';
 
-export default class SettingsScene extends Phaser.Scene
+export default class Settings extends Phaser.Scene
 {
     constructor()
     {
-        super('SettingsScene');
+        super('Settings');
+    }
+
+    init(data)
+    {
+        this.targetSceneKey = data.target;
     }
 
     preload()
@@ -40,7 +46,8 @@ export default class SettingsScene extends Phaser.Scene
         this.add.text(800, 120, 'AJUSTES',
         {
             color: '#ffffff',
-            fontSize: '80px'
+            fontSize: '80px',
+            fontFamily: 'Rockwell'
         })
         .setOrigin(0.5);
 
@@ -48,7 +55,8 @@ export default class SettingsScene extends Phaser.Scene
         this.add.text(350, 270, 'Volumen Música',
         { 
             fontSize: '40px', 
-            color: '#fff' 
+            color: '#fff',
+            fontFamily: 'Rockwell' 
         })
         .setOrigin(0,0.5)
         .setDepth(2);
@@ -85,7 +93,8 @@ export default class SettingsScene extends Phaser.Scene
         this.add.text(400, 570, 'Pantalla Completa',
         { 
             fontSize: '40px', 
-            color: '#fff' 
+            color: '#fff',
+            fontFamily: 'Rockwell'
         })
         .setOrigin(0, 0.5)
         .setDepth(2);
@@ -101,14 +110,29 @@ export default class SettingsScene extends Phaser.Scene
             if (this.scale.isFullscreen)
             {
                 this.scale.stopFullscreen();
-                this.scale.resize(1600,896);
+                this.game.scale.resize(1600, 900);
             }
             else
             {
                 this.scale.startFullscreen();
-                this.scale.resize(1980,1080);
+                this.game.scale.resize(1600, 900);
             }
         });
+
+        this.connectionText = this.add.text(800, 800, 'Servidor: Comprobando...',
+            {
+                fontSize: '18px',
+                fontFamily: 'Rockwell',
+                color: '#ffff00'
+            }
+        ).setOrigin(0.5);
+
+        // Listener para cambios de conexión
+        this.connectionListener = (data) => {
+            this.updateConnectionDisplay(data);
+        };
+
+        connectionManager.addListener(this.connectionListener);
 
         // = BOTÓN VOLVER = //
         const volverBtn = this.add.image(800, 780, 'btnVolverOff')
@@ -116,6 +140,55 @@ export default class SettingsScene extends Phaser.Scene
             .setInteractive({ useHandCursor: true })
             .on('pointerover', () => volverBtn.setTexture('btnVolverOn'))
             .on('pointerout',  () => volverBtn.setTexture('btnVolverOff'))
-            .on('pointerdown', () => this.scene.start('MenuScene'));
+            .on('pointerdown', () => this.exitSettings());
+    }
+
+    updateConnectionDisplay(data)
+    {
+        // Solo actualizar si el texto existe (la escena está creada)
+        if (!this.connectionText || !this.scene || !this.scene.isActive('Settings'))
+        {
+            return;
+        }
+
+        try
+        {
+            if (data.connected)
+            {
+                this.connectionText.setText(`Servidor: ${data.count} usuario(s) conectado(s)`);
+                this.connectionText.setColor('#00ff00');
+            }
+            else
+            {
+                this.connectionText.setText('Servidor: Desconectado');
+                this.connectionText.setColor('#ff0000');
+            }
+        }
+        catch (error)
+        {
+            console.error('[Settings] Error updating connection display:', error);
+        }
+    }
+
+    shutdown()
+    {
+        // Remover el listener
+        if (this.connectionListener)
+        {
+            connectionManager.removeListener(this.connectionListener);
+        }
+    }
+
+    exitSettings()
+    {
+        if (this.targetSceneKey == 'MenuScene')
+        {
+            this.scene.start(this.targetSceneKey)
+        }
+        else
+        {
+            this.scene.stop();
+            this.scene.resume(this.targetSceneKey);
+        }
     }
 }
