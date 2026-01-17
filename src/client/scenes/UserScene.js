@@ -11,20 +11,24 @@ export default class UserScene extends Phaser.Scene {
 
     // ===== NOMBRE ARRIBA =====
     this.add.text(300, 100,
-      username ? username.toUpperCase() : 'INVITADO',
-      { fontSize: '128px', color: '#ffffff', align: 'left' }
-    ).setOrigin(0.5);
+        username ? username.toUpperCase() : 'INVITADO',
+        { fontSize: '128px', fontFamily: 'Rockwell', color: '#ffffff', align: 'left' }
+    ).setDisplaySize(1000, 150).setOrigin(0.5);
 
     // ===== PERFIL =====
-    if (!username) {
-      this.createLoginUI();
-    } else {
-      this.createProfileUI(username);
+    if (!username)
+    {
+        this.createLoginUI();
+    }
+    else
+    {
+        this.createProfileUI(username);
     }
 
     // ===== BOTÓN VOLVER =====
     this.add.text(50, 800, '← Volver', {
       fontSize: '20px',
+      fontFamily: 'Rockwell',
       color: '#ffffff'
     })
     .setInteractive()
@@ -115,8 +119,15 @@ export default class UserScene extends Phaser.Scene {
     .setOrigin(0.5)
     .setInteractive({ useHandCursor: true })
     .on('pointerdown', () => this.register());
-    }
 
+    // Error o mensaje
+    this.err = this.add.text(800, 600, '', {
+                fontSize: '18px',
+                fontFamily: 'Rockwell',
+                color: '#00ff00'
+            })
+            .setOrigin(0.5);
+    }
 
     async createProfileUI(username) {
 
@@ -197,18 +208,19 @@ export default class UserScene extends Phaser.Scene {
         });
     }
 
-    formatTime(ms) {
-    if (ms == null) return '--:--.---';
+    formatTime(ms)
+    {
+        if (ms == null) return '--:--.---';
 
-    const minutes = Math.floor(ms / 60000);
-    const seconds = Math.floor((ms % 60000) / 1000);
-    const millis  = ms % 1000;
+        const minutes = Math.floor(ms / 60000);
+        const seconds = Math.floor((ms % 60000) / 1000);
+        const millis  = ms % 1000;
 
-    return `${minutes}:${seconds.toString().padStart(2,'0')}.${millis.toString().padStart(3,'0')}`;
-}
+        return `${minutes}:${seconds.toString().padStart(2,'0')}.${millis.toString().padStart(3,'0')}`;
+    }
 
-
-    async login() {
+    async login()
+    {
         const username = this.username.node.value.trim();
         const password = this.password.node.value.trim();
 
@@ -221,11 +233,7 @@ export default class UserScene extends Phaser.Scene {
         });
 
         if (!res.ok) {
-            this.err = this.add.text(800, 600, 'Algo salió mal...', {
-                fontSize: '18px',
-                color: '#00ff00'
-            })
-            .setOrigin(0.5);
+            this.err.setText('Algo salió mal...');
             return;
         }
 
@@ -236,7 +244,8 @@ export default class UserScene extends Phaser.Scene {
         this.scene.restart(); // 🔁 refresca a perfil
     }
 
-    async register() {
+    async register()
+    {
         const username = this.username.node.value.trim();
         const password = this.password.node.value.trim();
 
@@ -256,11 +265,6 @@ export default class UserScene extends Phaser.Scene {
         // tras registrar → vuelve a login
         console.log('Usuario creado, inicie sesion');
 
-        this.err = this.add.text(800, 600, 'Cuenta creada. Inicie Sesion.',
-            {
-                fontSize: '18px',
-                color: '#00ff00'
-            })
-            .setOrigin(0.5);
+        this.err.setText('Cuenta creada. Inicie Sesion.');
     }
 }

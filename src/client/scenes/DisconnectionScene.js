@@ -5,9 +5,9 @@ import { connectionManager } from '../services/ConnectionManager';
  * Escena que se muestra cuando se pierde la conexión con el servidor
  * Pausa el resto de escenas y comprueba continuamente hasta que se restablezca
  */
-export default class DisconectionScene extends Phaser.Scene {
+export default class DisconnectionScene extends Phaser.Scene {
     constructor() {
-        super('DisconectionScene');
+        super('DisconnectionScene');
         this.reconnectCheckInterval = null;
     }
 

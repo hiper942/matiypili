@@ -284,13 +284,7 @@ export default class ForestLevel2Scene extends Phaser.Scene
     update()
     {
         // ----- PAUSA ----- //
-        if (Phaser.Input.Keyboard.JustDown(this.pauseKey))
-        {
-            this.scene.pause();
-
-            this.scene.launch('Pause');
-            this.scene.bringToTop('Pause');
-        };
+        if (Phaser.Input.Keyboard.JustDown(this.pauseKey)) this.openPause();
         
         // ----- MATI ----- //
         this.mati.update(this.pili);
@@ -304,7 +298,7 @@ export default class ForestLevel2Scene extends Phaser.Scene
         //----- PUERTA -----//
         if (!this.door.open && this.grid.switch.active) this.door.openDoor();
 
-        if (this.door) this.door.update(this.mati, this.pili, 'ForestLevel3Scene');
+        if (this.door) this.door.update(this.mati, this.pili, 'WinScene');
 
         //----- BOTON -----//
         this.grid.buttons.forEach(btn => btn.update(this.mati));
@@ -316,10 +310,20 @@ export default class ForestLevel2Scene extends Phaser.Scene
         if (this.grid.pressurePlates) this.grid.pressurePlates.forEach(press => press.update(this.pressure));
     }
 
+    openPause()
+    {
+        if (this.scene.isActive('Pause')) return;
+
+        this.scene.pause(this.scene.key);
+        this.scene.launch('Pause', { target: this.scene.key });
+        this.scene.bringToTop('Pause');
+    }
+
+    // provisional
     onSpikeTouched(who)
     {
         console.log("Pincho tocado por:", who);
 
-        this.scene.start("DeathScene");
+        this.scene.start('DeathScene', { who: who, target: this.scene.key });
     }
 }

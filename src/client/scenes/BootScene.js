@@ -10,6 +10,25 @@ export default class BootScene extends Phaser.Scene
         // ---- FONDO ---- //
         this.load.image('fondoBosque1', 'assets/Escenario/Fondo.PNG');
         this.load.image('fondoBosque2', 'assets/Escenario/Fondo.png');
+        this.load.image('fondoPersonajes', 'assets/Menus/Seleccion/FondoSeleccion.PNG');
+
+        // ---- SELECCIÓN PERSONAJES ---- //
+        this.load.image('btnListoOff', 'assets/Menus/Seleccion/ListoApagado.PNG');
+        this.load.image('btnListoOn', 'assets/Menus/Seleccion/ListoEncendido.PNG');
+
+        this.load.image('btnEsperando', 'assets/Menus/Seleccion/Esperando.PNG');
+
+        this.load.image('btnConflicto', 'assets/Menus/Seleccion/Conflicto.PNG');
+
+        this.load.image('matiSplashOff', 'assets/Menus/Seleccion/MatiNegro.PNG');
+        this.load.image('matiSplashR', 'assets/Menus/Seleccion/MatiRojo.PNG');
+        this.load.image('matiSplashB', 'assets/Menus/Seleccion/MatiAzul.PNG');
+        this.load.image('matiSplashG', 'assets/Menus/Seleccion/MatiVerde.PNG');
+
+        this.load.image('piliSplashOff', 'assets/Menus/Seleccion/PiliNegro.PNG');
+        this.load.image('piliSplashR', 'assets/Menus/Seleccion/PiliRojo.PNG');
+        this.load.image('piliSplashB', 'assets/Menus/Seleccion/PiliAzul.PNG');
+        this.load.image('piliSplashG', 'assets/Menus/Seleccion/PiliVerde.PNG');
 
         // ---- MATI ---- //
         this.load.spritesheet('matiIdle', 'assets/Mati/idleMati.png', { frameWidth: 256, frameHeight: 256 });
@@ -100,6 +119,12 @@ export default class BootScene extends Phaser.Scene
 
         this.load.image('btnJugarOff', 'assets/Menus/botonJugarApagado.PNG');
         this.load.image('btnJugarOn', 'assets/Menus/botonJugarEncendido.PNG');
+
+        this.load.image('btnOnlineOff', 'assets/Menus/onlineApagado.PNG');
+        this.load.image('btnOnlineOn', 'assets/Menus/onlineEncendido.PNG');
+
+        this.load.image('btnOfflineOff', 'assets/Menus/offlineApagado.PNG');
+        this.load.image('btnOfflineOn', 'assets/Menus/offlineEncendido.PNG'); 
         
         this.load.image('btnVolverOff', 'assets/Menus/botonVolverApagado.PNG');
         this.load.image('btnVolverOn', 'assets/Menus/botonVolverEncendido.PNG');
