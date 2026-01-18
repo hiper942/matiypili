@@ -36,9 +36,17 @@ Todas las edades y amantes de los juegos en parejas.
 
 Controles:
 
+Controles offline:
+
 Movimiento de Mati - WASD 
 
 Movimiento de Pili - ↑←↓→
+
+Controles online:
+
+Movimiento de Mati - WASD 
+
+Movimiento de Pili - WASD 
 
 Estilo visual: 
 
@@ -62,7 +70,7 @@ Amistad y cooperación + Naturaleza.
 
 ### Tono narrativo
 Aventurero y emotivo, con una atmósfera llena de serenidad y tranquilidad.
-**NO** hay diálogos, sólo gestos, sonidos ambientales y música emocional que logran transmitir la historia.
+**NO** hay diálogos y hay música emocional que logran transmitir la historia.
 
 ## Personajes, Mecánicas y Físicas
 ### Personajes
@@ -129,10 +137,9 @@ El bosque de Almanza, un entorno natural mágico. Su estética en sí mezcla des
 Bosque con plataformas de roca, hoja y árboles
 El escenario es similar en todos los niveles, con un tileset, solo cambia la disposición de las plataformas y de los puzzles
 
-
 ### Estructura del mundo
 Cada nivel representa una zona del bosque con un santuario que ha perdido su brillo, el cual debe de activarse de nuevo.
-Los niveles se conectan visualmente aparentando un camino seguido, aunque se seleccionan desde un mapa central. Eso sí, se van desbloqueando después de pasar el nivel anterior para seguir una linealidad.
+Los niveles se conectan visualmente aparentando un camino seguido. Eso sí, se van desbloqueando después de pasar el nivel anterior para seguir una linealidad.
 
 
 ## Niveles
@@ -155,9 +162,9 @@ Elementos del nivel:
 ### NIVEL 3 - Raíces profundas
 Elementos del nivel:
 - Una placa de presión
-- Al activarse, se abre una trampilla
-- De la trampilla cae una caja 
-- Pili debe mover esa caja a un punto para que los dos puedan cruzar
+- Al activarse, se activa el puente.
+- De la trampilla cae una caja.
+- Pili debe mover esa caja a la placa de presión, para que se active, para poder pasar donde Mati.
 - El objetivo final, al igual que los otros niveles, es llegar a la puerta juntos. 
 
 ## Progreso del juego
@@ -182,7 +189,6 @@ En escala suave. La curva de aprendizaje se apoya en la cooperación de ambos m�
 
 ### Rejugabilidad
 La experiencia emocional es distinta dependiendo de con quién se juegue.
-
 
 ## Programacion
 La programación de Mati & Pili se basa en un sistema modular y simple, dividido en escenas, entidades y un generador de niveles. Está diseñado para que las mecánicas cooperativas funcionen de forma clara y sin complejidad innecesaria.
@@ -224,14 +230,12 @@ El Grid genera el nivel a partir de una matriz numérica donde cada número repr
 - Movimiento rápido y ligero.
 - Puede activar botones y mecanismos.
 - Puede subirse sobre Pili.
-- Control con WASD.
 
 #### Pili
 - Movimiento lento y pesado.
 - Puede empujar rocas.
 - Actúa como plataforma para Mati.
 - No puede saltar alto ni entrar en huecos pequeños.
-- Control con flechas.
 
 Ambos están diseñados para complementarse:
 *Mati* → precisión y agilidad.
@@ -257,12 +261,24 @@ Establece colisiones.
 Actualiza mecánicas e interacciones en cada frame.
 
 **Escenas del proyecto:**
-- MenuScene
-- TutorialLevelScene
-- ForestLevelScene
-- ForestLevel2Scene
-- WinScene
+- AuthCheckScene
+- BootScene
+- CharacterSelectScene
+- CreditsScene
 - DeathScene
+- DisconnectionScene
+- ForestLevel1Scene
+- ForestLevel2Scene
+- LoadScreen
+- LobbyScene
+- MenuScene
+- Pause
+- Settings
+- TutorialLevelScene
+- TutorialLevelSceneOnline
+- UserScene
+- WinScene
+
 
 ### Sistema de muerte y victoria
 **Muerte**: cualquier personaje que toque pinchos pasa a DeathScene.
