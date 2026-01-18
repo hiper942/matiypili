@@ -25,30 +25,30 @@ Grupo 7
 | Ismael | Garcia         | [i.garciaga.2023@alumnos.urjc.es](mailto:i.garciaga.2023@alumnos.urjc.es) | hiper942      |
 
 ## Introducción
-Género: 
+### Género 
 Plataformas cooperativo 2D
 
-Plataforma: 
+### Plataforma
 Web (cooperativo local)
 
-Público objetivo: 
+### Público objetivo
 Todas las edades y amantes de los juegos en parejas.
 
-Controles:
+### Controles
 
-Controles offline:
+#### Controles offline:
 
 Movimiento de Mati - WASD 
 
 Movimiento de Pili - ↑←↓→
 
-Controles online:
+#### Controles online:
 
 Movimiento de Mati - WASD 
 
 Movimiento de Pili - WASD 
 
-Estilo visual: 
+### Estilo visual
 
 El juego presenta un arte 2D dibujado a mano con un estilo cartoon-naturalista, el cual combina trazos suaves y colores cálidos. La estética se caracteriza por su atmósfera relajada, luminosa y orgánica, reviviendo la calma de un bosque mágico bañado por su luz propia.
 Los entornos están formados con tonos verdes, dorados y ocres suaves para reflejar la calidez del bosque.
@@ -57,11 +57,11 @@ El estilo visual combina formas redondeadas y simplificadas con detalles texturi
 
 El resultado final busca un equilibrio entre la estética ilustrada a mano y la claridad visual propia de un videojuego de plataformas cooperativo, asegurandose que los jugadores logren distinguir, sin problemas, los elementos interactivos sin perder la belleza del entorno.
 
-Descripción: 
+### Descripción
 Mati & Pili es un videojuego de plataformas cooperativo en el cual dos personajes muy distintos entre sí; Mati, un niño curioso y alocado, y Pili, una gigante piedra pacífica; deben avanzar por un bosque mágico resolviendo puzles enfocados en la colaboración, unión de habilidades, altura y tiempo.
 El juego combina una lógica, con sincronización y emoción. Se quiere transmitir un mensaje de confianza y unión entre seres diferentes.
 
-Objetivo del diseño: 
+### Objetivo del diseño
 Se quiere crear una experiencia cooperativa accesible para todos los públicos, emotiva y visualmente relajada, donde cada nivel logre reforzar un vínculo entre los dos jugadores.
 
 ## Narrativa
@@ -70,6 +70,8 @@ Amistad y cooperación + Naturaleza.
 
 ### Tono narrativo
 Aventurero y emotivo, con una atmósfera llena de serenidad y tranquilidad.
+<img src="./public/assets/MatyYPili JUNTIS.png" width=1024 height=670>
+
 **NO** hay diálogos y hay música emocional que logran transmitir la historia.
 
 ## Personajes, Mecánicas y Físicas
@@ -128,7 +130,8 @@ Cada uno responde de forma distinta a la gravedad, la inercia y el peso, por lo 
 Estas dinámicas ayudan a la coordinación, elevando la dificultad de manera natural a medida que avanza la aventura.
 
 ## Escenarios
-<img src="./public/assets/Escenario/TUTORIAL.png" width=1024 height=670>
+
+<img src="./public/assets/Escenario.png" width=1024 height=670>
 
 ### Ambientación principal
 El bosque de Almanza, un entorno natural mágico. Su estética en sí mezcla desde una tranquilidad hasta el misterio, con colores cálidos y vegetación exuberante.
@@ -141,10 +144,11 @@ El escenario es similar en todos los niveles, con un tileset, solo cambia la dis
 Cada nivel representa una zona del bosque con un santuario que ha perdido su brillo, el cual debe de activarse de nuevo.
 Los niveles se conectan visualmente aparentando un camino seguido. Eso sí, se van desbloqueando después de pasar el nivel anterior para seguir una linealidad.
 
-<img src="./public/assets/Escenario.png" width=1024 height=670>
-
 ## Niveles
 ### NIVEL 1 - Claro del Encuentro (Tutorial)
+
+<img src="./public/assets/Escenario/TUTORIAL.png" width=1024 height=670>
+
 Elementos del nivel:
 - Montarse en Pili para llegar a lugares altos
 - Dash de Mati
@@ -155,12 +159,18 @@ Elementos del nivel:
 - Ambos deben cruzar la puerta para finalizar el nivel
 
 ### NIVEL 2 - Puentes de musgo
+
+<img src="./public/assets/Escenario/NIVEL1.png" width=1024 height=670>
+
 Elementos del nivel:
 - Un cristal que, al interactuar con el, actical el puente
 - Puente que permite que Pili y Mati cruzan juntos
 - Plataformas más separadas para obligar a usar el puente o caer a los pinchos
 
 ### NIVEL 3 - Raíces profundas
+
+<img src="./public/assets/Escenario/NIVEL2.png" width=1024 height=670>
+
 Elementos del nivel:
 - Una placa de presión
 - Al activarse, se activa el puente.
@@ -300,7 +310,7 @@ Aqui se muestran varias imagenes de bocetos o assets que se utilizan el el juego
 <img src=".\public\assets\Recursos\boceto1.PNG" width=780 height=512>
 <img src=".\public\assets\Recursos\palanca.PNG" width=780 height=512>
 <img src=".\public\assets\Recursos\boceto2.PNG" width=780 height=512>
-<img src=".\public\assets\Recursos\cristal.PNG" width=780 height=512>
+<img src=".\public\assets\Recursos\cristal.PNG" width=512 height=512>
 <img src=".\public\assets\Recursos\boceto3.PNG" width=780 height=512>
 <img src=".\public\assets\Recursos\puerta.PNG" width=780 height=512>
 
@@ -321,6 +331,7 @@ Finalmente, se mantendrá una comunicación cercana mediante actualizaciones sem
 - [Masha y el oso](https://es.wikipedia.org/wiki/Masha_y_el_oso_(serie_de_televisi%C3%B3n))
 - [Sully y Boo](https://www.reddit.com/r/Pixar/comments/1eizi3p/sully_and_boo/?tl=es-es)
 - [Resto de referencias](https://es.pinterest.com/samu_vds/mati-y-pilii/)
+
 
 
 
