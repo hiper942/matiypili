@@ -128,7 +128,7 @@ Cada uno responde de forma distinta a la gravedad, la inercia y el peso, por lo 
 Estas dinámicas ayudan a la coordinación, elevando la dificultad de manera natural a medida que avanza la aventura.
 
 ## Escenarios
-<img src="./public/assets/Escenario.png" width=1024 height=670>
+<img src="./public/assets/Escenario/TUTORIAL.png" width=1024 height=670>
 
 ### Ambientación principal
 El bosque de Almanza, un entorno natural mágico. Su estética en sí mezcla desde una tranquilidad hasta el misterio, con colores cálidos y vegetación exuberante.
@@ -141,6 +141,7 @@ El escenario es similar en todos los niveles, con un tileset, solo cambia la dis
 Cada nivel representa una zona del bosque con un santuario que ha perdido su brillo, el cual debe de activarse de nuevo.
 Los niveles se conectan visualmente aparentando un camino seguido. Eso sí, se van desbloqueando después de pasar el nivel anterior para seguir una linealidad.
 
+<img src="./public/assets/Escenario.png" width=1024 height=670>
 
 ## Niveles
 ### NIVEL 1 - Claro del Encuentro (Tutorial)
@@ -320,5 +321,6 @@ Finalmente, se mantendrá una comunicación cercana mediante actualizaciones sem
 - [Masha y el oso](https://es.wikipedia.org/wiki/Masha_y_el_oso_(serie_de_televisi%C3%B3n))
 - [Sully y Boo](https://www.reddit.com/r/Pixar/comments/1eizi3p/sully_and_boo/?tl=es-es)
 - [Resto de referencias](https://es.pinterest.com/samu_vds/mati-y-pilii/)
+
 
 
