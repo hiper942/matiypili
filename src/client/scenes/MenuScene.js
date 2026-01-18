@@ -35,13 +35,12 @@ export default class MenuScene extends Phaser.Scene{
             })
 
         // Boton Usuario
-        this.add.text(400, 500, 'Usuario')
-            .setOrigin(0.5)
+        const userBtn = this.add.image(400, 500, 'btnUsuarioOff')
+            .setScale(0.6)
             .setInteractive({ useHandCursor: true })
-            .on('pointerdown', () =>
-            {
-                this.scene.start('UserScene');
-            });
+            .on('pointerover', () => userBtn.setTexture('btnUsuarioOn'))
+            .on('pointerout',  () => userBtn.setTexture('btnUsuarioOff'))
+            .on('pointerdown', () => this.scene.start('UserScene'));
 
         // Boton Jugar Online
         const onlineBtn = this.add.image(500, 650, 'btnOnlineOff')

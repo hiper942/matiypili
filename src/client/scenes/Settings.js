@@ -13,18 +13,6 @@ export default class Settings extends Phaser.Scene
         this.targetSceneKey = data.target;
     }
 
-    preload()
-    {
-        // Botones y fondo
-        this.load.image('btnVolverOff', 'assets/Menus/botonVolverApagado.PNG');
-        this.load.image('btnVolverOn',  'assets/Menus/botonVolverEncendido.PNG');
-
-        this.load.image('btnAjustes', 'assets/Escenario/Pedroloo/PiedraPili.PNG');
-
-        this.load.image('fondoPausa', 'assets/Menus/FondoMenuPausa.png');
-        this.load.image('fondoBosque', 'assets/Escenario/Fondo.png');
-    }
-
     create()
     {
         if (this.sound.get('menuMusic'))
@@ -90,7 +78,7 @@ export default class Settings extends Phaser.Scene
 
 
         // = BOTÓN FULLSCREEN = //
-        this.add.text(400, 570, 'Pantalla Completa',
+        this.add.text(350, 570, 'Pantalla Completa',
         { 
             fontSize: '40px', 
             color: '#fff',
@@ -119,7 +107,7 @@ export default class Settings extends Phaser.Scene
             }
         });
 
-        this.connectionText = this.add.text(800, 800, 'Servidor: Comprobando...',
+        this.connectionText = this.add.text(200, 850, 'Servidor: Comprobando...',
             {
                 fontSize: '18px',
                 fontFamily: 'Rockwell',

@@ -32,6 +32,10 @@ export default class TutorialLevelSceneOnline extends Phaser.Scene
     // Start()
     create()
     {                
+        // --- LISTENERS SHUTDOWN --- //
+        this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
+        this.events.once(Phaser.Scenes.Events.DESTROY, this.onShutdown, this);
+        
         // --- MUSICA --- //
         if (!this.sound.get('levelMusic'))
         {
@@ -303,7 +307,7 @@ export default class TutorialLevelSceneOnline extends Phaser.Scene
 
         // --- ONLINE --- //
         this.lastNetSend = 0;
-        this.NET_RATE = 50; // ms -> 1000 / 50 = 20 veces/segundo para evitar lag innecesario
+        this.NET_RATE = 20; // ms -> 1000 / 20 = 50 veces/segundo para evitar lag innecesario
         
         this.localPlayer  = this.character === 'mati' ? this.mati : this.pili;
         this.remotePlayer = this.character === 'mati' ? this.pili : this.mati;
@@ -311,7 +315,7 @@ export default class TutorialLevelSceneOnline extends Phaser.Scene
         this.mati.isLocal = this.character === 'mati';
         this.pili.isLocal = this.character === 'pili';
 
-        this.socket.addEventListener('message', (event) =>
+        this.onSocketMessage = (event) =>
         {
             const data = JSON.parse(event.data);
 
@@ -338,7 +342,7 @@ export default class TutorialLevelSceneOnline extends Phaser.Scene
                     break;
 
                 case 'doorOpened':
-                    if (!this.door.open) 
+                    if (!this.door.open)
                     {
                         this.door.openDoor();
                     }
@@ -355,21 +359,28 @@ export default class TutorialLevelSceneOnline extends Phaser.Scene
                         rock.applyRemoteState(data);
                     }
                     break;
+
                 case 'playerDisconnected':
                     this.handleDisconnection(data.reason || 'other_player_left');
                     break;
             }
-        });
+        };
+        
+        this.onSocketClose = () =>
+        {
+            this.handleDisconnection('other_player_left');
+        };
 
-        this.socket.addEventListener('close', () =>
+        this.onSocketError = () =>
         {
             this.handleDisconnection('connection_lost');
-        });
+        };
 
-        this.socket.addEventListener('error', () =>
-        {
-            this.handleDisconnection('socket_error');
-        });
+        this.socket.addEventListener('message', this.onSocketMessage);
+
+        this.socket.addEventListener('close', this.onSocketClose);
+
+        this.socket.addEventListener('error', this.onSocketError);
     }
 
     // Update()
@@ -380,7 +391,8 @@ export default class TutorialLevelSceneOnline extends Phaser.Scene
         // ----- ONLINE ----- //
         const now = Date.now();
 
-        if (now - this.lastNetSend > this.NET_RATE) {
+        if (now - this.lastNetSend > this.NET_RATE)
+        {
             this.sendPlayerState();
             this.lastNetSend = now;
         }
@@ -456,6 +468,8 @@ export default class TutorialLevelSceneOnline extends Phaser.Scene
 
     sendPlayerState()
     {
+        if (!this.socket || this.socket.readyState !== WebSocket.OPEN) return;
+
         const p = this.localPlayer.sprite;
 
         this.socket.send(JSON.stringify
@@ -540,21 +554,15 @@ export default class TutorialLevelSceneOnline extends Phaser.Scene
             this.socket.close(1000, 'exit_to_menu');
         }
 
-        // 3. Limpiar listeners (muy importante)
-        if (this.socket)
-        {
-            this.socket.onclose = null;
-            this.socket.onerror = null;
-            this.socket.onmessage = null;
-        }
-
         // 4. Pausar escena actual
         this.scene.pause();
+        this.time.removeAllEvents();
 
         // 5. Lanzar escena de desconexión
-        if (!this.scene.isActive('DisconnectionScene'))
+        if (!this.scene.isActive('DisconnectionScene') && !isVoluntary)
         {
-            this.scene.launch('DisconnectionScene', {
+            this.scene.launch('DisconnectionScene',
+            {
                 previousScene: this.scene.key,
                 reason
             });
@@ -571,12 +579,35 @@ export default class TutorialLevelSceneOnline extends Phaser.Scene
         // Volver a escuchar eventos
         this.socket.addEventListener('close', () =>
         {
-            this.handleDisconnection('connection_lost');
+            this.handleDisconnection('other_player_left');
         });
 
         this.socket.addEventListener('error', () =>
         {
-            this.handleDisconnection('socket_error');
+            this.handleDisconnection('connection_lost');
         });
+    }
+
+    onShutdown()
+    {
+        if (!this.socket) return;
+
+        if (this.onSocketMessage)
+        {
+            this.socket.removeEventListener('message', this.onSocketMessage);
+            this.onSocketMessage = null;
+        }
+
+        if (this.onSocketClose)
+        {
+            this.socket.removeEventListener('close', this.onSocketClose);
+            this.onSocketClose = null;
+        }
+
+        if (this.onSocketError)
+        {
+            this.socket.removeEventListener('error', this.onSocketError);
+            this.onSocketError = null;
+        }
     }
 }

@@ -11,69 +11,91 @@ export default class DisconnectionScene extends Phaser.Scene {
         this.reconnectCheckInterval = null;
     }
 
-    init(data) {
+    init(data)
+    {
         // Guardar la escena que estaba activa cuando se perdió la conexión
         this.previousScene = data.previousScene;
         this.reason = data.reason;
     }
 
-    create() {
+    create()
+    {        
         // Fondo semi-transparente
         this.add.rectangle(800, 450, 1600, 900, 0x000000, 0.8);
 
         // Título
         this.add.text(800, 300, 'CONEXIÓN PERDIDA', {
             fontSize: '96px',
-            color: '#ff0000',
+            color: '#ffffff',
             fontFamily: 'Rockwell'
         }).setOrigin(0.5);
 
         // Mensaje
         let message = 'Intentando reconectar...';
 
-        if (this.reason === 'exit_to_menu' || this.reason === 'other_player_left') message = 'El otro jugador ha salido al menú';
+        if (this.reason === 'other_player_left') message = 'El otro jugador ha salido al menú';
 
         this.statusText = this.add.text(800, 500, message, {
             fontSize: '48px',
             fontFamily: 'Rockwell',
-            color: '#ffff00'
-        }).setOrigin(0.5);
-
-        // Contador de intentos
-        this.attemptCount = 0;
-        this.attemptText = this.add.text(800, 600, 'Intentos: 0', {
-            fontSize: '36px',
-            fontFamily: 'Rockwell',
             color: '#ffffff'
         }).setOrigin(0.5);
 
-        // Indicador parpadeante
-        this.dotCount = 0;
-        this.time.addEvent({
-            delay: 2000,
-            callback: () => {
-                this.dotCount = (this.dotCount + 1) % 4;
-                const dots = '.'.repeat(this.dotCount);
-                this.statusText.setText(`Intentando reconectar${dots}`);
-            },
-            loop: true
-        });
+        if (this.reason !== 'other_player_left')
+        {            
+            // Contador de intentos
+            this.attemptCount = 0;
+            this.attemptText = this.add.text(800, 600, 'Intentos: 0', {
+                fontSize: '36px',
+                fontFamily: 'Rockwell',
+                color: '#ffffff'
+            }).setOrigin(0.5);
 
-        // Listener para cambios de conexión
-        this.connectionListener = (data) => {
-            if (data.connected) {
-                this.onReconnected();
-            }
-        };
-        connectionManager.addListener(this.connectionListener);
+            // Indicador parpadeante
+            this.dotCount = 0;
+            this.time.addEvent({
+                delay: 2000,
+                callback: () => {
+                    this.dotCount = (this.dotCount + 1) % 4;
+                    const dots = '.'.repeat(this.dotCount);
+                    this.statusText.setText(`Intentando reconectar${dots}`);
+                },
+                loop: true
+            });
 
-        // Intentar reconectar cada 2 segundos
-        this.reconnectCheckInterval = setInterval(() => {
+            // Listener para cambios de conexión
+            this.connectionListener = (data) => {
+                if (data.connected) {
+                    this.onReconnected();
+                }
+            };
+            connectionManager.addListener(this.connectionListener);
+
+            // Intentar reconectar cada 2 segundos
+            this.reconnectCheckInterval = setInterval(() => {
+                this.attemptReconnect();
+            }, 2000);
+
+            // Primer intento inmediato
             this.attemptReconnect();
-        }, 2000);
+        }
 
-        // Primer intento inmediato
-        this.attemptReconnect();
+        const menuBtn = this.add.image(800, 750, 'btnSalirOff')
+            .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => menuBtn.setTexture('btnSalirOn'))
+            .on('pointerout',  () => menuBtn.setTexture('btnSalirOff'))
+            .on('pointerdown', () => this.goToMenu());
+    }
+
+    goToMenu()
+    {
+        const gameScene = this.scene.get(this.previousScene);
+
+        if (gameScene?.handleDisconnection) gameScene.handleDisconnection('exit_to_menu');
+        
+        this.scene.start('MenuScene');
+        this.scene.stop(this.previousScene);
+        this.scene.stop();
     }
 
     async attemptReconnect() {
@@ -104,13 +126,16 @@ export default class DisconnectionScene extends Phaser.Scene {
         });
     }
 
-    shutdown() {
+    onShutdown()
+    {
         // Limpiar el interval al cerrar la escena
-        if (this.reconnectCheckInterval) {
+        if (this.reconnectCheckInterval)
+        {
             clearInterval(this.reconnectCheckInterval);
         }
         // Remover el listener
-        if (this.connectionListener) {
+        if (this.connectionListener)
+        {
             connectionManager.removeListener(this.connectionListener);
         }
     }

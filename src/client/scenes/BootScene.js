@@ -11,6 +11,7 @@ export default class BootScene extends Phaser.Scene
         this.load.image('fondoBosque1', 'assets/Escenario/Fondo.PNG');
         this.load.image('fondoBosque2', 'assets/Escenario/Fondo.png');
         this.load.image('fondoPersonajes', 'assets/Menus/Seleccion/FondoSeleccion.PNG');
+        this.load.image('fondoLobby', 'assets/Menus/OnlineMulti.PNG');
 
         // ---- SELECCIÓN PERSONAJES ---- //
         this.load.image('btnListoOff', 'assets/Menus/Seleccion/ListoApagado.PNG');
@@ -141,6 +142,9 @@ export default class BootScene extends Phaser.Scene
         this.load.image('btnReiniciarOff', 'assets/Menus/botonReiniciarApagado.PNG');
         this.load.image('btnReiniciarOn', 'assets/Menus/botonReiniciarEncendido.PNG');
 
+        this.load.image('btnUsuarioOff', 'assets/Menus/usuarioApagado.PNG');
+        this.load.image('btnUsuarioOn', 'assets/Menus/usuarioEncendido.PNG');
+
         this.load.image('btnstt', 'assets/Menus/ajustes.PNG');
 
         // ---- MÚSICA ---- //
@@ -150,6 +154,15 @@ export default class BootScene extends Phaser.Scene
         // ---- LOGIN ---- //
         this.load.html('loginForm', 'assets/ui/login.html');
         this.load.html('registerForm', 'assets/ui/register.html');
+
+        this.load.image('btnLoginOff', 'assets/Menus/usuarioApagado.PNG');
+        this.load.image('btnLoginOn', 'assets/Menus/usuarioEncendido.PNG');
+
+        this.load.image('btnRegistrarOff', 'assets/Menus/Usuario/RegApagado.PNG');
+        this.load.image('btnRegistrarOn', 'assets/Menus/RegEncendido.PNG');
+
+        this.load.image('btnLogoutOff', 'assets/Menus/usuarioApagado.PNG');
+        this.load.image('btnLogoutOn', 'assets/Menus/usuarioEncendido.PNG');
     }
 
     create()

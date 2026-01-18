@@ -15,7 +15,6 @@ export default class CharacterSelectScene extends Phaser.Scene {
 
     create()
     {
-
         console.log('Soy el jugador:', this.playerIndex);
 
         this.selectedCharacter = null;
@@ -113,6 +112,9 @@ export default class CharacterSelectScene extends Phaser.Scene {
                     break;
             }
         });
+
+        this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
+        this.events.once(Phaser.Scenes.Events.DESTROY, this.onShutdown, this);
     }
 
     /* =========================
@@ -232,6 +234,15 @@ export default class CharacterSelectScene extends Phaser.Scene {
     goToMenu()
     {
         this.scene.start('MenuScene');
+    }
+
+    onShutdown()
+    {
+        if (!this.socket) return;
+
+        this.socket.onmessage = null;
+        this.socket.onerror = null;
+        this.socket.onclose = null;
     }
 
     showWarning(text)
