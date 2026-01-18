@@ -307,7 +307,6 @@ export default class TutorialLevelSceneOnline extends Phaser.Scene
 
         // --- ONLINE --- //
         this.lastNetSend = 0;
-        this.NET_RATE = 20; // ms -> 1000 / 20 = 50 veces/segundo para evitar lag innecesario
         
         this.localPlayer  = this.character === 'mati' ? this.mati : this.pili;
         this.remotePlayer = this.character === 'mati' ? this.pili : this.mati;
@@ -391,12 +390,9 @@ export default class TutorialLevelSceneOnline extends Phaser.Scene
         // ----- ONLINE ----- //
         const now = Date.now();
 
-        if (now - this.lastNetSend > this.NET_RATE)
-        {
-            this.sendPlayerState();
-            this.lastNetSend = now;
-        }
-        
+        this.sendPlayerState();
+        this.lastNetSend = now;
+
         // ----- PAUSA ----- //
         if (Phaser.Input.Keyboard.JustDown(this.pauseKey)) this.openPause();
 
@@ -463,7 +459,7 @@ export default class TutorialLevelSceneOnline extends Phaser.Scene
     {
         console.log("Pincho tocado por:", who);
 
-        this.scene.start("DeathScene");
+        this.scene.launch('DeathScene', { who: who, target: this.scene.key });
     }
 
     sendPlayerState()

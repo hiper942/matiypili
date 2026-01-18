@@ -89,6 +89,7 @@ export default class TutorialLevelScene extends Phaser.Scene
         ]
 
         // = DECORACION BACK = //
+        // 1  = Espiral
         // 3  = Flechas
         // 4  = WASD
         // 5  = SHIFT
@@ -96,6 +97,12 @@ export default class TutorialLevelScene extends Phaser.Scene
         // 7  = Arbusto Peque
         // 8  = Cristal Amarillo
         // 9  = Cristal Verde
+        // 10 = Flecha Arriba
+        // 11 = Flecha Abajo
+        // 12 = Flecha Izquierda
+        // 13 = Flecha Derecha
+        // 14 = Flecha Arriba Izquierda
+        // 15 = Flecha Arriba Derecha
         // 22 = Piedra Grande
         // 23 = Piedra Mediana
         // 24 = Piedra Pequeña
@@ -320,8 +327,12 @@ export default class TutorialLevelScene extends Phaser.Scene
 
     onSpikeTouched(who)
     {
+        if (this.scene.isActive('DeathScene')) return;
+
         console.log("Pincho tocado por:", who);
 
-        this.scene.start('DeathScene', { who: who, target: this.scene.key });
+        this.scene.pause(this.scene.key);
+        this.scene.launch('DeathScene', { who: who, target: this.scene.key });
+        this.scene.bringToTop('DeathScene');
     }
 }

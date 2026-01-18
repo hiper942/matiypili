@@ -7,7 +7,7 @@ export default class Switch
         this.isMoving = false;
 
         this.sprite = scene.add.sprite(x, y, 'switchActivation');
-        this.sprite.setOrigin(0.5, 0.575);
+        this.sprite.setOrigin(0.5, 0.625).setScale(1.25);
 
         scene.physics.add.existing(this.sprite, true);
 

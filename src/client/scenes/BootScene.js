@@ -106,6 +106,15 @@ export default class BootScene extends Phaser.Scene
 
         this.load.image('shrooms1', 'assets/Escenario/Decoraciones/Setas2.PNG');
         this.load.image('shrooms2', 'assets/Escenario/Decoraciones/Setas3.PNG');
+
+        this.load.image('up', 'assets/Escenario/Decoraciones/arriba.png');
+        this.load.image('right', 'assets/Escenario/Decoraciones/derecha.png');
+        this.load.image('left', 'assets/Escenario/Decoraciones/izquierda.png');
+        this.load.image('down', 'assets/Escenario/Decoraciones/abajo.png');
+        this.load.image('upR', 'assets/Escenario/Decoraciones/diagonalDerecha.png');
+        this.load.image('upL', 'assets/Escenario/Decoraciones/diagonalIzquierda.png');
+
+        this.load.spritesheet('swirly', 'assets/Escenario/Decoraciones/espiral.png', { frameWidth: 128, frameHeight: 128 });
         
         this.load.spritesheet('fireflies', 'assets/Escenario/Decoraciones/luciernagas.png', { frameWidth: 128, frameHeight: 128 });
 
@@ -258,6 +267,13 @@ export default class BootScene extends Phaser.Scene
             key: 'flies',
             frames: this.anims.generateFrameNumbers('fireflies', { start: 0, end: 157 }),
             frameRate: 24,
+            repeat: -1
+        })
+
+        this.anims.create({
+            key: 'swirl',
+            frames: this.anims.generateFrameNumbers('swirly', { start: 0, end: 35 }),
+            frameRate: 6,
             repeat: -1
         })
 

@@ -1,8 +1,10 @@
 /**
  * Lobby Scene - Waiting for multiplayer matchmaking
  */
-export default class LobbyScene extends Phaser.Scene {
-  constructor() {
+export default class LobbyScene extends Phaser.Scene
+{
+  constructor()
+  {
     super({ key: 'LobbyScene' });
     this.ws = null;
     this.transferSocket = false;
@@ -19,7 +21,7 @@ export default class LobbyScene extends Phaser.Scene {
       .setDepth(-10);
 
     // Status text
-    this.statusText = this.add.text(width / 2, height / 2 - 70, 'CONNECTING TO SERVER...', {
+    this.statusText = this.add.text(width / 2, height / 2 - 70, 'CONECTANDO AL SERVIDOR...', {
       fontSize: '48px',
       fontFamily: 'Rockwell',
       color: '#21170B'
@@ -64,7 +66,7 @@ export default class LobbyScene extends Phaser.Scene {
 
       this.ws.onopen = () => {
         console.log('Connected to WebSocket server');
-        this.statusText.setText('Waiting for opponent...');
+        this.statusText.setText('Buscando partida...');
 
         // Join matchmaking queue
         this.ws.send(JSON.stringify({ type: 'joinQueue' }));
@@ -106,7 +108,7 @@ export default class LobbyScene extends Phaser.Scene {
     switch (data.type)
     {
       case 'queueStatus':
-        this.playerCountText.setText(`Players in queue: ${data.position}/2`);
+        this.playerCountText.setText(`Jugadores en cola: ${data.position}/2`);
         break;
 
       case 'gameStart':

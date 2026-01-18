@@ -8,7 +8,7 @@ export default class DeathScene extends Phaser.Scene
 
     init(data)
     {
-        this.targetSceneKey = data.key;
+        this.targetSceneKey = data.target;
     }
 
     create()
@@ -21,18 +21,35 @@ export default class DeathScene extends Phaser.Scene
         //Fondo
         this.add.image(800, 450, 'deathScene').setDisplaySize(1600, 900);
 
-        //Texto secundario
-        this.add.text(800, 384, 'Intentadlo de nuevo!',
-        {
-            fontSize: '64px',
-            color: '#ffffff'
-        }).setOrigin(0.5);
+        const restartButton = this.add.image(800, 600, 'btnReiniciarOff')
+            .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => restartButton.setTexture('btnReiniciarOn'))
+            .on('pointerout', () => restartButton.setTexture('btnReiniciarOff'))
+            .on('pointerdown', () => this.restartLevel());
 
         //Botón vuelta al menú
-        const volverBtn = this.add.image(800, 650, 'btnVolverOff')
+        const cancelButton = this.add.image(800, 800, 'btnSalirOff')
             .setInteractive({ useHandCursor: true })
-            .on('pointerover', () => volverBtn.setTexture('btnVolverOn'))
-            .on('pointerout',  () => volverBtn.setTexture('btnVolverOff'))
-            .on('pointerdown', () => this.scene.start(this.targetSceneKey));
+            .on('pointerover', () => cancelButton.setTexture('btnSalirOn'))
+            .on('pointerout', () => cancelButton.setTexture('btnSalirOff'))
+            .on('pointerdown', () => this.goToMenu());
+    }
+
+    restartLevel()
+    {
+        this.scene.stop();
+        this.scene.stop(this.targetSceneKey);
+        this.scene.start(this.targetSceneKey);
+    }
+
+    goToMenu()
+    {
+        const gameScene = this.scene.get(this.targetSceneKey);
+
+        if (gameScene?.handleDisconnection) gameScene.handleDisconnection('exit_to_menu');
+        
+        this.scene.start('MenuScene');
+        this.scene.stop(this.targetSceneKey);
+        this.scene.stop();
     }
 }

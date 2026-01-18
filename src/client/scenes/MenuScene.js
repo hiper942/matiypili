@@ -35,7 +35,7 @@ export default class MenuScene extends Phaser.Scene{
             })
 
         // Boton Usuario
-        const userBtn = this.add.image(500, 650, 'btnUsuarioOff')
+        const userBtn = this.add.image(300, 650, 'btnUsuarioOff')
             .setScale(0.6)
             .setInteractive({ useHandCursor: true })
             .on('pointerover', () => userBtn.setTexture('btnUsuarioOn'))
@@ -43,7 +43,7 @@ export default class MenuScene extends Phaser.Scene{
             .on('pointerdown', () => this.scene.start('UserScene'));
 
         // Boton Jugar Online
-        const onlineBtn = this.add.image(400, 500, 'btnOnlineOff')
+        const onlineBtn = this.add.image(300, 500, 'btnOnlineOff')
             .setScale(0.6)
             .setInteractive({ useHandCursor: true })
             .on('pointerover', () => onlineBtn.setTexture('btnOnlineOn'))
@@ -61,8 +61,8 @@ export default class MenuScene extends Phaser.Scene{
             });
 
         // Boton Creditos
-        const creditsBtn = this.add.image(600, 800, 'btnCreditosOff')
-            .setScale(0.75)
+        const creditsBtn = this.add.image(300, 800, 'btnCreditosOff')
+            .setScale(0.6)
             .setInteractive({ useHandCursor: true })
             .on('pointerover', () => creditsBtn.setTexture('btnCreditosOn'))
             .on('pointerout',  () => creditsBtn.setTexture('btnCreditosOff'))

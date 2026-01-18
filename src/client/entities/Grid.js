@@ -191,6 +191,10 @@ export default class Grid
                     case 0:
                         break;
 
+                    case 1:
+                        this.decoFront.push({ x: x, y: y, texture: 'swirly', anim: 'swirl' });
+                        break;
+
                     case 3:
                         this.decoBack.push({ x: x, y: y, texture: 'tutoARROWS', type: 'raw' });
                         break;
@@ -219,6 +223,30 @@ export default class Grid
                         this.decoBack.push({ x: x, y: y - this.cellSize / 2, texture: 'greenCrystal' });
                         break;
 
+                    case 10:
+                        this.decoBack.push({ x: x, y: y, texture: 'up' });
+                        break;
+
+                    case 11:
+                        this.decoBack.push({ x: x, y: y, texture: 'down' });
+                        break;
+
+                    case 12:
+                        this.decoBack.push({ x: x, y: y, texture: 'left' });
+                        break;
+
+                    case 13:
+                        this.decoBack.push({ x: x, y: y, texture: 'right' });
+                        break;
+
+                    case 14:
+                        this.decoBack.push({ x: x, y: y, texture: 'upL' });
+                        break;
+
+                    case 15:
+                        this.decoBack.push({ x: x, y: y, texture: 'upR' });
+                        break;
+
                     case 22:
                         this.decoBack.push({ x: x, y: y - this.cellSize / 2, texture: 'stoneL' });
                         break;
@@ -243,7 +271,6 @@ export default class Grid
                         console.warn("Decoration: Tile unknown:", tile);
                         break;
                 }
-
             }
         }
 
@@ -318,11 +345,11 @@ export default class Grid
                         break;
 
                     case 20:
-                        this.decoFront.push({ x: x + 4, y: y - 4, texture: 'mossCornerR' });
+                        this.decoFront.push({ x: x + 4, y: y - 8, texture: 'mossCornerR' });
                         break;
 
                     case 21:
-                        this.decoFront.push({ x: x - 4, y: y - 4, texture: 'mossCornerL' });
+                        this.decoFront.push({ x: x - 4, y: y - 8, texture: 'mossCornerL' });
                         break;
                         
                     case 27:

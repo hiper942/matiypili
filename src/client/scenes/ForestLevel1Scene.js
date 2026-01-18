@@ -39,7 +39,7 @@ export default class ForestLevel1Scene extends Phaser.Scene
         }
 
         // --- FONDO --- //
-        this.add.image(800, 450, 'fondoBosque2')
+        this.add.image(800, 450, 'fondoBosque')
             .setDisplaySize(1600, 900)
             .setDepth(-10);
 
@@ -87,6 +87,7 @@ export default class ForestLevel1Scene extends Phaser.Scene
         ]
 
         // = DECORACION BACK = //
+        // 1  = Espiral
         // 3  = Flechas
         // 4  = WASD
         // 5  = SHIFT
@@ -94,6 +95,12 @@ export default class ForestLevel1Scene extends Phaser.Scene
         // 7  = Arbusto Peque
         // 8  = Cristal Amarillo
         // 9  = Cristal Verde
+        // 10 = Flecha Arriba
+        // 11 = Flecha Abajo
+        // 12 = Flecha Izquierda
+        // 13 = Flecha Derecha
+        // 14 = Flecha Arriba Izquierda
+        // 15 = Flecha Arriba Derecha
         // 22 = Piedra Grande
         // 23 = Piedra Mediana
         // 24 = Piedra Pequeña
@@ -104,11 +111,11 @@ export default class ForestLevel1Scene extends Phaser.Scene
         [
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,26,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,25,0,0,0,0,0,0,0,0,0,0,15,0,0,0,26,0,0],
+            [0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,6,0,0,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
