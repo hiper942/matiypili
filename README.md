@@ -75,12 +75,12 @@ Aventurero y emotivo, con una atmósfera llena de serenidad y tranquilidad.
 ## Personajes, Mecánicas y Físicas
 ### Personajes
 #### Mati
-<img src="./public/assets/Matias_Concepto.png" width=512 height=512>
+<img src="./public/assets/MatiBosque.png" width=512 height=512>
 Mati es un niño elfo, ágil, curioso y un poco imprudente. Representa la energía, la exploración y la agilidad.
 Viste una capa naranja, una bandana y pelo recogido en un moño.
 
 #### Pili
-<img src="./public/assets/Pilar_Concepto.png" width=512 height=512>
+<img src="./public/assets/PiliBosque.png" width=512 height=512>
 Pili es una gigante piedra con ojos brillantes y movimientos lentos pero firmes. Tiene musgo a lo largo de su lomo, y su tamaño triplica el de Mati. Transmite calma y fuerza.
 
 ### Mecánicas
@@ -320,3 +320,4 @@ Finalmente, se mantendrá una comunicación cercana mediante actualizaciones sem
 - [Masha y el oso](https://es.wikipedia.org/wiki/Masha_y_el_oso_(serie_de_televisi%C3%B3n))
 - [Sully y Boo](https://www.reddit.com/r/Pixar/comments/1eizi3p/sully_and_boo/?tl=es-es)
 - [Resto de referencias](https://es.pinterest.com/samu_vds/mati-y-pilii/)
+
