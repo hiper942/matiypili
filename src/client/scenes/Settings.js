@@ -21,30 +21,31 @@ export default class Settings extends Phaser.Scene
         }
         
         // = FONDO = //
-        this.add.image(800, 450, 'fondoBosque')
+        this.add.image(800, 450, 'fondoMadera')
             .setDisplaySize(1600, 900)
             .setDepth(-10);
 
         // = PANEL AJUSTES = //
-        this.add.image(680, 450, 'fondoPausa')
-            .setDisplaySize(3200, 896)
-            .setDepth(0);
+        this.add.image(800, 450, 'fondoTronco')
+            .setDisplaySize(1600, 900)
+            .setScale(1.5, 1)
+            .setDepth(-5);
 
 
         this.add.text(800, 120, 'AJUSTES',
         {
-            color: '#ffffff',
-            fontSize: '80px',
-            fontFamily: 'Rockwell'
+            color: '#21170B',
+            fontFamily: 'Rockwell',
+            fontSize: '80px'
         })
         .setOrigin(0.5);
 
         // = SLIDER VOLUMEN MÚSICA = //
         this.add.text(350, 270, 'Volumen Música',
         { 
-            fontSize: '40px', 
-            color: '#fff',
-            fontFamily: 'Rockwell' 
+            fontSize: '40px',
+            fontFamily: 'Rockwell', 
+            color: '#21170B'
         })
         .setOrigin(0,0.5)
         .setDepth(2);
@@ -53,13 +54,13 @@ export default class Settings extends Phaser.Scene
         const maxX= 1100;
         const y = 280
         
-        const bar = this.add.rectangle(minX, y, (maxX - minX), 6, 0xffffff)
+        const bar = this.add.rectangle(minX, y, (maxX - minX), 6, 0x684927)
             .setOrigin(0, 0.5)
             .setDepth(1);
 
         // HANDLE usando btnAjustes (más grande para que se vea)
         const handle = this.add.image( minX + (this.sound.volume * (maxX - minX)), y,
-            'btnAjustes')
+            'rock')
             .setScale(1)
             .setInteractive({ draggable: true })
             .setDepth(2)
@@ -80,14 +81,15 @@ export default class Settings extends Phaser.Scene
         // = BOTÓN FULLSCREEN = //
         this.add.text(350, 570, 'Pantalla Completa',
         { 
-            fontSize: '40px', 
-            color: '#fff',
-            fontFamily: 'Rockwell'
+            fontSize: '40px',
+            fontFamily: 'Rockwell',
+            color: '#21170B'
+            
         })
         .setOrigin(0, 0.5)
         .setDepth(2);
 
-        const fullscreenBtn = this.add.image(900, 570, 'btnAjustes')
+        const fullscreenBtn = this.add.image(900, 570, 'rock')
             .setScale(1)
             .setDepth(2)
             .setInteractive({ useHandCursor: true })
@@ -129,6 +131,12 @@ export default class Settings extends Phaser.Scene
             .on('pointerover', () => volverBtn.setTexture('btnVolverOn'))
             .on('pointerout',  () => volverBtn.setTexture('btnVolverOff'))
             .on('pointerdown', () => this.exitSettings());
+    }
+
+    goToMenu()
+    {
+        this.scene.start('MenuScene');
+        this.scene.stop();
     }
 
     updateConnectionDisplay(data)

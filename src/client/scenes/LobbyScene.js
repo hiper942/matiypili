@@ -19,15 +19,15 @@ export default class LobbyScene extends Phaser.Scene {
       .setDepth(-10);
 
     // Status text
-    this.statusText = this.add.text(width / 2, height / 2 - 50, 'CONNECTING TO SERVER...', {
-      fontSize: '24px',
+    this.statusText = this.add.text(width / 2, height / 2 - 70, 'CONNECTING TO SERVER...', {
+      fontSize: '48px',
       fontFamily: 'Rockwell',
       color: '#21170B'
     }).setOrigin(0.5);
 
     // Player count text
-    this.playerCountText = this.add.text(width / 2, height / 2 + 20, '', {
-      fontSize: '20px',
+    this.playerCountText = this.add.text(width / 2, height / 2 + 40, '', {
+      fontSize: '40px',
       fontFamily: 'RockwellBold',
       color: '#331F0A'
     }).setOrigin(0.5);

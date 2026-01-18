@@ -180,13 +180,13 @@ export default class CharacterSelectScene extends Phaser.Scene {
         {
             if (data.selections[otherId] === 'mati')
             {
-                otherId === 1 ? this.matiCard.setTexture('matiSplashR') : this.matiCard.setTexture('matiSplashB');
+                otherId === 1 ? this.matiCard.setTexture('matiSplashB') : this.matiCard.setTexture('matiSplashR');
                 this.selectedCharacter === 'pili' ? this.piliCard.setTexture(otherId === 1 ? 'piliSplashB' : 'piliSplashR') : this.piliCard.setTexture('piliSplashOff');
             }
 
             if (data.selections[otherId] === 'pili')
             {
-                otherId === 1 ? this.piliCard.setTexture('piliSplashR') : this.piliCard.setTexture('piliSplashB');
+                otherId === 1 ? this.piliCard.setTexture('piliSplashB') : this.piliCard.setTexture('piliSplashR');
                 this.selectedCharacter === 'mati' ? this.matiCard.setTexture(otherId === 1 ? 'matiSplashB' : 'matiSplashR') : this.matiCard.setTexture('matiSplashOff');
             }
         }

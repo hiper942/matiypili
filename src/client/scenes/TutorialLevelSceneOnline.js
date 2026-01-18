@@ -51,7 +51,7 @@ export default class TutorialLevelSceneOnline extends Phaser.Scene
         }
         
         // --- FONDO --- //
-        this.add.image(800, 450, 'fondoBosque2')
+        this.add.image(800, 450, 'fondoBosque')
             .setDisplaySize(1600, 900)
             .setDepth(-10);
 

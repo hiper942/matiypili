@@ -1,142 +1,134 @@
 import Phaser from 'phaser';
 
 export default class UserScene extends Phaser.Scene {
-  constructor() {
-    super('UserScene');
-  }
-
-  create() {
-
-    const username = localStorage.getItem('username');
-
-    // ===== NOMBRE ARRIBA =====
-    this.add.text(300, 100,
-        username ? username.toUpperCase() : 'INVITADO',
-        { fontSize: '128px', fontFamily: 'Rockwell', color: '#ffffff', align: 'left' }
-    ).setDisplaySize(1000, 150).setOrigin(0.5);
-
-    // ===== PERFIL =====
-    if (!username)
+    constructor()
     {
-        this.createLoginUI();
-    }
-    else
-    {
-        this.createProfileUI(username);
+        super('UserScene');
     }
 
-    // ===== BOTÓN VOLVER =====
-    this.add.text(50, 800, '← Volver', {
-      fontSize: '20px',
-      fontFamily: 'Rockwell',
-      color: '#ffffff'
-    })
-    .setInteractive()
-    .on('pointerdown', () => this.scene.start('MenuScene'));
-  }
+    create()
+    {
+        const username = localStorage.getItem('username');
 
-  createLoginUI()
-  {
-    this.usernameBox = this.add.rectangle(800, 400, 320, 50, 0xffffff)
-        .setStrokeStyle(2, 0x000000)
-        .setInteractive({ useHandCursor: true });
+        // ===== FONDO =====
+        this.add.image(800, 450, 'fondoUsuario')
+            .setDisplaySize(1600, 900)
+            .setDepth(-10);
 
-    this.username = this.add.dom(800, 400, 'input', {
-        type: 'text',
-        name: 'username',
-        placeholder: 'Username',
-        style: `
-            width: 300px;
-            height: 40px;
-            background: transparent;
-            color: black;
-            font-size: 18px;
-            border: none;
-            outline: none;
-            text-align: left;
-        `
-    });
+        // ===== NOMBRE ARRIBA =====
+        const user = this.add.text(350, 100,
+            username ? username.toUpperCase() : '',
+            { fontSize: '96px', fontFamily: 'Rockwell', color: '#8a6946', align: 'left' }
+        )
+            .setOrigin(0.5);
 
-    this.username.node.style.pointerEvents = 'auto';
+        // ===== PERFIL =====
+        if (!username)
+        {
+            this.createLoginUI();
+        }
+        else
+        {
+            this.createProfileUI(username);
+        }
 
-    this.usernameBox.on('pointerdown', () => {
-        this.username.node.focus();
-        this.usernameBox.setStrokeStyle(2, 0x00aaff);
-        this.passwordBox.setStrokeStyle(2, 0x000000);
-    });
+        // ===== BOTÓN VOLVER =====
+        const volverBtn = this.add.image(200, 800, 'btnSalirOff')
+            .setDepth(1)
+            .setScale(0.6)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => volverBtn.setTexture('btnSalirOn'))
+            .on('pointerout',  () => volverBtn.setTexture('btnSalirOff'))
+            .on('pointerdown', () => this.goToMenu());
+    }
 
-    // =========================
-    // PASSWORD
-    // =========================
+    goToMenu()
+    {
+        this.scene.start('MenuScene');
+        this.scene.stop();
+    }
 
-    this.passwordBox = this.add.rectangle(800, 500, 320, 50, 0xffffff)
-        .setStrokeStyle(2, 0x000000)
-        .setInteractive({ useHandCursor: true });
+    createLoginUI()
+    {
+        // FONDO        
+        this.add.image(810, 450, 'fondoTronco')
+            .setDisplaySize(1600, 900)
+            .setOrigin(0.5)
+            .setDepth(-8);
 
-    this.password = this.add.dom(800, 500, 'input', {
-        type: 'password',
-        name: 'password',
-        placeholder: 'Contraseña',
-        style: `
-            width: 300px;
-            height: 40px;
-            background: transparent;
-            color: black;
-            font-size: 18px;
-            border: none;
-            outline: none;
-        `
-    });
+        this.add.image(810, 325, 'inputBack')
+            .setDepth(-5)
+            .setOrigin(0.5);
 
-    this.password.node.style.pointerEvents = 'auto';
+        // =========================
+        // USERNAME
+        // =========================
 
-    this.passwordBox.on('pointerdown', () => {
-        this.password.node.focus();
-        this.passwordBox.setStrokeStyle(2, 0x00aaff);
-        this.usernameBox.setStrokeStyle(2, 0x000000);
-    });
+        this.username = this.add.dom(800, 240, 'input', {
+            type: 'text',
+            name: 'username',
+            placeholder: 'Nombre de usuario',
+            fontSize: '24px',
+            fontFamily: 'Rockwell',
+            border: '6px solid #311F08',
+            width: '450px',
+            height: '40px',
+            backgroundColor: '#583710',
+            color: '#8a6946',
+            outline: 'none'
+        });
 
-    // =========================
-    // BOTÓN LOGIN
-    // =========================
+        // =========================
+        // PASSWORD
+        // =========================
 
-    this.add.text(800, 650, 'Iniciar Sesion', {
-        fontSize: '32px',
-        color: '#ffffff'
-    })
-    .setOrigin(0.5)
-    .setInteractive({ useHandCursor: true })
-    .on('pointerdown', () => this.login());
+        this.password = this.add.dom(800, 465, 'input', {
+            type: 'password',
+            name: 'password',
+            placeholder: 'Contraseña',
+            fontSize: '24px',
+            fontFamily: 'Rockwell',
+            border: '6px solid #311F08',
+            width: '450px',
+            height: '40px',
+            backgroundColor: '#583710',
+            color: '#8a6946',
+            outline: 'none'
+        });
 
-    // =========================
-    // BOTÓN REGISTER
-    // =========================
+        // =========================
+        // BOTÓN LOGIN
+        // =========================
 
-    this.add.text(800, 700, 'Registrarse', {
-        fontSize: '18px',
-        color: '#cccccc'
-    })
-    .setOrigin(0.5)
-    .setInteractive({ useHandCursor: true })
-    .on('pointerdown', () => this.register());
+        const loginButton = this.add.image(800, 700, 'btnLoginOff')
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => loginButton.setTexture('btnLoginOn'))
+            .on('pointerout', () => loginButton.setTexture('btnLoginOff'))
+            .on('pointerdown', () => this.login());
 
-    // Error o mensaje
-    this.err = this.add.text(800, 600, '', {
-                fontSize: '18px',
+        // =========================
+        // BOTÓN REGISTER
+        // =========================
+
+        const regButton = this.add.image(800, 825, 'btnRegistrarOff')
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => regButton.setTexture('btnRegistrarOn'))
+            .on('pointerout', () => regButton.setTexture('btnRegistrarOff'))
+            .on('pointerdown', () => this.register());
+
+        // Error o mensaje
+        this.err = this.add.text(800, 600, '', {
+                fontSize: '32px',
                 fontFamily: 'Rockwell',
-                color: '#00ff00'
+                color: '#6e352d'
             })
             .setOrigin(0.5);
     }
 
-    async createProfileUI(username) {
-
-        // ===== TÍTULO =====
-        this.add.text(800, 150, 'LEADERBOARD', {
-            fontSize: '40px',
-            color: '#e0c097'
-        }).setOrigin(0.5);
-
+    async createProfileUI(username)
+    {
         // ===== OBTENER DATOS =====
         const res = await fetch('/api/leaderboard');
         const leaderboard = await res.json();
@@ -144,68 +136,66 @@ export default class UserScene extends Phaser.Scene {
         const myEntry = leaderboard.find(u => u.username === username);
 
         // ===== MEJOR TIEMPO PERSONAL =====
-        this.add.rectangle(800, 300, 520, 80, 0x6f4e37)
-            .setStrokeStyle(3, 0x5a3e2b);
+        this.add.image(1175, 850, 'cell2');
 
-        this.add.text(800, 280, 'TU MEJOR TIEMPO', {
-            fontSize: '22px',
-            color: '#e0c097'
-        }).setOrigin(0.5);
+        this.add.text(900, 850, username, {
+            fontSize: '36px',
+            fontFamily: 'Rockwell',
+            color: '#21170B'
+        }).setOrigin(0, 0.5);
 
         this.add.text(
-            800,
-            315,
+            1450,
+            850,
             myEntry ? this.formatTime(myEntry.bestTime) : '--:--.---',
             {
                 fontSize: '36px',
+                fontFamily: 'Rockwell',
+                align: 'right',
                 color: '#ffffff'
             }
-        ).setOrigin(0.5);
+        ).setOrigin(1, 0.5);
 
         // ===== TABLA =====
-        const startY = 400;
-        const rowHeight = 48;
-        const width = 600;
+        const startY = 100;
+        const rowHeight = 125;
+        const width = 750;
 
         leaderboard.slice(0, 10).forEach((entry, index) => {
             const y = startY + index * rowHeight;
 
-            const bgColor = index % 2 === 0 ? 0xb08968 : 0x9c6b4f;
+            const bgColor = index % 2 === 0 ? 'cell1' : 'cell2';
 
             // Fondo fila
-            this.add.rectangle(800, y, width, rowHeight, bgColor)
-                .setStrokeStyle(2, 0x5a3e2b);
-
-            // Resaltar usuario actual
-            if (entry.username === username) {
-                this.add.rectangle(800, y, width + 10, rowHeight + 6, 0xe0c097, 0.35)
-                    .setStrokeStyle(2, 0xffffff);
-            }
+            this.add.image(1175, y, bgColor);
 
             // Posición + nombre
-            this.add.text(520, y, `${index + 1}. ${entry.username}`, {
+            this.add.text(900, y, `${index + 1}. ${entry.username}`, {
                 fontSize: '20px',
-                color: '#2b1d13'
+                fontFamily: 'Rockwell',
+                align: 'left',
+                color: '#21170B'
             }).setOrigin(0, 0.5);
 
             // Tiempo
-            this.add.text(1080, y, this.formatTime(entry.bestTime), {
+            this.add.text(1450, y, this.formatTime(entry.bestTime), {
                 fontSize: '20px',
-                color: '#1f140d'
+                fontFamily: 'Rockwell',
+                align: 'right',
+                color: '#ffffff'
             }).setOrigin(1, 0.5);
         });
 
         // ===== LOGOUT =====
-        this.add.text(1400, 820, 'LOGOUT', {
-            fontSize: '28px',
-            color: '#ffaaaa'
-        })
-        .setOrigin(0.5)
-        .setInteractive()
-        .on('pointerdown', () => {
-            localStorage.clear();
-            this.scene.restart();
-        });
+
+        const logout = this.add.image(350, 600, 'btnLogoutOff')
+            .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => logout.setTexture('btnLogoutOn'))
+            .on('pointerout', () => logout.setTexture('btnLogoutOff'))
+            .on('pointerdown', () => {
+                localStorage.clear();
+                this.scene.restart();
+            });
     }
 
     formatTime(ms)
@@ -241,7 +231,7 @@ export default class UserScene extends Phaser.Scene {
         localStorage.setItem('token', data.token);
         localStorage.setItem('username', data.username);
 
-        this.scene.restart(); // 🔁 refresca a perfil
+        this.scene.restart();
     }
 
     async register()

@@ -8,10 +8,14 @@ export default class BootScene extends Phaser.Scene
     preload() 
     {
         // ---- FONDO ---- //
-        this.load.image('fondoBosque1', 'assets/Escenario/Fondo.PNG');
-        this.load.image('fondoBosque2', 'assets/Escenario/Fondo.png');
+        this.load.image('fondoBosque', 'assets/Escenario/Fondo.PNG');
+
+        this.load.image('fondoMadera', 'assets/Menus/fondoMadera.PNG');
+        this.load.image('fondoTronco', 'assets/Menus/TroncoFondo.PNG');
+
         this.load.image('fondoPersonajes', 'assets/Menus/Seleccion/FondoSeleccion.PNG');
         this.load.image('fondoLobby', 'assets/Menus/OnlineMulti.PNG');
+        this.load.image('creditos', 'assets/Menus/Creditos.PNG');
 
         // ---- SELECCIÓN PERSONAJES ---- //
         this.load.image('btnListoOff', 'assets/Menus/Seleccion/ListoApagado.PNG');
@@ -113,6 +117,7 @@ export default class BootScene extends Phaser.Scene
         // ---- INTERFACES ---- //
         this.load.image('frame', 'assets/Escenario/Marco.PNG');
         this.load.image('light', 'assets/Escenario/Luz.PNG');
+
         // ---- MENÚS ---- //
         this.load.image('menuScene', 'assets/Menus/FondoMenu.png');
         this.load.image('deathScene', 'assets/Menus/FondoMenuMuerte.png');
@@ -155,14 +160,21 @@ export default class BootScene extends Phaser.Scene
         this.load.html('loginForm', 'assets/ui/login.html');
         this.load.html('registerForm', 'assets/ui/register.html');
 
-        this.load.image('btnLoginOff', 'assets/Menus/usuarioApagado.PNG');
-        this.load.image('btnLoginOn', 'assets/Menus/usuarioEncendido.PNG');
+        this.load.image('fondoUsuario', 'assets/Menus/Leaderboard/LeaderboardFondo.PNG');
+
+        this.load.image('cell1', 'assets/Menus/Leaderboard/Casilla1.PNG');
+        this.load.image('cell2', 'assets/Menus/Leaderboard/Casilla2.PNG');
+
+        this.load.image('btnLoginOff', 'assets/Menus/Usuario/IniciarApagado.PNG');
+        this.load.image('btnLoginOn', 'assets/Menus/Usuario/IniciarEncendido.PNG');
 
         this.load.image('btnRegistrarOff', 'assets/Menus/Usuario/RegApagado.PNG');
-        this.load.image('btnRegistrarOn', 'assets/Menus/RegEncendido.PNG');
+        this.load.image('btnRegistrarOn', 'assets/Menus/Usuario/RegEncendido.PNG');
 
-        this.load.image('btnLogoutOff', 'assets/Menus/usuarioApagado.PNG');
-        this.load.image('btnLogoutOn', 'assets/Menus/usuarioEncendido.PNG');
+        this.load.image('btnLogoutOff', 'assets/Menus/logoutApagado.PNG');
+        this.load.image('btnLogoutOn', 'assets/Menus/logoutEncendido.PNG');
+
+        this.load.image('inputBack', 'assets/Menus/Usuario/UsuarioContraseña.PNG');
     }
 
     create()
