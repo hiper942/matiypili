@@ -5,7 +5,9 @@ import CreditsScene from './scenes/CreditsScene.js';
 import TutorialLevelScene from './scenes/TutorialLevelScene.js';
 import TutorialLevelSceneOnline from './scenes/TutorialLevelSceneOnline.js';
 import ForestLevel1Scene from './scenes/ForestLevel1Scene.js';
+import ForestLevel1SceneOnline from './scenes/ForestLevel1SceneOnline.js';
 import ForestLevel2Scene from './scenes/ForestLevel2Scene.js';
+import ForestLevel2SceneOnline from './scenes/ForestLevel2SceneOnline.js';
 import BootScene from './scenes/BootScene.js';
 import WinScene from './scenes/WinScene.js';
 import DeathScene from './scenes/DeathScene.js';
@@ -56,7 +58,9 @@ const config =
         TutorialLevelScene,
         TutorialLevelSceneOnline,
         ForestLevel1Scene,
+        ForestLevel1SceneOnline,
         ForestLevel2Scene,
+        ForestLevel2SceneOnline,
         DisconnectionScene,
         LobbyScene,
         CharacterSelectScene

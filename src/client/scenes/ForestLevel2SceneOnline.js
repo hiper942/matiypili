@@ -2,27 +2,40 @@ import Mati from '../entities/Mati.js';
 import Pili from '../entities/Pili.js';
 import Platform from '../entities/Platform.js';
 import Switch from '../entities/Switch.js';
+import Spike from '../entities/Spike.js'
 import Door from '../entities/Door.js';
 import Rock from '../entities/Rock.js';
 import PressurePlate from '../entities/PressurePlate.js';
-import Grid from '../entities/Grid.js';
 import Decoration from '../entities/Decoration.js';
+import Grid from '../entities/Grid.js';
 
 import { MoveCharacterCommand } from '../commands/MoveCharacterCommand.js';
 import { JumpCharacterCommand } from '../commands/JumpCharacterCommand.js';
 
-export default class ForestLevel2Scene extends Phaser.Scene
+export default class ForestLevel2SceneOnline extends Phaser.Scene
 {
     constructor()
     {
-        super('ForestLevel2Scene');
+        super('ForestLevel2SceneOnline');
+        this.disconnected = false;
+        this.isOnline = true;
+        this.canWin = false;
+    }
+
+    init(data)
+    {
+        this.socket = data.socket;
+        this.playerIndex = data.playerIndex;
+        this.character = data.character;
+        this.roomId = data.roomId;
     }
 
     // Start()
     create()
-    {
-        // --- ONLINE --- //
-        this.isOnline = false;
+    {                
+        // --- LISTENERS SHUTDOWN --- //
+        // this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
+        // this.events.once(Phaser.Scenes.Events.DESTROY, this.onShutdown, this);
         
         // --- MUSICA --- //
         if (!this.sound.get('levelMusic'))
@@ -37,12 +50,12 @@ export default class ForestLevel2Scene extends Phaser.Scene
         {
             this.levelMusic = this.sound.get('levelMusic');
         }
-
+        
         // --- FONDO --- //
         this.add.image(800, 450, 'fondoBosque')
             .setDisplaySize(1600, 900)
             .setDepth(-10);
-        
+
         // --- INTERFAZ --- //
         this.add.image(800, 450, 'frame')
             .setDisplaySize(1600, 900)
@@ -52,7 +65,7 @@ export default class ForestLevel2Scene extends Phaser.Scene
         this.add.image(800, 450, 'light')
             .setDisplaySize(1600, 900)
             .setDepth(29);
-
+        
         // --- NIVEL --- //
         // = GRID = //
 
@@ -86,8 +99,8 @@ export default class ForestLevel2Scene extends Phaser.Scene
             [1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1],
             [1,1,1,1,1,1,1,10,10,10,10,10,10,10,10,1,1,1,1,1,1,1,1,1,1]
         ]
+
         // = DECORACION BACK = //
-        // 1  = Espiral
         // 3  = Flechas
         // 4  = WASD
         // 5  = SHIFT
@@ -95,12 +108,6 @@ export default class ForestLevel2Scene extends Phaser.Scene
         // 7  = Arbusto Peque
         // 8  = Cristal Amarillo
         // 9  = Cristal Verde
-        // 10 = Flecha Arriba
-        // 11 = Flecha Abajo
-        // 12 = Flecha Izquierda
-        // 13 = Flecha Derecha
-        // 14 = Flecha Arriba Izquierda
-        // 15 = Flecha Arriba Derecha
         // 22 = Piedra Grande
         // 23 = Piedra Mediana
         // 24 = Piedra Pequeña
@@ -124,7 +131,7 @@ export default class ForestLevel2Scene extends Phaser.Scene
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         ]
-
+        
         // = DECORACION FRONT = //
         // 1  = Cesped
         // 2  = Lampara
@@ -168,7 +175,6 @@ export default class ForestLevel2Scene extends Phaser.Scene
         this.door = new Door(this, this.grid.doorpos.x, this.grid.doorpos.y);
         
         // = DECORACIÓN FONDO = //
-
         this.grid.decoBack.forEach(deco =>
         {
             const dec = new Decoration(this, deco.x, deco.y, deco.texture);
@@ -178,6 +184,9 @@ export default class ForestLevel2Scene extends Phaser.Scene
         // = PERSONAJES 1 = //
         this.mati = new Mati(this, this.grid.matiSpawn.x, this.grid.matiSpawn.y);
         this.mati.sprite.y -= this.mati.sprite.body.height / 2;
+
+        this.pili = new Pili(this, this.grid.piliSpawn.x, this.grid.piliSpawn.y);
+        this.pili.sprite.y -= this.pili.sprite.body.height / 2;
 
         // = DECORACIÓN FRENTE = //
         this.grid.decoFront.forEach(deco =>
@@ -210,17 +219,17 @@ export default class ForestLevel2Scene extends Phaser.Scene
                     
                 return;
             }
-        
+
             const dec = new Decoration(this, deco.x, deco.y, deco.texture);
             dec.sprite.setDepth(22);
         });
 
-        // = PERSONAJES 2 = //
-        this.pili = new Pili(this, this.grid.piliSpawn.x, this.grid.piliSpawn.y);
-        this.pili.sprite.y -= this.pili.sprite.body.height / 2;
-
         // --- FISICAS --- //
         // = COLISIONES = //
+
+        // Plataforma pili
+        this.physics.add.collider(this.mati.sprite, this.pili.topCollider);
+
         // Plataformas
         this.physics.add.collider(this.mati.sprite, this.grid.platforms);
         this.physics.add.collider(this.pili.sprite, this.grid.platforms);
@@ -274,7 +283,6 @@ export default class ForestLevel2Scene extends Phaser.Scene
         });
 
         // --- INPUT --- //
-        this.cursors = this.input.keyboard.createCursorKeys();
         this.keys = this.input.keyboard.addKeys(
         {
             A: 'A',
@@ -282,30 +290,144 @@ export default class ForestLevel2Scene extends Phaser.Scene
             W: 'W',
             SPACE: 'SPACE',
             SHIFT: 'SHIFT',
-            
         });
         this.pauseKey = this.input.keyboard.addKey('ESC');
+
+        const playerIndex = this.registry.get('playerIndex'); // 1 o 2
+
+        // --- CRONO --- //
+        this.registry.set('runStartTime', Date.now());
+
+        // --- ONLINE --- //
+        this.lastNetSend = 0;
+        
+        this.localPlayer  = this.character === 'mati' ? this.mati : this.pili;
+        this.remotePlayer = this.character === 'mati' ? this.pili : this.mati;
+
+        this.mati.isLocal = this.character === 'mati';
+        this.pili.isLocal = this.character === 'pili';
+
+        this.onSocketMessage = (event) =>
+        {
+            const data = JSON.parse(event.data);
+
+            if (data.roomId !== this.roomId) return;
+
+            switch (data.type)
+            {
+                case 'playerState':
+                    if (data.playerIndex !== this.playerIndex)
+                    {
+                        this.applyRemoteState(data);
+                    }
+                    break;
+
+                case 'piliPlatform':
+                    this.pili.isPlatform = data.active;
+                    break;
+
+                case 'switchActivated':
+                    if (this.grid.switch && !this.grid.switch.active)
+                    {
+                        this.grid.switch.forceActivate();
+                    }
+                    break;
+
+                case 'doorOpened':
+                    if (!this.door.open)
+                    {
+                        this.door.openDoor();
+                    }
+                    break;
+
+                case 'levelCompleted':
+                    if (this.canWin) return;
+                    this.canWin = false;
+                    
+                    this.scene.start('WinScene');
+                    break;
+
+                case 'rockState':
+                    const rock = this.grid.rocks.find(r => r.id === data.id);
+                    if (rock)
+                    {
+                        rock.applyRemoteState(data);
+                    }
+                    break;
+
+                case 'playerDisconnected':
+                    this.handleDisconnection(data.reason || 'other_player_left');
+                    break;
+            }
+        };
+        
+        this.onSocketClose = () =>
+        {
+            this.handleDisconnection('other_player_left');
+        };
+
+        this.onSocketError = () =>
+        {
+            this.handleDisconnection('connection_lost');
+        };
+
+        this.socket.addEventListener('message', this.onSocketMessage);
+
+        this.socket.addEventListener('close', this.onSocketClose);
+
+        this.socket.addEventListener('error', this.onSocketError);
+
+        // CANWIN
+        this.canWin = true;
     }
 
     // Update()
     update()
     {
+        if (this.disconnected) return;
+        
+        // ----- ONLINE ----- //
+        const now = Date.now();
+
+        this.sendPlayerState();
+        this.lastNetSend = now;
+
         // ----- PAUSA ----- //
         if (Phaser.Input.Keyboard.JustDown(this.pauseKey)) this.openPause();
-        
-        // ----- MATI ----- //
-        this.mati.update(this.pili);
 
-        // ----- PILI ----- //        
-        this.pili.update();
-        
+        // ----- PERSONAJE ----- //
+        if (this.localPlayer === this.mati) this.mati.update(this.pili);
+        else this.pili.update();
+
+        // = SINCRONIZAR TOP COLLIDERS (LOCAL Y REMOTO) = //
+        [this.mati, this.pili].forEach(player =>
+        {
+            if (player == this.pili)
+            {
+                const p = player;
+
+                if (!p.topCollider) return;
+
+                p.topCollider.x = p.sprite.x;
+                p.topCollider.y = p.sprite.y - p.topColliderOffsetY;
+
+                p.topCollider.body.updateFromGameObject();
+            }
+        });
+
         //----- INTERRUPTOR -----//        
-        if (this.grid.switch) this.grid.switch.update(this.mati);
+        if (this.grid.switch && this.localPlayer === this.mati)
+        {
+            this.grid.switch.update(this.mati);
+        }
 
         //----- PUERTA -----//
-        if (!this.door.open && this.grid.switch.active) this.door.openDoor();
+        if (!this.door.open && this.grid.switch.active && (!this.isOnline || this.localPlayer.isLocal)) this.door.openDoor();
 
-        if (this.door) this.door.update(this.mati, this.pili, 'WinScene');
+        if (this.door && this.canWin && this.localPlayer.isLocal) this.door.update(this.mati, this.pili, 'WinScene');
+
+        //----- ROCAS -----//
+        this.grid.rocks.forEach(rock => rock.update());
 
         //----- BOTON -----//
         this.grid.buttons.forEach(btn => btn.update(this.mati));
@@ -314,7 +436,7 @@ export default class ForestLevel2Scene extends Phaser.Scene
         if (this.grid.spikes) this.grid.spikes.forEach(spike => spike.update(this.mati, this.pili));
 
         //----- PLACA DE PRESIÓN -----//
-        if (this.grid.pressurePlates) this.grid.pressurePlates.forEach(press => press.update(this.pressure));
+        if (this.grid.pressurePlates) this.grid.pressurePlates.forEach(press => press.update(this.pressure))
     }
 
     openPause()
@@ -326,7 +448,6 @@ export default class ForestLevel2Scene extends Phaser.Scene
         this.scene.bringToTop('Pause');
     }
 
-    // provisional
     onSpikeTouched(who)
     {
         if (this.scene.isActive('DeathScene')) return;
@@ -336,5 +457,150 @@ export default class ForestLevel2Scene extends Phaser.Scene
         this.scene.pause(this.scene.key);
         this.scene.launch('DeathScene', { who: who, target: this.scene.key });
         this.scene.bringToTop('DeathScene');
+    }
+
+    sendPlayerState()
+    {
+        if (!this.socket || this.socket.readyState !== WebSocket.OPEN) return;
+
+        const p = this.localPlayer.sprite;
+
+        this.socket.send(JSON.stringify
+        ({
+            type: 'playerState',
+            roomId: this.roomId,
+            playerIndex: this.playerIndex,
+            x: p.x,
+            y: p.y,
+            vx: p.body.velocity.x,
+            vy: p.body.velocity.y,
+            flipX: p.flipX,
+            anim: p.anims.currentAnim?.key ?? null,
+            topColliderOffsetY: this.pili.topColliderOffsetY,
+            piliIsPlatform: this.pili.isPlatform
+        }));
+    }
+
+    applyRemoteState(data)
+    {
+        const remote = this.remotePlayer.sprite;
+
+        if (remote == this.pili) remote.isPlatform = data.piliIsPlatform;
+
+        // posición
+        remote.x = data.x;
+        remote.y = data.y;
+
+        if (remote.topCollider)
+        {
+            const offset = data.topColliderOffsetY ?? remote.topColliderOffsetY ?? 0;
+            remote.topCollider.y = data.y + offset;
+            
+            remote.topCollider.x = data.x;
+
+            remote.topCollider.body.updateFromGameObject();
+        }
+
+        // velocidad
+        remote.body.setVelocity(data.vx, data.vy);
+
+        // orientación
+        remote.flipX = data.flipX;
+
+        // animación
+        if (data.anim && (!remote.anims.currentAnim || remote.anims.currentAnim.key !== data.anim))
+        {
+            remote.play(data.anim, true);
+        }
+    }
+
+    handleDisconnection(reason = 'unknown')
+    {
+        if (this.disconnected) return;
+        this.disconnected = true;
+
+        console.warn('[ONLINE] Disconnected:', reason);
+
+        const isVoluntary = reason === 'exit_to_menu';
+
+        // 1. Avisar al otro jugador si es salida voluntaria
+        if (isVoluntary && this.socket && this.socket.readyState === WebSocket.OPEN)
+        {
+            try
+            {
+                this.socket.send(JSON.stringify({
+                    type: 'playerDisconnected',
+                    roomId: this.roomId,
+                    playerIndex: this.playerIndex,
+                    reason
+                }));
+            }
+            catch (e)
+            {
+                console.warn('Failed to notify disconnection', e);
+            }
+        }
+
+        // 2. Cerrar el socket SOLO en salida voluntaria
+        if (isVoluntary && this.socket && this.socket.readyState === WebSocket.OPEN)
+        {
+            this.socket.close(1000, 'exit_to_menu');
+        }
+
+        // 4. Pausar escena actual
+        this.scene.pause();
+        this.time.removeAllEvents();
+
+        // 5. Lanzar escena de desconexión
+        if (!this.scene.isActive('DisconnectionScene') && !isVoluntary)
+        {
+            this.scene.launch('DisconnectionScene',
+            {
+                previousScene: this.scene.key,
+                reason
+            });
+        }
+    }
+
+    onReconnected(socket)
+    {
+        console.log('[ONLINE] Reconnected');
+
+        this.socket = socket;
+        this.disconnected = false;
+
+        // Volver a escuchar eventos
+        this.socket.addEventListener('close', () =>
+        {
+            this.handleDisconnection('other_player_left');
+        });
+
+        this.socket.addEventListener('error', () =>
+        {
+            this.handleDisconnection('connection_lost');
+        });
+    }
+
+    onShutdown()
+    {
+        if (!this.socket) return;
+
+        if (this.onSocketMessage)
+        {
+            this.socket.removeEventListener('message', this.onSocketMessage);
+            this.onSocketMessage = null;
+        }
+
+        if (this.onSocketClose)
+        {
+            this.socket.removeEventListener('close', this.onSocketClose);
+            this.onSocketClose = null;
+        }
+
+        if (this.onSocketError)
+        {
+            this.socket.removeEventListener('error', this.onSocketError);
+            this.onSocketError = null;
+        }
     }
 }

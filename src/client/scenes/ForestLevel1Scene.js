@@ -323,8 +323,12 @@ export default class ForestLevel1Scene extends Phaser.Scene
 
     onSpikeTouched(who)
     {
+        if (this.scene.isActive('DeathScene')) return;
+
         console.log("Pincho tocado por:", who);
 
-        this.scene.start('DeathScene', { who: who, target: this.scene.key });
+        this.scene.pause(this.scene.key);
+        this.scene.launch('DeathScene', { who: who, target: this.scene.key });
+        this.scene.bringToTop('DeathScene');
     }
 }

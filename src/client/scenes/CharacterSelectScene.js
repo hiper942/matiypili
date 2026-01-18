@@ -1,11 +1,13 @@
 import Phaser from 'phaser';
 
 export default class CharacterSelectScene extends Phaser.Scene {
-    constructor() {
+    constructor()
+    {
         super('CharacterSelectScene');
     }
 
-    init(data) {
+    init(data)
+    {
         // data viene del lobby / matchmaking
         // { socket, playerIndex }
         this.socket = data.ws;

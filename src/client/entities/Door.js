@@ -38,7 +38,13 @@ export default class Door
                     roomId: this.scene.roomId
                 }));
 
-                this.scene.scene.start(nextLevel);
+                /*this.scene.scene.start(nextLevel,
+                {
+                    socket: this.scene.socket,
+                    playerIndex: this.scene.playerIndex,
+                    character: this.scene.character,
+                    roomId: this.scene.roomId
+                });*/
             }
         }
         else if (matiInDoor && piliInDoor && !this.scene.isOnline)

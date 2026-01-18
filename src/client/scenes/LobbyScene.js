@@ -45,8 +45,8 @@ export default class LobbyScene extends Phaser.Scene
     // Connect to WebSocket server
     this.connectToServer();
 
-    this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
-    this.events.once(Phaser.Scenes.Events.DESTROY, this.onShutdown, this);
+    //this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
+    //this.events.once(Phaser.Scenes.Events.DESTROY, this.onShutdown, this);
   }
 
   goToMenu()
