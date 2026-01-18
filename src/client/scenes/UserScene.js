@@ -33,7 +33,7 @@ export default class UserScene extends Phaser.Scene {
         }
 
         // ===== BOTÓN VOLVER =====
-        const volverBtn = this.add.image(200, 800, 'btnSalirOff')
+        const volverBtn = this.add.image(150, 830, 'btnSalirOff')
             .setDepth(1)
             .setScale(0.6)
             .setInteractive({ useHandCursor: true })
@@ -136,9 +136,9 @@ export default class UserScene extends Phaser.Scene {
         const myEntry = leaderboard.find(u => u.username === username);
 
         // ===== MEJOR TIEMPO PERSONAL =====
-        this.add.image(1175, 850, 'cell2');
+        this.add.image(1175, 825, 'cell2');
 
-        this.add.text(900, 850, username, {
+        this.add.text(900, 825, username, {
             fontSize: '36px',
             fontFamily: 'Rockwell',
             color: '#21170B'
@@ -146,7 +146,7 @@ export default class UserScene extends Phaser.Scene {
 
         this.add.text(
             1450,
-            850,
+            825,
             myEntry ? this.formatTime(myEntry.bestTime) : '--:--.---',
             {
                 fontSize: '36px',
@@ -157,11 +157,11 @@ export default class UserScene extends Phaser.Scene {
         ).setOrigin(1, 0.5);
 
         // ===== TABLA =====
-        const startY = 100;
+        const startY = 300;
         const rowHeight = 125;
         const width = 750;
 
-        leaderboard.slice(0, 10).forEach((entry, index) => {
+        leaderboard.slice(0, 5).forEach((entry, index) => {
             const y = startY + index * rowHeight;
 
             const bgColor = index % 2 === 0 ? 'cell1' : 'cell2';
@@ -171,7 +171,7 @@ export default class UserScene extends Phaser.Scene {
 
             // Posición + nombre
             this.add.text(900, y, `${index + 1}. ${entry.username}`, {
-                fontSize: '20px',
+                fontSize: '36px',
                 fontFamily: 'Rockwell',
                 align: 'left',
                 color: '#21170B'
@@ -179,7 +179,7 @@ export default class UserScene extends Phaser.Scene {
 
             // Tiempo
             this.add.text(1450, y, this.formatTime(entry.bestTime), {
-                fontSize: '20px',
+                fontSize: '36px',
                 fontFamily: 'Rockwell',
                 align: 'right',
                 color: '#ffffff'
