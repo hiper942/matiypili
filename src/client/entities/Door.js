@@ -5,6 +5,8 @@ export default class Door
         this.scene = scene;
         this.open = false;
 
+        this.levelSent = false;
+
         // Sprite estático de colisión
         this.sprite = scene.physics.add.sprite(x, y, 'doorOpen', 0)
             .setDisplaySize(256, 256)
@@ -23,33 +25,34 @@ export default class Door
         this.trigger.body.immovable = true;
     }
 
-    update(mati, pili, nextLevel) 
+    update(mati, pili) 
     {
-        if (!this.open) return;
+        if (!this.open || this.levelSent) return;
 
         const matiInDoor = this.scene.physics.overlap(mati.sprite, this.trigger);
         const piliInDoor = this.scene.physics.overlap(pili.sprite, this.trigger);
-        if (this.scene.isOnline)
+
+        if (matiInDoor && piliInDoor)
         {
-            if (matiInDoor && piliInDoor && this.scene.localPlayer.isLocal)
+            if (this.scene.isOnline)
             {
+                if (!this.scene.localPlayer.isLocal) return;
+
+                this.levelSent = true;
+
                 this.scene.socket.send(JSON.stringify({
                     type: 'levelCompleted',
-                    roomId: this.scene.roomId
+                    roomId: this.scene.roomId,
+                    fromLevelId: this.scene.levelId,
+                    toLevelId: this.scene.nextLevelId,
+                    seq: this.scene.transitionSeq + 1
                 }));
-
-                /*this.scene.scene.start(nextLevel,
-                {
-                    socket: this.scene.socket,
-                    playerIndex: this.scene.playerIndex,
-                    character: this.scene.character,
-                    roomId: this.scene.roomId
-                });*/
             }
-        }
-        else if (matiInDoor && piliInDoor && !this.scene.isOnline)
-        {
-            this.scene.scene.start(nextLevel);
+            else
+            {
+                this.levelSent = true;
+                this.scene.scene.start(this.scene.nextLevel);
+            }
         }
     }
 

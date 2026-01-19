@@ -20,6 +20,13 @@ export default class ForestLevel1SceneOnline extends Phaser.Scene
         this.disconnected = false;
         this.isOnline = true;
         this.canWin = false;
+        this.nextLevel = 'ForestLevel2SceneOnline';
+
+        this.levelId = 'forest1';
+        this.nextLevelId = 'forest2';
+        this.nextLevelSceneKey = 'ForestLevel2SceneOnline';
+
+        this.changingScene = false;
     }
 
     init(data)
@@ -28,14 +35,16 @@ export default class ForestLevel1SceneOnline extends Phaser.Scene
         this.playerIndex = data.playerIndex;
         this.character = data.character;
         this.roomId = data.roomId;
+
+        this.transitionSeq = data.transitionSeq ?? 0;
     }
 
     // Start()
     create()
     {                
         // --- LISTENERS SHUTDOWN --- //
-        // this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
-        // this.events.once(Phaser.Scenes.Events.DESTROY, this.onShutdown, this);
+        this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
+        this.events.once(Phaser.Scenes.Events.DESTROY, this.onShutdown, this);
         
         // --- MUSICA --- //
         if (!this.sound.get('levelMusic'))
@@ -303,9 +312,6 @@ export default class ForestLevel1SceneOnline extends Phaser.Scene
 
         const playerIndex = this.registry.get('playerIndex'); // 1 o 2
 
-        // --- CRONO --- //
-        this.registry.set('runStartTime', Date.now());
-
         // --- ONLINE --- //
         this.lastNetSend = 0;
         
@@ -317,6 +323,8 @@ export default class ForestLevel1SceneOnline extends Phaser.Scene
 
         this.onSocketMessage = (event) =>
         {
+            if (!this.scene.isActive(this.scene.key) || this.changingScene) return;
+            
             const data = JSON.parse(event.data);
 
             if (data.roomId !== this.roomId) return;
@@ -344,21 +352,38 @@ export default class ForestLevel1SceneOnline extends Phaser.Scene
                 case 'doorOpened':
                     if (!this.door.open)
                     {
-                        this.door.openDoor();
+                        this.door.forceOpen();
                     }
                     break;
 
                 case 'levelCompleted':
-                    if (this.canWin) return;
-                    this.canWin = false;
-                
-                    this.scene.start('ForestLevel2SceneOnline',
-                    {
+                    // 1) Solo acepto si el mensaje corresponde EXACTAMENTE a ESTA escena como origen
+                    if (data.fromLevelId !== this.levelId) return;
+
+                    // 2) Solo acepto si el destino coincide con lo que YO espero
+                    if (data.toLevelId !== this.nextLevelId) return;
+
+                    // 3) Solo acepto si es el siguiente seq esperado
+                    const expectedSeq = this.transitionSeq + 1;
+                    if (data.seq !== expectedSeq) return;
+
+                    // 4) Anti-doble
+                    if (this.changingScene) return;
+                    this.changingScene = true;
+
+                    // 5) Confirmo y avanzo
+                    this.transitionSeq = data.seq;
+
+                    this.onShutdown();
+
+                    this.scene.start(this.nextLevelSceneKey, {
                         socket: this.socket,
                         playerIndex: this.playerIndex,
                         character: this.character,
-                        roomId: this.roomId
+                        roomId: this.roomId,
+                        transitionSeq: this.transitionSeq
                     });
+                    
                     break;
 
                 case 'rockState':
@@ -438,7 +463,7 @@ export default class ForestLevel1SceneOnline extends Phaser.Scene
         //----- PUERTA -----//
         if (!this.door.open && this.grid.switch.active && (!this.isOnline || this.localPlayer.isLocal)) this.door.openDoor();
 
-        if (this.door && this.canWin && this.localPlayer.isLocal) this.door.update(this.mati, this.pili, 'ForestLevel2SceneOnline');
+        if (this.door && this.canWin && this.localPlayer.isLocal) this.door.update(this.mati, this.pili);
 
         //----- ROCAS -----//
         this.grid.rocks.forEach(rock => rock.update());
@@ -497,6 +522,10 @@ export default class ForestLevel1SceneOnline extends Phaser.Scene
 
     applyRemoteState(data)
     {
+        if (!this.remotePlayer) return;
+        if (!this.remotePlayer.sprite) return;
+        if (!this.remotePlayer.sprite.body) return;
+        
         const remote = this.remotePlayer.sprite;
 
         if (remote == this.pili) remote.isPlatform = data.piliIsPlatform;

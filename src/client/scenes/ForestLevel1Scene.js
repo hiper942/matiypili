@@ -16,6 +16,7 @@ export default class ForestLevel1Scene extends Phaser.Scene
     constructor()
     {
         super('ForestLevel1Scene');
+        this.nextLevel = 'ForestLevel2Scene';
     }
 
     // Start()
@@ -300,7 +301,7 @@ export default class ForestLevel1Scene extends Phaser.Scene
         //----- PUERTA -----//
         if (!this.door.open && this.grid.switch.active) this.door.openDoor();
 
-        if (this.door) this.door.update(this.mati, this.pili, 'ForestLevel2Scene');
+        if (this.door) this.door.update(this.mati, this.pili);
 
         //----- BOTON -----//
         this.grid.buttons.forEach(btn => btn.update(this.mati));

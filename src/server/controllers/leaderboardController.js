@@ -14,5 +14,34 @@ export function createLeaderboardController(userService) {
     res.json(leaderboard);
   }
 
-  return { getLeaderboard };
+  function addRecord(req, res)
+  {
+    const { time } = req.body;
+
+    if (typeof time !== 'number')
+    {
+      return res.status(400).json({ error: 'Invalid time' });
+    }
+
+    const userId = req.user.id;
+
+    const user = userService.getUserById(userId);
+    if (!user)
+    {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // guardar solo si mejora
+    if (user.bestTime === null || time < user.bestTime)
+    {
+      user.bestTime = time;
+    }
+
+    res.sendStatus(200);
+  }
+
+  return {
+    getLeaderboard,
+    addRecord
+  };
 }

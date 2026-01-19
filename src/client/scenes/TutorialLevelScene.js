@@ -17,6 +17,7 @@ export default class TutorialLevelScene extends Phaser.Scene
     constructor()
     {
         super('TutorialLevelScene');
+        this.nextLevel = 'ForestLevel1Scene';
     }
 
     // Start()
@@ -302,9 +303,9 @@ export default class TutorialLevelScene extends Phaser.Scene
         if (this.grid.switch) this.grid.switch.update(this.mati);
 
         //----- PUERTA -----//
-        if (!this.door.open && this.grid.switch.active && (!this.isOnline || this.localPlayer.isLocal)) this.door.openDoor();
+        if (!this.door.open && this.grid.switch.active) this.door.openDoor();
 
-        if (this.door) this.door.update(this.mati, this.pili, 'ForestLevel1Scene');
+        if (this.door) this.door.update(this.mati, this.pili);
 
         //----- BOTON -----//
         this.grid.buttons.forEach(btn => btn.update(this.mati));
