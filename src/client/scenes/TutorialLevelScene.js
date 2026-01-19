@@ -17,7 +17,7 @@ export default class TutorialLevelScene extends Phaser.Scene
     constructor()
     {
         super('TutorialLevelScene');
-        this.nextLevel = 'ForestLevel1Scene';
+        this.nextLevel = 'WinScene';
     }
 
     // Start()

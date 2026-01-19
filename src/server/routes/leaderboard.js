@@ -7,7 +7,7 @@ export function createLeaderboardRoutes(leaderboardController) {
   router.get('/leaderboard', leaderboardController.getLeaderboard);
 
   // POST /api/leaderboard
-  router.post('/record', auth, leaderboardController.addRecord);
+  router.post('/leaderboard', leaderboardController.addRecord);
 
   return router;
 }

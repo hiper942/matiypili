@@ -10,8 +10,8 @@ export default class LoadScreen extends Phaser.Scene {
         });
     }
 
-    create() {
-
+    create()
+    {
         // Crear animación del loader
         this.anims.create({
             key: 'loadAnim',
@@ -31,5 +31,7 @@ export default class LoadScreen extends Phaser.Scene {
         this.scene.get('BootScene').events.once('boot-complete', () => {
             this.scene.start('MenuScene');
         });
+
+        const test = this.add.text(800, 450, '', { fontFamily: 'Rockwell' });
     }
 }

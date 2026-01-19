@@ -152,7 +152,7 @@ export default class UserScene extends Phaser.Scene {
                 fontSize: '36px',
                 fontFamily: 'Rockwell',
                 align: 'right',
-                color: '#ffffff'
+                color: '#ffeab0'
             }
         ).setOrigin(1, 0.5);
 
@@ -182,7 +182,7 @@ export default class UserScene extends Phaser.Scene {
                 fontSize: '36px',
                 fontFamily: 'Rockwell',
                 align: 'right',
-                color: '#ffffff'
+                color: '#ffeab0'
             }).setOrigin(1, 0.5);
         });
 
