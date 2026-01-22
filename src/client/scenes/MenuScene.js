@@ -1,5 +1,4 @@
 import Phaser from 'phaser';
-import { connectionManager } from '../services/ConnectionManager';
 
 export default class MenuScene extends Phaser.Scene{
 
@@ -40,7 +39,7 @@ export default class MenuScene extends Phaser.Scene{
             .setInteractive({ useHandCursor: true })
             .on('pointerover', () => userBtn.setTexture('btnUsuarioOn'))
             .on('pointerout',  () => userBtn.setTexture('btnUsuarioOff'))
-            .on('pointerdown', () => this.scene.start('UserScene'));
+            .on('pointerdown', () => this.notImplemented());
 
         // Boton Jugar Online
         const onlineBtn = this.add.image(300, 500, 'btnOnlineOff')
@@ -48,17 +47,7 @@ export default class MenuScene extends Phaser.Scene{
             .setInteractive({ useHandCursor: true })
             .on('pointerover', () => onlineBtn.setTexture('btnOnlineOn'))
             .on('pointerout',  () => onlineBtn.setTexture('btnOnlineOff'))
-            .on('pointerdown', () => 
-            {
-                if (!localStorage.getItem('token'))
-                {
-                    this.showWarning('Regístrate para jugar online');
-                    return;
-                }
-
-                this.registry.set('gameMode', 'online');
-                this.scene.start('LobbyScene');
-            });
+            .on('pointerdown', () => this.notImplemented());
 
         // Boton Creditos
         const creditsBtn = this.add.image(300, 800, 'btnCreditosOff')
@@ -74,6 +63,11 @@ export default class MenuScene extends Phaser.Scene{
             .setScale(0.1)
             .setInteractive({ useHandCursor: true })
             .on('pointerdown', () => this.scene.start('Settings', { target: this.scene.key }));
+    }
+
+    notImplemented()
+    {
+        this.showWarning("No implementado en esta plataforma\nVisita nuestro GitHub para más!");
     }
 
     showWarning(text)

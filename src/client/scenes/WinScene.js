@@ -11,7 +11,7 @@ export default class WinScene extends Phaser.Scene
 
     create()
     {
-        this.sendTime();
+        
         
         if (this.sound.get('levelMusic'))
         {
@@ -27,9 +27,13 @@ export default class WinScene extends Phaser.Scene
             .on('pointerover', () => volverBtn.setTexture('btnVolverOn'))
             .on('pointerout',  () => volverBtn.setTexture('btnVolverOff'))
             .on('pointerdown', () => this.scene.start('MenuScene'));
+
+        const time = this.add.text(innerWidth/2, 800, 'Time: ' + this.getTime(), { fontFamily: 'RockwellBold', fontSize: '24px', color: '#ffffff', align: 'center' });
+        
+        this.getTime();
     }
 
-    async sendTime()
+    getTime()
     {
         const startTime = this.registry.get('runStartTime');
         const endTime = Date.now();
@@ -38,32 +42,18 @@ export default class WinScene extends Phaser.Scene
         const totalTimeSeconds = (totalTimeMs / 1000).toFixed(2);
 
         console.log('Tiempo total: ', totalTimeSeconds, 's');
-        
-        try
-        {
-            console.log('TOKEN:', localStorage.getItem('token'));
-            const res = await fetch('http://localhost:3000/api/record', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`
-                },
-                body: JSON.stringify({ time: totalTimeMs })
-            });
 
-            if (!res.ok)
-            {
-                const text = await res.text();
-                console.error('[RECORD] Error:', res.status, text);
-            }
-            else
-            {
-                console.log('[RECORD] Tiempo enviado correctamente');
-            }
-        }
-        catch (err)
-        {
-            console.error('[RECORD] Fetch failed:', err);
-        }
+        return this.formatTime(totalTimeMs);
+    }
+
+    formatTime(ms)
+    {
+        if (ms == null) return '--:--.---';
+
+        const minutes = Math.floor(ms / 60000);
+        const seconds = Math.floor((ms % 60000) / 1000);
+        const millis  = ms % 1000;
+
+        return `${minutes}:${seconds.toString().padStart(2,'0')}.${millis.toString().padStart(3,'0')}`;
     }
 }
