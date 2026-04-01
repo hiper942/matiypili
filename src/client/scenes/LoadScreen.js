@@ -33,5 +33,7 @@ export default class LoadScreen extends Phaser.Scene {
         });
 
         const test = this.add.text(800, 450, '', { fontFamily: 'Rockwell' });
+
+        const test2 = this.add.text(800, 450, '', { fontFamily: 'RockwellBold' });
     }
 }

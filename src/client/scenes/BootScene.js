@@ -65,7 +65,7 @@ export default class BootScene extends Phaser.Scene
         this.load.image('bridgeM', 'assets/Escenario/Puente/puenteCentro.png');
         this.load.image('bridgeR', 'assets/Escenario/Puente/puenteDerecha.png');
 
-        this.load.image('spike', 'assets/Escenario/Pinchos/pinchos.png');
+        this.load.image('spike', 'assets/Escenario/Pinchos/pinchos.PNG');
         this.load.image('rock', 'assets/Escenario/Pedroloo/PiedraPili.png');
 
         this.load.spritesheet('pressure', 'assets/Escenario/Placa/placa.png', { frameWidth: 128, frameHeight: 128 });
@@ -128,9 +128,9 @@ export default class BootScene extends Phaser.Scene
         this.load.image('light', 'assets/Escenario/Luz.PNG');
 
         // ---- MENÚS ---- //
-        this.load.image('menuScene', 'assets/Menus/FondoMenu.png');
-        this.load.image('deathScene', 'assets/Menus/FondoMenuMuerte.png');
-        this.load.image('winScene', 'assets/Menus/FondoMenuVictoria.png');
+        this.load.image('menuScene', 'assets/Menus/FondoMenu.PNG');
+        this.load.image('deathScene', 'assets/Menus/FondoMenuMuerte.PNG');
+        this.load.image('winScene', 'assets/Menus/FondoMenuVictoria.PNG');
 
         this.load.image('btnJugarOff', 'assets/Menus/botonJugarApagado.PNG');
         this.load.image('btnJugarOn', 'assets/Menus/botonJugarEncendido.PNG');
@@ -159,7 +159,7 @@ export default class BootScene extends Phaser.Scene
         this.load.image('btnUsuarioOff', 'assets/Menus/usuarioApagado.PNG');
         this.load.image('btnUsuarioOn', 'assets/Menus/usuarioEncendido.PNG');
 
-        this.load.image('btnstt', 'assets/Menus/ajustes.PNG');
+        this.load.image('btnstt', 'assets/Menus/ajustes.png');
 
         // ---- MÚSICA ---- //
         this.load.audio('menuMusic', 'assets/Musica/menu.mp3');

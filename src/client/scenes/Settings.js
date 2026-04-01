@@ -1,5 +1,4 @@
 import Phaser from 'phaser';
-import { connectionManager } from '../services/ConnectionManager';
 
 export default class Settings extends Phaser.Scene
 {
@@ -109,21 +108,6 @@ export default class Settings extends Phaser.Scene
             }
         });
 
-        this.connectionText = this.add.text(200, 850, 'Servidor: Comprobando...',
-            {
-                fontSize: '18px',
-                fontFamily: 'Rockwell',
-                color: '#ffff00'
-            }
-        ).setOrigin(0.5);
-
-        // Listener para cambios de conexión
-        this.connectionListener = (data) => {
-            this.updateConnectionDisplay(data);
-        };
-
-        connectionManager.addListener(this.connectionListener);
-
         // = BOTÓN VOLVER = //
         const volverBtn = this.add.image(800, 780, 'btnVolverOff')
             .setDepth(1)
@@ -131,48 +115,6 @@ export default class Settings extends Phaser.Scene
             .on('pointerover', () => volverBtn.setTexture('btnVolverOn'))
             .on('pointerout',  () => volverBtn.setTexture('btnVolverOff'))
             .on('pointerdown', () => this.exitSettings());
-    }
-
-    goToMenu()
-    {
-        this.scene.start('MenuScene');
-        this.scene.stop();
-    }
-
-    updateConnectionDisplay(data)
-    {
-        // Solo actualizar si el texto existe (la escena está creada)
-        if (!this.connectionText || !this.scene || !this.scene.isActive('Settings'))
-        {
-            return;
-        }
-
-        try
-        {
-            if (data.connected)
-            {
-                this.connectionText.setText(`Servidor: ${data.count} usuario(s) conectado(s)`);
-                this.connectionText.setColor('#00ff00');
-            }
-            else
-            {
-                this.connectionText.setText('Servidor: Desconectado');
-                this.connectionText.setColor('#ff0000');
-            }
-        }
-        catch (error)
-        {
-            console.error('[Settings] Error updating connection display:', error);
-        }
-    }
-
-    shutdown()
-    {
-        // Remover el listener
-        if (this.connectionListener)
-        {
-            connectionManager.removeListener(this.connectionListener);
-        }
     }
 
     exitSettings()
